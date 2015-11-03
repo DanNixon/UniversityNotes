@@ -1,0 +1,34 @@
+% Set document attributes
+\title{\DOCTITLE}
+
+\usepackage{fullpage}
+\usepackage{scrextend}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+% Handle graphics correctly
+\ifx\pdftexversion\undefined
+\usepackage{graphicx}
+% \usepackage[dvips]{graphicx}
+\else
+\usepackage[pdftex]{graphicx}
+\DeclareGraphicsRule{*}{mps}{*}{}
+\fi
+
+% Setup headers and footers
+\pagestyle{fancy}
+\lhead{}
+\chead{\DOCTITLE}
+\rhead{}
+\rfoot{}
+\cfoot{\thepage}
+\lfoot{}
+
+% New page for each section
+\newcommand{\sectionbreak}{\clearpage}
+
+% Set header and footer sizes
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+\setlength{\headheight}{15.2pt}
+\setlength{\headsep}{15.2pt}
