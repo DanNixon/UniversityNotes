@@ -5,6 +5,8 @@
 \usepackage{scrextend}
 \usepackage{titlesec}
 \usepackage{fancyhdr}
+\usepackage{amsmath}
+\usepackage{amssymb}
 
 % Handle graphics correctly
 \ifx\pdftexversion\undefined
@@ -25,10 +27,16 @@
 \lfoot{}
 
 % New page for each section
-\newcommand{\sectionbreak}{\clearpage}
+% \newcommand{\sectionbreak}{\clearpage}
 
 % Set header and footer sizes
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0.4pt}
 \setlength{\headheight}{15.2pt}
 \setlength{\headsep}{15.2pt}
+
+\setlength{\parskip}{5pt plus 1pt minus 1pt}
+\setlength{\parindent}{0pt}
+
+\newcommand{\Forall}{\;\forall\;}
+\newcommand{\Mod}{\: mod \:}
