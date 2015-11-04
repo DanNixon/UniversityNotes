@@ -14,7 +14,7 @@ MP_GRAPHICS_1=$(subst $(GRAPHICS_DIR),$(OUTPUT_DIR),$(MP_GRAPHICS:.mp=.1))
 SVG_GRAPHICS=$(wildcard $(GRAPHICS_DIR)/*.svg)
 SVG_GRAPHICS_EPS=$(subst $(GRAPHICS_DIR),$(OUTPUT_DIR),$(SVG_GRAPHICS:.svg=.eps))
 
-all: out_dir mp_graphics $(PDFS)
+all: out_dir mp_graphics svg_graphics $(PDFS)
 
 out_dir:
 	mkdir -p $(OUTPUT_DIR)
