@@ -110,4 +110,176 @@ To solve:
 Solution:
 \[x = -b \cdot a^{-1} \in \mathbb{Z}_{N}\]
 
+\section{Key Exchange}
+
+\begin{itemize}
+  \item Need to transmit a secret key on an open channel without eavesdroppers
+        learning the key
+  \item Too many keys to manage for each pair of participants to have their own
+        key ($\mathcal{O}(n^{2})$)
+  \item Ad-hoc method of key exchange is required in order to establish a secure
+        communication channel between two parties
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  % \includegraphics[width=0.8\textwidth]{}
+  TODO
+  \caption{Key Exchange Problem}
+  \label{fig:key_exchange_problem}
+\end{figure}
+\FloatBarrier
+
+\subsection{Trusted Third Party}
+
+\begin{itemize}
+  \item Only $\mathcal{O}(n)$ keys required
+  \item No third party can be truly/fully trusted
+\end{itemize}
+
+\subsection{Merkle Puzzles (symmetric)}
+
+\begin{itemize}
+  \item Only secure against eavesdropping
+  \item Only uses symmetric primitives
+  \item Not used in real world applications
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  % \includegraphics[width=0.8\textwidth]{}
+  TODO
+  \caption{Merkle Puzzles Key Exchange}
+  \label{fig:merkle_puzzles_key_exchange}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Idea}
+
+\begin{enumerate}
+  \item[1] Alice generates a large number of puzzles (e.g. $2^{32}$) each with a
+           candidate session key in the payload
+  \item[2] Alice sends all the puzzles to Bob
+  \item[3] Bob chooses a puzzle at random and solves it by brute force
+  \item[4] Bob sends the puzzle ID back to Alice, Alice then knows which puzzle
+           hence which session key Bob is using
+  \item[5] Alice sends a random number $N$ to Bob, encrypted with the
+           chosen session key
+  \item[6] Bob replies with $N-1$ encrypted using the chosen session key
+  \item[7] If the message from bob is actually $N-1$ then the key exchange was
+           successful
+\end{enumerate}
+
+Choose AES key with leading zeros such that:
+\[K = \{0\}^{128-l} \{0,1\}^{l}\]
+
+Requires $2^{l}$ brute force decryption attempts to solve.
+
+\subsubsection{Puzzle generator}
+
+\begin{enumerate}
+  \item[1] Choose random $P \in \{0,1\}^{32}$
+  \item[2] Choose random $x, k \in \{0,1\}^{128}$
+  \item[3] Puzzle $P = E((\{0\}^{96}||P), "puzzle" x, k)$
+\end{enumerate}
+
+\subsubsection{Puzzle structure}
+
+\begin{description}
+  \item[$\{0\}^{96} || P$] \hfill \\
+    Random encryption key
+  \item[$"puzzle" x$] \hfill \\
+    Random ID
+  \item[$k$] \hfill \\
+    Random session key
+\end{description}
+
+\subsubsection{Computational gap}
+
+\begin{itemize}
+  \item Workload for Alice and Bob: $\mathcal{O}(n)$, e.g. $2^{32}$
+  \item Workload for Eve: $\mathcal{O}(n^{2})$, e.g. $2^{64}$
+  \item Quadratic gap is best achievable for symmetric block ciphers
+\end{itemize}
+
+\subsection{Diffie-Hellman (asymmetric)}
+
+\begin{itemize}
+  \item Only secure against eavesdropping
+  \item Uses asymmetric primitives
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  % \includegraphics[width=0.8\textwidth]{}
+  TODO
+  \caption{Diffe-Hellman Key Exchange}
+  \label{fig:diffe_hellman_key_exchange}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Idea}
+
+\begin{enumerate}
+  \item[1] A large prime number $p$ and integer $g$ (generator of
+           $(\mathbb{Z}_{p})^{*}$) are known by everyone
+  \item[2] Alice chooses a random $a \in (\mathbb{Z}_{p})^{*}$
+  \item[2] Bob chooses a random $b \in (\mathbb{Z}_{p})^{*}$
+  \item[3] Alice transmits $A = g^{a} (\Mod p)$ to Bob
+  \item[4] Bob transmits $B = g^{b} (\Mod p)$ to Alice
+  \item[5] Alice computes session key $k_{AB} = B^{a}$
+  \item[6] Bob computes session key $k_{AB} = A^{b}$
+\end{enumerate}
+
+\subsubsection{Proof of correctness}
+
+Proof of correctness of session keys:
+\begin{align*}
+  k_{AB(alice)} &= k_{AB(bob)} \\
+  B^{a} &= A^{b} \\
+  g^{b^{a}} &= g^{a^{b}} \\
+  g^{ba} &= g^{ab} \\
+  g^{ab} &= g^{ab}
+\end{align*}
+
+\subsubsection{Difficulty}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    Symmetric Cipher Key Size & DH/RSA Modulus Size \\
+    \midrule
+    80 bits                   & 1028 bits           \\
+    128 bits                  & 3072 bits           \\
+    \bottomrule
+  \end{tabular}
+  \caption{Diffie-Hellman Difficulty}
+  \label{tab:diffie_hellman_difficulty}
+\end{table}
+\FloatBarrier
+
+Best known algorithm to break DH/RSA is General Number Field Sieve, the expected
+running time of which is $\mathcal{O}(exp(log(N)^{\frac{1}{3}}))$.
+
+\subsection{Establishing a secure channel}
+
+\begin{itemize}
+  \item Messages are sent encrypted with a symmetric cipher with a MAC
+  \item Avoid using same key for all ciphers and MAC generation by using key
+        derivation
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  % \includegraphics[width=0.8\textwidth]{}
+  TODO
+  \caption{Key Derivation Function}
+  \label{fig:key_derivation_function}
+\end{figure}
+\FloatBarrier
+
+Key derivation generates different keys for cipher and MAC in both directions (4
+unique keys in total) using the session key and a known salt.
+
 \end{document}

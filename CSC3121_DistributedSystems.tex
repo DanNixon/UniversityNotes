@@ -4,6 +4,34 @@
 
 \begin{document}
 
+\section{Remote Procedure Calls}
+
 TODO
+
+\section{Clocks and Order}
+
+TODO
+
+\section{Atomic Transactions}
+
+For controlling operations on persistent storage resources.
+
+"ACID" properties:
+
+\begin{description}
+  \item[Atomicity] \hfill \\
+    "All or nothing". \\
+    In the event of failure the state must be restored to its condition prior to
+    execution.
+  \item[Consistency] \hfill \\
+    Ensures executions are scheduled to run such that one will not interfere
+    with another.
+  \item[Independence] \hfill \\
+    The effects of an execution (A) must not become visible to another execution
+    (B) until after A has successfully completed.
+  \item[Durability] \hfill \\
+    Results produced by a successful execution are not damaged by a subsequent
+    failed execution.
+\end{description}
 
 \end{document}
