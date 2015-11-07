@@ -14,7 +14,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="key_derivationsvg.svg">
+   sodipodi:docname="key_derivation_function.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -57,7 +57,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -199,48 +199,56 @@
          y="412.34497">Session Key</tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:8.59601212px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="115"
-       y="602.36218"
+       style="font-size:12.51589203px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="114.644"
+       y="601.2821"
        id="text3111"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3113"
-         x="115"
-         y="602.36218">kMAC, AB</tspan></text>
+         x="114.644"
+         y="601.2821">k<tspan
+   style="font-size:8.13544464px;baseline-shift:sub"
+   id="tspan3038">MAC, AB</tspan></tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:8.48208714px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="185.26645"
-       y="602.70312"
+       style="font-size:12.3587923px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="184.91437"
+       y="601.63495"
        id="text3115"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3117"
-         x="185.26645"
-         y="602.70312">kMAC, BA</tspan></text>
+         x="184.91437"
+         y="601.63495">k<tspan
+   style="font-size:8.03332806px;baseline-shift:sub"
+   id="tspan3040">MAC, BA</tspan></tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:8.87925434px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="275"
-       y="602.36218"
+       style="font-size:12.90551281px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="274.63434"
+       y="601.25281"
        id="text3119"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3121"
-         x="275"
-         y="602.36218">kENC, AB</tspan></text>
+         x="274.63434"
+         y="601.25281">k<tspan
+   style="font-size:8.38870144px;baseline-shift:sub"
+   id="tspan3042">ENC, AB</tspan></tspan></text>
     <text
        xml:space="preserve"
-       style="font-size:8.75775051px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="345"
-       y="602.36218"
+       style="font-size:12.73854351px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="344.63846"
+       y="601.26532"
        id="text3123"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3125"
-         x="345"
-         y="602.36218">kENC, BA</tspan></text>
+         x="344.63846"
+         y="601.26532">k<tspan
+   style="font-size:8.28016949px;baseline-shift:sub"
+   id="tspan3044">ENC, BA</tspan></tspan></text>
     <text
        xml:space="preserve"
        style="font-size:21.3306675px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
