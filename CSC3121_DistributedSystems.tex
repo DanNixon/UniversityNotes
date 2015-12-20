@@ -4,7 +4,74 @@
 
 \begin{document}
 
-\section{Remote Procedure Calls}
+\tableofcontents
+
+\section{RPC semantics}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}llll@{}}
+    \toprule
+    Message & Type    & Direction   & Remarks                                       \\
+    \midrule
+    REQ     & Request         & C \RArrow S & Client wants service from server      \\
+    REP     & Reply           & S \RArrow C & Server replies to client request      \\
+    ACK     & Acknowledgement & (both)      & Previous message arrived successfully \\
+    AYA     & Are You Alive?  & C \RArrow S & Check server is functioning           \\
+    IAA     & I Am Alive      & S \RArrow C & Server confirms it is functioning     \\
+    TA      & Try Again       & S \RArrow C & Server is busy                        \\
+    AU      & Address Unknown & S \RArrow C & No server at this address             \\
+    \bottomrule
+  \end{tabular}
+  \caption{Protocol Message Types}
+  \label{tab:message_types}
+\end{table}
+
+\begin{itemize}
+  \item REQ and REP are essential
+  \item ACK helps ensure reliability by handling message loss
+  \item AYA and IAA allow the client to determine if the server is available if
+        it receives a timeout following a REQ or ACK
+\end{itemize}
+
+Remote Procedure Calls (RPC) encapsulates the message sending and receiving
+between the client and server such that the client code does not have to deal
+with it.
+
+Assuming there is some client code $C$ compiled to $C_{obj}$ and server code $S$
+compiled to $S_{obj}$, in order for the code to be executed remotely both are
+linked to a language specific stub which contains the logic for the remote
+communication between client and server.
+
+The stubs for the client and server are produced using an interface definition
+$S_{if}$ which describes the interface to the server code $S$.
+
+Basic call procedure:
+
+\begin{enumerate}
+  \item[1] Client calls client stub as it would the server code if it was
+           compiled locally
+  \item[2] Client stub builds the message (including parameter packing) to be
+           sent to the server
+  \item[3] Message is sent to the server
+  \item[4] Server receives the message and passes it to the server stub
+  \item[5] Server stub parses the message, unpacks the parameters and calls the
+           actual routine
+  \item[6] The code executes and the results are packed into a reply message
+  \item[7] The reply message is sent to the client
+  \item[8] The client stub unpacks the results and returns them to the client
+           routine
+\end{enumerate}
+
+\subsection{Parameter Passing}
+
+TODO
+
+\subsection{Binding}
+
+TODO
+
+\subsection{Failure Handling}
 
 TODO
 
@@ -12,7 +79,7 @@ TODO
 
 TODO
 
-\section{Atomic Transactions}
+\section{Transactions}
 
 For controlling operations on persistent storage resources.
 

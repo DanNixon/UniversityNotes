@@ -9,6 +9,7 @@
 \usepackage{amssymb}
 \usepackage[section]{placeins}
 \usepackage{booktabs}
+\usepackage{hyperref}
 
 % Handle graphics correctly
 \ifx\pdftexversion\undefined
@@ -29,7 +30,7 @@
 \lfoot{}
 
 % New page for each section
-% \newcommand{\sectionbreak}{\clearpage}
+\newcommand{\sectionbreak}{\clearpage}
 
 % Set header and footer sizes
 \renewcommand{\headrulewidth}{0.4pt}
@@ -40,5 +41,12 @@
 \setlength{\parskip}{5pt plus 1pt minus 1pt}
 \setlength{\parindent}{0pt}
 
+% Newline after paragraph
+\newcommand{\Para}[1]{\paragraph{#1}\mbox{}\\}
+
+% Stuff used in cryptography notes
 \newcommand{\Forall}{\;\forall\;}
 \newcommand{\Mod}{\: mod \:}
+
+% Stuff used in distributed systems notes
+\newcommand{\RArrow}{$\rightarrow$}
