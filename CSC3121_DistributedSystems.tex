@@ -65,6 +65,40 @@ Basic call procedure:
 
 \subsection{Parameter Passing}
 
+\subsubsection{Methods}
+
+Methods of parameter passing:
+
+\begin{description}
+  \item[Pass by value] \hfill \\
+    The parameter value is copied to the stack of the executing process.
+
+    Changes to the value of the variable in the called routine do not affect the
+    original copy.
+
+  \item[Pass by refernce] \hfill \\
+    A reference to the original variable is copied to the stack of the executing
+    process.
+
+    When the called routine changes the value of the parameter the original copy
+    is also changed.
+
+  \item[Pass by copy-restore (aka value-result)] \hfill \\
+    The parameter value is copied to the stack of the executing process, then
+    copied back when the routine terminates.
+
+    When the called routine changes the value of the parameter the original copy
+    is also changed.
+
+\end{description}
+
+In most situations pass by reference and pass by copy-restore yield identical
+results.
+
+In RPC pass by copy-restore is used in place of pass by reference.
+
+\subsubsection{Packing}
+
 TODO
 
 \subsection{Binding}
