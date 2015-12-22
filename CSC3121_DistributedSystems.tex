@@ -245,12 +245,34 @@ reboots and crashes.
 Difficult (sometimes impossible) to implement in the presence of server crashes,
 for instance if the server is in the middle of an unrecoverable operation.
 
-TODO
+Required client and server use a co-ordinated recovery strategy for handling
+abnormal termination.
+
+See atomic transactions in section \ref{sec:transactions}.
 
 \subsubsection{Orphans}
 \label{sec:rpc_orphans}
 
-TODO
+Execution started on a server when a client request is received and the client
+crashes before it can receive the reply.
+
+Orphans can consume resources and create consistency issues between orphans and
+normal executions (in he case where the client retries the request).
+
+For instance, if an RPC locks a file to be written to and the client does not
+get a reply from the server they may retry by sending another RPC, which will be
+waiting for the orphaned RPC. In this case neither RPC will terminate.
+
+Treatment of orphaned execution:
+
+\begin{itemize}
+  \item When a server receives a request it could check for an identical request
+        from the same client that is already being executed, if any are found
+        they should be terminated before executing the current request.
+  \item A server could periodically check that clients with requests executing
+        on the server are alive, if the failure of a client is suspected then
+        the server terminates any associated executions.
+\end{itemize}
 
 \section{Clocks and Order}
 \label{sec:clocks_and_order}
