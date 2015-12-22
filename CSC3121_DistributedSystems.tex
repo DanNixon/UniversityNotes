@@ -7,6 +7,7 @@
 \tableofcontents
 
 \section{RPC semantics}
+\label{sec:rpc}
 
 \begin{table}[h]
   \centering
@@ -203,13 +204,38 @@ TODO: fig
 
 \Para{At Least Once}
 
-TODO
+If client makes a call and it times out then it retries a finite number of
+times, if it continues the fail then the client terminates abnormally.a
+
+Server always executes the request from the client and sends the reply
+regardless of previous client requests (stateless server).
 
 \Para{At Most Once}
 
-TODO
+If a client request times out then retries are made as per At Least Once
+semantics, however each request also contains a sequence number such that all
+retries that are made have the same sequence number as the original request.
+
+For each client, the server stores the results of the last executed call and the
+sequence number it corresponds to (stateful server).
+
+If a request from a client is received and its sequence number already exists in
+the stored results then the stored results are returned to the client.
+
+Need to ensure that the storage of previous results is persistent across server
+reboots and crashes.
 
 \Para{Exactly Once}
+
+"All or nothing" behaviour requires that:
+
+\begin{itemize}
+  \item Normal termination gives exactly one execution
+  \item Abnormal termination gives exactly no executions
+\end{itemize}
+
+Difficult (sometimes impossible) to implement in the presence of server crashes,
+for instance if the server is in the middle of an unrecoverable operation.
 
 TODO
 
@@ -219,10 +245,12 @@ TODO
 TODO
 
 \section{Clocks and Order}
+\label{sec:clocks_and_order}
 
 TODO
 
 \section{Transactions}
+\label{sec:transactions}
 
 For controlling operations on persistent storage resources.
 
