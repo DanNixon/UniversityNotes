@@ -99,13 +99,122 @@ In RPC pass by copy-restore is used in place of pass by reference.
 
 \subsubsection{Packing}
 
-TODO
+Parameter marshalling and un-marshalling is converting a set of parameters to
+and from a message to b sent between a client and server.
+
+Must have a standard representation for data types, e.g. integer types, due to
+different physical reorientations of different architectures, e.g. endianness.
 
 \subsection{Binding}
 
-TODO
+\begin{description}
+  \item[Static Binding] \hfill \\
+    Address of server is hard coded in the client stub.
+  \item[Dynamic Binding] \hfill \\
+    Address of server is located at run time.
+\end{description}
+
+\subsubsection{Dynamic Binding}
+
+\begin{itemize}
+  \item The service specification is stored (registered) on a statically
+        addressed binder (a.k.a. name server)
+  \item The server uses the service specification to generate the server stub
+  \item The developer of the client selects a suitable service specification
+        which is used to compile the client stub
+  \item The client stub contacts the binder at run time to obtain the address of
+        the server
+\end{itemize}
+
+\subsubsection{Service Specification}
+
+Stores following information on binder/name server:
+
+\begin{itemize}
+  \item Name of service
+  \item Service routine specification
+  \item Address of server running the service
+\end{itemize}
+
+Require language independent way to define service routine specification
+(a.k.a function signature): Interface Definition Language (IDL).
+
+e.g. \texttt{read(in char name[n], out char buf[n], in int length, in int pos)}
+
+\texttt{in}, \texttt{out}, \texttt{inout} specify the direction of the
+variables.
+
+\texttt{in} and \texttt{inout} parameters are sent from the client to the
+server.
+
+\texttt{out} and \texttt{inout} parameters are sent from the server to the
+client.
+
+An \texttt{inout} parameter is the equivalent of pass by reference.
 
 \subsection{Failure Handling}
+
+Two possible outcomes of an RPC call:
+
+\begin{description}
+  \item[Normal Termination] \hfill \\
+    Client received the reply from the server as expected.
+
+  \item[Abnormal (Exceptional) Termination] \hfill \\
+    Client does not receive a reply from the server as expected.
+
+    This can be for a number of reasons: communication issues, node crashes,
+    etc.
+
+\end{description}
+
+Causes of failures:
+
+\begin{itemize}
+  \item[1] Client cannot contact the server
+  \item[2] Client's request message does not reach the server
+  \item[3] Server's reply message does not reach the client
+  \item[4] Server crashes during the call
+  \item[5] Client crashes during the call
+\end{itemize}
+
+Actions in event of failures:
+
+\begin{description}
+  \item[Failure 1] \hfill \\
+    Client received address unknown message from the node it tried to contact.
+
+  \item[Failures 2, 3 \& 4] \hfill \\
+    Client times out waiting for a reply from the server.
+
+    May makes several further attempts to contact the server before an abnormal
+    termination or terminate right away.
+
+  \item[Failure 5] \hfill \\
+    Orphan process is created on server.
+
+    See section \ref{sec:rpc_orphans}.
+
+\end{description}
+
+TODO: fig
+
+\subsubsection{Semantics}
+
+\Para{At Least Once}
+
+TODO
+
+\Para{At Most Once}
+
+TODO
+
+\Para{Exactly Once}
+
+TODO
+
+\subsubsection{Orphans}
+\label{sec:rpc_orphans}
 
 TODO
 
@@ -134,5 +243,7 @@ For controlling operations on persistent storage resources.
     Results produced by a successful execution are not damaged by a subsequent
     failed execution.
 \end{description}
+
+TODO
 
 \end{document}
