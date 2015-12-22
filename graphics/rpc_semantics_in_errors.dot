@@ -1,0 +1,25 @@
+digraph RPCSemanticsInFailureCases
+{
+  ClientTimesOut            [label="Client Times Out"]
+  NoRetry                   [label="No Retry"]
+  RetryUntilResponse        [label="Retry Until Response"]
+  AU                        [label="Response = Address Unknown"]
+  Reply                     [label="Response = Reply"]
+  ServerRetainsResult       [label="Server Retains Result"]
+  ServerDoesNotRetainResult [label="Server Does Not Retain Result"]
+
+  AtLeastOnce               [label="At Least Once"]
+  AtMostOnce                [label="At Most Once"]
+  ExactlyOnce               [label="Exactly Once"]
+
+  ClientTimesOut            -> NoRetry
+  NoRetry                   -> AtMostOnce
+  ClientTimesOut            -> RetryUntilResponse
+  RetryUntilResponse        -> AU
+  AU                        -> ExactlyOnce
+  RetryUntilResponse        -> Reply
+  Reply                     -> ServerRetainsResult
+  ServerRetainsResult       -> ExactlyOnce
+  Reply                     -> ServerDoesNotRetainResult
+  ServerDoesNotRetainResult -> AtLeastOnce
+}
