@@ -10,15 +10,10 @@
 \usepackage[section]{placeins}
 \usepackage{booktabs}
 \usepackage{hyperref}
-
-% Handle graphics correctly
-\ifx\pdftexversion\undefined
+\usepackage{tikz}
 \usepackage{graphicx}
-% \usepackage[dvips]{graphicx}
-\else
-\usepackage[pdftex]{graphicx}
-\DeclareGraphicsRule{*}{mps}{*}{}
-\fi
+\usepackage{minted}
+\usepackage{subcaption}
 
 % Setup headers and footers
 \pagestyle{fancy}
@@ -50,3 +45,5 @@
 
 % Stuff used in distributed systems notes
 \newcommand{\RArrow}{$\rightarrow$}
+
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;}
