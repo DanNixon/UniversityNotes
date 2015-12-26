@@ -1,0 +1,17 @@
+digraph GPTreeFill
+{
+  O11 [label="/"]
+	O21 [label="+"]
+	O22 [label="*"]
+	V31 [label="4"]
+	V32 [label="P3"]
+	V33 [label="P1"]
+	V34 [label="3.5"]
+
+  O11 -> O21
+	O11 -> O22
+	O21 -> V31
+	O21 -> V32
+	O22 -> V33
+	O22 -> V34
+}

@@ -1,0 +1,13 @@
+digraph GPTreeGrow
+{
+  O11 [label="/"]
+	O21 [label="+"]
+	V22 [label="9"]
+	V31 [label="4"]
+	V32 [label="P3"]
+
+  O11 -> O21
+	O11 -> V22
+	O21 -> V31
+	O21 -> V32
+}
