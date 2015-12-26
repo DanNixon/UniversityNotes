@@ -7,6 +7,7 @@
 \tableofcontents
 
 \section{Overview}
+\label{sec:overview}
 
 \begin{table}[h]
   \centering
@@ -36,6 +37,7 @@
 \end{description}
 
 \section{Genetic Algorithms}
+\label{sec:ga}
 
 \subsection{Biological Inspiration}
 
@@ -318,30 +320,175 @@ Real valued attributes:
 \end{itemize}
 
 \section{Genetic Programming}
+\label{sec:gp}
 
-TODO
+\begin{itemize}
+  \item Very similar concept to Genetic Algorithms \ref{sec:ga}
+  \item Instead of evolving a solution, eveolve a program
+  
+\end{itemize}
+
+\subsection{Program Respresentation}
+
+\begin{itemize}
+  \item Classic method is to represent programs as a tree representing a
+        formula
+  \item Modern methods can also create other representations
+    \begin{itemize}
+      \item e.g. Cartesian Genetic Programming creates graphs
+    \end{itemize}
+  \item Internal nodes of tree are functions/operations
+  \item Leaves are either variables/parameters or constants
+    \begin{itemize}
+      \item Constants can be predefined or asigned a random value within a
+            predefined range
+    \end{itemize}
+\end{itemize}
+
+TODO: example
+
+\subsection{Initialisation}
+
+\begin{itemize}
+  \item Initial tree is generated randomly
+  \item Maximum depth of tree is predefined
+  \item Strategies for generation:
+    \begin{description}
+      \item[Grow] \hfill \\
+        Generate a tree at random with leaves up to the maximum depth
+      \item[Fill] \hfill \\
+        Generate a tree at random with all leaves at the maximum depth
+      \item[Hybrid] \hdill \\
+        For each level of depth, initialise a uniform number of trees, half of
+        which using Grow and half using Full
+    \end{description}
+\end{itemize}
+
+\Para{Example}
+
+Figure \ref{fig:gp_tree_example} shows a tree representing the equation:
+\[
+  \frac{4 + P3}{P1 - sin(P2)}
+\]
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{out/gp_tree_example.eps}
+  \caption{Example Tree}
+  \label{fig:gp_tree_example}
+\end{figure}
+\FloatBarrier
+
+\subsection{Evaluation/Execution}
+
+\begin{itemize}
+  \item Evaluation is done by averaging error over all test cases, giving a
+        fitness value
+  \item Recursive execution is easy but inefficient
+  \item Converting a tree to Reverse Polish Notation solves problem
+\end{itemize}
+
+\begin{listing}[h]
+  \begin{minted}{text}
+    for each element e:
+    if e is value:
+      push e to the stack
+    else if e is operator:
+      pop as many elements from the stack as the operator has parameters
+      execute the operator
+      push the result to the stack
+    return value at top of stack
+  \end{minted}
+  \caption{Genetic programming execution pseudocode}
+  \label{listing:gp_eval_pseudocode}
+\end{listing}
+
+\subsection{Crossover}
+
+Exchange subtrees between parents.
+
+TODO: example
+
+\subsection{Mutation}
+
+Replace entire subtrees with a randomly generated subtree.
+
+TODO: example
+
+\subsection{Bloat}
+
+\begin{itemize}
+  \item Growth of program tree without improvment in fitness
+  \item Bloat can affect any evolutionary paradigm where the representation
+        has variable length
+  \item Solutions:
+    \begin{description}
+      \item[Restrict tree depth] \hfill \\
+        May affect evolutionary process making it unable to find a good
+        solution
+      \item[Simplification] \hfill \\
+        Very difficult to do efficiently
+      \item[Add fitness penalty to large trees] \hfill \\
+        Smaller fitness for solutions with larger trees
+      \item[Consider tree size in selection] \hfill \\
+        When two individuals have equal fitness, prefer the smaller tree
+    \end{description}
+\end{itemize}
+
+\subsection{Applications}
+
+\begin{description}
+  \item[Regression] \hfill \\
+    Reverge engineering a mathematical formula given a dataset of output values
+    for given input values.
+    
+    This gives an approximation of the original formula that created the
+    dataset.
+    
+  \item[Generating Electronic Circuits] \hfill \\
+    Tree topology defines schmatic.
+    
+    Leaves define component values (inductance, capacitance, etc.).
+    
+  \item[Control] \hfill \\
+    Optimising gains of a PID controller.
+    
+  \item[Puzzle Solvers] \hfill \\
+    e.g. FreeCell solver using hybrig genetic algorithm and genetic
+    programming.
+  
+  \item[Generation of Audio Synhesizers] \hfill \\
+    Using Cartesian Generic Programming to generate a graph structure.
+    
+\end{description}
 
 \section{Neural Networks}
+\label{sec:nn}
 
 TODO
 
 \section{Memetic Algorithms}
+\label{sec:ma}
 
 TODO
 
 \section{Swarm Intelligence}
+\label{sec:swarm}
 
 TODO
 
 \section{Cellular Automata}
+\label{sec:ca}
 
 TODO
 
 \section{Membrane Computing}
+\label{sec:membrane}
 
 TODO
 
 \section{DNA Computing}
+\label{sec:dna}
 
 TODO
 
