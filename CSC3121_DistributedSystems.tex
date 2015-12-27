@@ -277,6 +277,81 @@ Treatment of orphaned execution:
 \section{Clocks and Order}
 \label{sec:clocks_and_order}
 
+\subsection{Happened Before Relation}
+
+The happens before relation ($A \happenbefore B$) defines the order of two events
+$A$ and $B$ such that event $A$ happens logically before event $B$.
+
+Assume that:
+
+\begin{itemize}
+  \item Processes communicate only via messages
+  \item All events on a single process form a chain of happened before relations
+  \item Sending or receiving a message is an event
+  \item $A \not\happenbefore A$
+  \item Gives partial order to events in a system
+\end{itemize}
+
+Defined by:
+
+\begin{enumerate}
+  \item[1] The relation $\happenbefore$ satisfies the following conditions:
+    \begin{enumerate}
+      \item[1] If $A$ and $B$ are events in the same process and $A$ executes
+               before $B$ then $A \happenbefore B$
+      \item[2] If $A$ is the sending of a message $m$ to another process and $B$
+               is the receiving of message $m$, then $A \happenbefore B$
+      \item[3] If $A \happenbefore B$ and $B \happenbefore C$ then $A
+               \happenbefore C$
+    \end{enumerate}
+
+  \item[2] Two distinct events $A$ and $B$ are concurrent ($A || B$) if $A
+           \not\happenbefore B$ and $B \not\happenbefore A$
+
+\end{enumerate}
+
+\subsection{Logical Clocks}
+
+\begin{itemize}
+  \item Used to implement partial order in a system.
+  \item Each event $e$ in a process $i$ has a timestamp $C_{i}(e)$
+\end{itemize}
+
+Conditions:
+
+\begin{enumerate}
+  \item[1] If $A$ and $B$ are events in process $i$ and $C_{i}(A) < C_{i}(B)$
+           then $A \happenbefore B$
+  \item[2] If $A$ is the sending of  message $m$ from process $i$ and $B$ is the
+           receiving of message $m$ by process $j$ then $C_{i}(A) < C_{j}(B)$
+\end{enumerate}
+
+Note that the inverse of condition 1 cannot hold.
+
+Implementation rules:
+
+\begin{enumerate}
+  \item[1] Each process $i$ increments its logical clock $C_{i}$ immediately
+           after an event (meets condition 1)
+  \item[2]
+    \begin{enumerate}
+      \item[1] Each message $m$ sent from a process $i$ in event $A$ has a
+               timestamp $T_{m} = C_{i}(A)$
+      \item[2] When receiving message $m$ at process $j$ in event $B$, read
+               $T_{m}$ and increment $C_{j}(B)$ such that $C_{j}(B) > T_{m}$
+    \end{enumerate}
+\end{enumerate}
+
+\subsection{Total Order}
+
+TODO
+
+\subsubsection{Resource Management Example}
+
+TODO
+
+\subsection{Physical Clocks}
+
 TODO
 
 \section{Transactions}
