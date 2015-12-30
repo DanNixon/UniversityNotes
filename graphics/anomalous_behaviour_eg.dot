@@ -1,0 +1,6 @@
+digraph AnomalousBehaviour
+{
+  A -> B [label="verbal"]
+  A -> C [label="computer"]
+  B -> C [label="computer"]
+}

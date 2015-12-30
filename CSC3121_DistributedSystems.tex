@@ -207,6 +207,7 @@ each failure case.
   \caption{RPC semantics in presence of failures}
   \label{fig:rpc_semantics_in_errors}
 \end{figure}
+\FloatBarrier
 
 \subsubsection{Semantics}
 
@@ -342,9 +343,58 @@ Implementation rules:
     \end{enumerate}
 \end{enumerate}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{out/logical_clock_eg.eps}
+  \caption{Logical Clock example}
+  \label{fig:logical_clock_eg}
+\end{figure}
+\FloatBarrier
+
 \subsection{Total Order}
 
-TODO
+Useful to put a total order on a set of events. Required a fixed tie braking
+rule for concurrent events, a common rule is using process numbers.
+
+Define relation $\orderbefore$ as $A \orderbefore B$ if and only if:
+
+\begin{itemize}
+  \item $C_{i}(A) < C_{j}(B)$
+  \item or, $C_{i}(A) = C_{j}(B)$ and $P_{i} < P_{j}$
+\end{itemize}
+
+Note that:
+
+\begin{itemize}
+  \item If $A \happenbefore B$ then $A \orderbefore B$
+  \item For a set of events there could be several valid $\orderbefore$
+        relations for a single $\happenbefore$ relation, depending on the rule
+        used to break ties.
+  \item Total order based on logical clocks cannot be guaranteed to respect
+        temporal ordering of events external to the system, this can lead to
+        anomalous behaviour.
+\end{itemize}
+
+Figure \ref{fig:anomalous_behaviour_eg} demonstrates a situation where anomalous
+behaviour can occur, in this case there is no way to guarantee that the logical
+clock timestamps of the computer messages will respect the actual order of
+events.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.25\textwidth]{out/anomalous_behaviour_eg.eps}
+  \caption{Anomalous Behaviour example}
+  \label{fig:anomalous_behaviour_eg}
+\end{figure}
+\FloatBarrier
+
+To avoid anomalous behaviour the strong clock condition must hold:
+\[
+  \forall \: a, b \in S: if a \clockcond b \: then \: C(a) < C(b)
+\]
+
+This condition cannot be met using logical clocks as they only tick for events
+inside the system $S$.
 
 \subsubsection{Resource Management Example}
 
@@ -352,7 +402,40 @@ TODO
 
 \subsection{Physical Clocks}
 
-TODO
+The correctness of a physical clock is given by the error coefficient $k$ (where
+$k \rightarrow 0$) and the synchronisation error $\epsilon$.
+
+Conditions:
+
+\begin{enumerate}
+  \item[1] For every clock $i$ and every time $t$: $1-k \leq
+           \frac{dC_{i}(t)}{dt} \leq 1 + k$
+  \item[2] For every clock $i$ and $j$ and very time $t$: $|C_{i}(t) - C_{j}(t)|
+           \leq \epsilon$
+\end{enumerate}
+
+$\mu$ is the minimum message transmission time in system $S$.
+
+Maximum value of $\epsilon$ must be such that the synchronisation error is lower
+than the minimum message transmission time after taking into account the clock
+error coefficient:
+
+\[
+  \epsilon < (1-k)\mu
+\]
+
+Clock adjustments are performed periodically (usually in software) to keep
+physical clocks in synch.
+
+Large "jumps" or rollbacks in time of a physical clock should be avoided.
+
+Once example is the "Central Spray" approach, in which a central "master" clock
+transmits its time to all other systems which update their clocks to the
+received time.
+
+The time transmitted to each node is corrected for the estimated transmission
+time between the master and the node such that the transmitted time will be
+correct by the time the message is received by the node.
 
 \section{Transactions}
 \label{sec:transactions}
