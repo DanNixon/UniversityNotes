@@ -519,7 +519,167 @@ Replace entire subtrees with a randomly generated subtree.
 \section{Neural Networks}
 \label{sec:nn}
 
-TODO
+\begin{itemize}
+  \item Connection of perceptrons
+  \item Perceptron
+    \begin{itemize}
+      \item Set of inputs from other perceptrons
+      \item Activation/transfer function
+      \item Output value
+    \end{itemize}
+  \item Connection
+    \begin{itemize}
+      \item Weighted
+    \end{itemize}
+  \item Used for data problems (classification, regression, control)
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{out/perceptron.eps}
+  \caption{Perceptron}
+  \label{fig:perceptron}
+\end{figure}
+\FloatBarrier
+
+\subsection{Multi Layer Perceptron}
+
+\begin{itemize}
+  \item Multi layer neural network where every perceptron in a layer is
+        connected to every neuron in the adjacent layers
+    \begin{itemize}
+      \item A single input layer with as many neurons as they are input
+            parameters
+      \item Several inner layers
+      \item A single output layer with as many neurons as they are outputs
+    \end{itemize}
+  \item Each layer represents a combination of features
+    \begin{itemize}
+      \item e.g. phonemes -> words -> sentences
+    \end{itemize}
+  \item A non linear multi layer perceptron with a single inner layer with
+        enough neurons can learn any continuous function (universal
+        approximation theory)
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{out/multi_layer_perceptron.eps}
+  \caption{Multi Layer Perceptron}
+  \label{fig:multi_layer_perceptron}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Learning Task}
+
+\begin{itemize}
+  \item Supervised learning given a set of inputs and the expected output
+  \item Optimise the error function \ref{eq:mlp_e} to obtain the smallest value
+        of $E$ by selecting new values of the weights $W$
+  \item Computationally difficult to do using traditional optimisation methods
+        (e.g. steepest-descent, Newton, etc.)
+  \item Classic method for MLP is using backpropagation algorithm
+    \begin{itemize}
+      \item Two pass approach
+      \item Calculate error of output layer
+      \item Calculate weight updates of next layer back in turn
+    \end{itemize}
+\end{itemize}
+
+\begin{align}
+  E &= \frac{1}{n} \sum^{n}_{t=1} E(x')                   \\
+    &= \frac{1}{n} \sum^{n}_{t=1} (F(x', W) - y_{t})^{2}
+  \label{eq:mlp_e}
+\end{align}
+
+\subsection{Self Organised Maps}
+
+\begin{itemize}
+  \item a.k.a Kohonen neural network
+  \item Unsupervised neural network
+  \item Maps data from a high dimensionality to a 2D lattice
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{out/som_training.eps}
+  \caption{Self Organising Map Training}
+  \label{fig:som_training}
+\end{figure}
+\FloatBarrier
+
+Training:
+
+\begin{enumerate}
+  \item[1] A new input vector is selected
+  \item[2] The node with a weight vector closest to the input vector (best
+           matching unit) is found
+  \item[3] The weight vector of the BMU and it's neighbours is modified to
+           bring them closer to the input vector
+\end{enumerate}
+
+\subsection{Deep Learning}
+
+\begin{itemize}
+  \item A neural network with lots ($\geq 10$) inner layers
+  \item More inner layers allows construction/recognition of higher level
+        features
+\end{itemize}
+
+Types:
+
+\begin{itemize}
+  \item Purely supervised (deep NN)
+    \begin{itemize}
+      \item Trained using classic methods (e.g. backpropagation)
+      \item Results in very slow training times due to network size
+    \end{itemize}
+
+  \item Semi-supervised (deep belief networks)
+    \begin{itemize}
+      \item Build inner layers incrementally in an unsupervised way
+      \item Add a final supervised layer
+    \end{itemize}
+
+  \item Generative methods (convolutional NN)
+    \begin{itemize}
+      \item Each layer applies a "filter" to the data to reduce its
+            dimensionality
+      \item Commonly used with image/signal processing
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Training semi-supervised networks}
+
+\begin{enumerate}
+  \item[1] Train first layer in an unsupervised manner
+  \item[2] Fix first layer parameters and train second layer using the output of
+           the first layer as unsupervised input to the second
+  \item[3] Repeat for all inner layers
+  \item[4] Use the outputs of the final layer as inputs to a supervised layer
+           and train using the raining data outputs
+  \item[5] Free all parameters and train entire network using a supervised
+           approach using existing weights as initial values
+\end{enumerate}
+
+\subsubsection{Restricted Boltzmann machine}
+
+\begin{itemize}
+  \item Unsupervised neural network that learns a probability distribution over
+        a set of inputs
+  \item The result is it will learn to recognise recurrent patterns
+\end{itemize}
+
+\subsubsection{Convolutional Neural Network}
+
+\begin{itemize}
+  \item Each layer combines "patches" from the previous layer
+  \item Compresses larger problems into smaller sets of features
+  \item Filters are usually manually defined (i.e. not learned)
+  \item Output of filtering is used to train a supervised model
+  \item Requires neighbourhood regularity in input data (i.e. areas of a certain
+        colour in an image)
+\end{itemize}
 
 \section{Memetic Algorithms}
 \label{sec:ma}
