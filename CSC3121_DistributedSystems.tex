@@ -398,16 +398,16 @@ inside the system $S$.
 
 \subsubsection{Resource Management Example}
 
-Example usage: managing sexclusive access to a single shared resource.
+Example usage: managing exclusive access to a single shared resource.
 
 \Para{Conditions}
 
 \begin{enumerate}
   \item[1] A process that has been granted a resource must release it before it
            can be granted to another process
-  \item[2] Seperate requests for the same resource must be granted in the order
+  \item[2] Separate requests for the same resource must be granted in the order
            they were made
-  \item[3] If every process is granted a resource eventaully releases it, then
+  \item[3] If every process is granted a resource eventually releases it, then
            every request is eventually granted
 \end{enumerate}
 
@@ -422,8 +422,8 @@ Example usage: managing sexclusive access to a single shared resource.
   \item Initial state:
     \begin{itemize}
       \item $P_{0}$ has the resource
-      \item All message queues contain the message: \texttt{$T_{0}$: $P_{0}$
-            requests resource} 
+      \item All message queues contain the message: \texttt{$T_{0}$:$P_{0}$
+            requests resource}
       \item Where $T_{0}$ is less than the clock value of any process
     \end{itemize}
 \end{itemize}
@@ -431,24 +431,24 @@ Example usage: managing sexclusive access to a single shared resource.
 \Para{Rules}
 
 \begin{enumerate}
-  \item[1] To request a resource $P_{i}$ sends the message \texttt{$T_{m}$:
-           $P_{i}$ requests resource} to every other process and keeps a copy
-           in its local message queue
+  \item[1] To request a resource $P_{i}$ sends the message
+           \texttt{$T_{m}$:$P_{i}$ requests resource} to every other process and
+           keeps a copy in its local message queue
   \item[2] When the request message is received by a process, assuming the
-           process has not aleady replied to another request a timestamped
-           acknowleddement is sent to $P_{i}$
-  \item[3] To release a resource the proces $P_{i}$ sends message
-           \texttt{$T_{m}$: $P_{i}$ releases resource} to all processes and
+           process has not already replied to another request a timestamped
+           acknowledgement is sent to $P_{i}$
+  \item[3] To release a resource the process $P_{i}$ sends message
+           \texttt{$T_{m}$:$P_{i}$ releases resource} to all processes and
            removes the request message from its local message queue
   \item[4] When a process receives a release message it removes any associated
            request messages from its local queue
   \item[5] A process $P_{i}$ is granted access to the resource when the
            following conditions are met:
     \begin{enumerate}
-      \item[1] There is a request message \texttt{$T_{m}$: $P_{i}$ requests
+      \item[1] There is a request message \texttt{$T_{m}$:$P_{i}$ requests
                resource} in its local queue that is ordered before every other
                request message in the queue
-      \item[2] $P_{i}$ has received an acknowledement message with a timestamp
+      \item[2] $P_{i}$ has received an acknowledgement message with a timestamp
                greater than $T_{m}$ from every other process in the system
     \end{enumerate}
 \end{enumerate}
