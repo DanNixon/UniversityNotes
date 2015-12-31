@@ -1,0 +1,82 @@
+\documentclass[a4paper]{article}
+\def\DOCTITLE{CSC3221 Programming For Games}
+\input{sections/preamble.tex}
+
+\begin{document}
+
+\tableofcontents
+
+\section{Data Types and Variables}
+
+\subsection{Types}
+
+A selection of data types that always seem to be on the exam:
+
+\begin{description}
+  \item[\texttt{int a}] \hfill \\
+    An integer.
+  \item[\texttt{int *a}] \hfill \\
+    A pointer to an integer.
+  \item[\texttt{char a[3]}] \hfill \\
+    An array of characters of length 3.
+  \item[\texttt{int *a[3]}] \hfill \\
+    An array of pointers to integers of length 3.
+  \item[\texttt{int (*a)[3]}] \hfill \\
+    A pointer to an array of integers of length 3.
+  \item[\texttt{int char *(*a)[]}] \hfill \\
+    A pointer to an array of pointers to characters.
+\end{description}
+
+\subsection{Declaration vs Definition}
+
+\begin{description}
+  \item[Declaration] \hfill \\
+    \begin{itemize}
+      \item Provides basic attributes: type and name
+      \item Does not allocate storage (for variables)
+      \item e.g. \texttt{extern int a;}
+    \end{itemize}
+
+  \item[Definition] \hfill \\
+    \begin{itemize}
+      \item Defines all attributes of a symbol
+      \item e.g. \texttt{int a;}
+    \end{itemize}
+\end{description}
+
+A symbol being declared but never defined results in a linker error.
+
+\section{Polymorphism}
+
+\begin{listing}[h!]
+  \inputminted[linenos,frame=lines,firstline=5,lastline=31]{cpp}{listings/polymorphism_1.cpp}
+  \caption{Polymorphism example classes}
+  \label{listing:polymorphism_1}
+\end{listing}
+\FloatBarrier
+
+\begin{listing}[h!]
+  \inputminted[linenos,frame=lines,firstline=33]{cpp}{listings/polymorphism_1.cpp}
+  \caption{Polymorphism example \texttt{main()}}
+  \label{listing:polymorphism_1_main}
+\end{listing}
+\FloatBarrier
+
+\begin{listing}[h!]
+  \inputminted[linenos,frame=lines]{text}{listings/polymorphism_1.txt}
+  \caption{Polymorphism example output}
+  \label{listing:polymorphism_1_out}
+\end{listing}
+\FloatBarrier
+
+Notes:
+
+\begin{itemize}
+  \item The closest implementation of a \texttt{virtual} function to the type of
+        the instance will be called
+  \item The implementation of a function not declared \texttt{virtual} will be
+        that of the type (not the type if the instance)
+  \item For this reason destructors should always be \texttt{virtual}
+\end{itemize}
+
+\end{document}
