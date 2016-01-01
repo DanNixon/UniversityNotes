@@ -796,6 +796,69 @@ population.
 \section{Swarm Intelligence}
 \label{sec:swarm}
 
+\begin{itemize}
+  \item System of "items" collaborating to solve a task
+  \item No external guidance/arbitration/synchronisation
+\end{itemize}
+
+\subsection{Ant Colony Optimisation}
+
+\begin{itemize}
+  \item Key concept is stigmergy, the indirect communication between individuals
+        in the system through the environment
+  \item In ants this is done though a pheromone trail deposited by ants as they
+        explore a path
+  \item Ants will always prefer to follow the path with the strongest pheromone
+        trail
+  \item Can be applied to any problem assuming it can be represented as a graph
+    \begin{itemize}
+      \item e.g. Ant-Miner: An unsupervised machine learning framework that
+            constructs rules that identify patters in a set of input data.
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Example: Travelling Salesperson Problem}
+
+Close problem to actual ant colony movement.
+
+\begin{itemize}
+  \item Graph $G(N, E)$: $N$ are cities and $E$ are routed between cities
+  \item $d_{i,j}$ is the fixed cost of travelling between cities $i$ and $j$
+  \item Edge cost is given by a combination of:
+    \begin{enumerate}
+      \item[1] Static cost: $\eta(r, s) = \frac{1}{d_{r,s}}$
+      \item[2] Dynamic trace: $\tau(r, s)$ deposited by ants (initially zero)
+    \end{enumerate}
+  \item All ants must visit all nodes in an iteration (a tour)
+  \item At the end of an iteration all edges that are on the best tour receive
+        additional pheromone
+  \item At each iteration the pheromone count for all nodes may be reduced to
+        reduce the chances of unpopular edges being selected in a tour
+  \item Stopping criteria is either stagnation or a maximum number of iterations
+    being performed.
+\end{itemize}
+
+\Para{Pseudocode}
+
+\begin{listing}[h]
+  \begin{minted}{python}
+    graph = init_graph(d)
+    place_ants()
+    while not stopping_criteria:
+      while not all_cities_visited:
+        for a in ants:
+          move_to_next_city(a)
+      place_ants()
+      graph = update_graph(tau)
+    return graph
+  \end{minted}
+  \caption{Ant colony optimisation for TSP pseudocode (single iteration)}
+  \label{listing:msco_for_tsp_pseudocode}
+\end{listing}
+\FloatBarrier
+
+\subsection{Particle Swarm Optimisation}
+
 TODO
 
 \section{Cellular Automata}
