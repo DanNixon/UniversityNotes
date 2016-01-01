@@ -18,7 +18,7 @@ class Youkai : public ITouhou {
 class IFlyable {
  public:
   IFlyable() { cout << "IFlyable constructed" << endl; }
-  ~IFlyable() { cout << "IFlyable destructed" << endl; }
+  virtual ~IFlyable() { cout << "IFlyable destructed" << endl; }
   virtual void fly() { cout << "IFlyable::fly()" << endl; }
 };
 
@@ -49,6 +49,7 @@ int main() {
 
   IFlyable *y4 = new Yuuka();
   y4->fly();
+  delete y4;
 
   return 0;
 }

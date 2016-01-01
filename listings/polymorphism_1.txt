@@ -31,3 +31,7 @@ Youkai constructed
 IFlyable constructed
 Yuuka constructed
 Yuuka::fly()
+Yuuka destructed
+IFlyable destructed
+Youkai destructed
+ITouhou destructed
