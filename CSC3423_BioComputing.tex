@@ -684,7 +684,114 @@ Types:
 \section{Memetic Algorithms}
 \label{sec:ma}
 
-TODO
+\begin{itemize}
+  \item Derived form the concept of traits spreading from person to person
+  \item Combines conventional genetic algorithm (global search) with local
+        search
+  \item Global search allows exploration of entire problem space
+  \item Local search allows exploration of neighbourhood of each individual to
+        attempt to improve its fitness
+\end{itemize}
+
+\Para{Pseudocode}
+
+\begin{listing}[h]
+  \begin{minted}{python}
+    population = init_random_population()
+    iteration = 0
+    while iteration < num_interations:
+      evaluate(population)
+      for i in range(len(population)):
+        population[i] = select_local_best(population[i])
+      population = selection(population)
+      population = crossover(population)
+      population = mutation(population)
+      iteration++
+    best = get_best_individual(population)
+    return best
+  \end{minted}
+  \caption{Memetic algorithm pseudocode}
+  \label{listing:ma_pseudocode}
+\end{listing}
+
+\subsection{Motivation}
+
+\begin{itemize}
+  \item When decomposing complex problems, subproblems may be easier to solve
+        using either GA or local search
+  \item Fast to reach optimal solution using domain specific knowledge in local
+        search operator
+  \item Domain knowledge in local search operator can "repair" bad individuals
+        found by a GA
+\end{itemize}
+
+\subsection{Design considerations}
+
+\Para{Baldwinism vs Lamarckism}
+
+Two alternative theories for transfer of traits between individuals of a
+population.
+
+\begin{description}
+  \item[Baldwinism] \hfill \\
+    \begin{itemize}
+      \item Traits accured by an individual can be passed to its offspring
+      \item e.g. replace an individual with its fitter neighbour
+    \end{itemize}
+    
+  \item[Lamarckism] \hfill \\
+    \begin{itemize}
+      \item Traits accuired by an individual cannot be passed to its offspring
+      \item e.g. individual inherits fitness but not genotype
+    \end{itemize}
+    
+\end{description}
+
+\Para{When to apply local search?}
+
+\begin{itemize}
+  \item After selecton
+  \item After corssover
+  \item After mutation
+\end{itemize}
+
+\Para{In which stage of the genetic algorithm lifecycle?}
+
+\begin{itemize}
+  \item Uniformly throughout all iterations
+  \item More in earlier or later iteraions
+\end{itemize}
+
+\Para{Scope of local search?}
+
+\begin{itemize}
+  \item Entire propulation
+  \item Probabilty of local search (fitness proportionate)
+  \item Only indidivuals with specific range of fitness values
+\end{itemize}
+
+\Para{Choice of local search operator}
+
+\begin{itemize}
+  \item Use multiple, each of which having a fixed probability of being applied
+  \item Have a fixed mapping of individuals to operator (domain specific)
+  \item Evolve the operator choice using a GA
+\end{itemize}
+
+\Para{Other design issues}
+
+\begin{itemize}
+  \item Size of neighbourhood for local search
+  \item Size of variations to make during local search operation
+\end{itemize}
+
+\Para{Diversity control}
+
+\begin{itemize}
+  \item Memetic algorithms naturally favour exploitation over exploration
+  \item To ensure good evolution additional exploration must be done
+  \item One option is to increase local search neigbourhood
+\end{itemize}
 
 \section{Swarm Intelligence}
 \label{sec:swarm}
