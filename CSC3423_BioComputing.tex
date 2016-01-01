@@ -852,14 +852,96 @@ Close problem to actual ant colony movement.
       graph = update_graph(tau)
     return graph
   \end{minted}
-  \caption{Ant colony optimisation for TSP pseudocode (single iteration)}
-  \label{listing:msco_for_tsp_pseudocode}
+  \caption{Ant colony optimisation for TSP pseudocode}
+  \label{listing:aco_for_tsp_pseudocode}
 \end{listing}
 \FloatBarrier
 
 \subsection{Particle Swarm Optimisation}
 
-TODO
+\begin{itemize}
+  \item General purpose optimisation for continuous variables
+  \item Each particle searches for the optimum
+  \item Each particle is moving with a velocity
+  \item Each particle knows its last position and the position of its best
+        result so far
+  \item A particle has a neighbourhood associated with it
+  \item A particle knows the position of the most optimal particle in its
+        neighbourhood
+\end{itemize}
+
+\subsubsection{Neighbourhood types}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{graphics/pso_neighbourhoods_1.eps}
+  \caption{Geographical and social neighbourhoods}
+  \label{fig:pso_neighbourhoods_1}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{graphics/pso_neighbourhoods_2.eps}
+  \caption{Global neighbourhood}
+  \label{fig:pso_neighbourhoods_2}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{graphics/pso_neighbourhoods_3.eps}
+  \caption{Circular neighbourhood}
+  \label{fig:pso_neighbourhoods_3}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Algorithm}
+
+\begin{itemize}
+  \item In each time step a particles velocity and position are updated as per
+        equations \ref{eq:particle_vel_update} and \ref{eq:particle_pos_update}
+  \item Particle velocity is limited to a fixed $max\_velocity$
+\end{itemize}
+
+\begin{equation}
+  \label{eq:particle_vel_update}
+  \begin{split}
+    velocity = \: &a * velocity \: + \\
+                  &b * (neighbourhood\_best - position) + \\
+                  &c * (local\_best - position) \\
+    velocity = \: &max(velcoity, max\_velocity)
+  \end{split}
+\end{equation}
+
+\begin{equation}
+  \label{eq:particle_pos_update}
+  position = position + velocity
+\end{equation}
+
+\Para{Pseudocode}
+
+\begin{listing}[h]
+  \begin{minted}{python}
+    particles = random_initial_particles()
+
+    while not stopping_criteria:
+      for p in particles:
+        fitness = evaluate(p)
+
+        if fitness > p.best:
+          p.best = fitness
+        if fitness > global_best:
+          global_best = fitness
+
+      for p in particles:
+        update_velocity(p)
+        update_position(p)
+  \end{minted}
+  \caption{Particle swarm optimisation pseudocode}
+  \label{listing:pso_pseudocode}
+\end{listing}
+\FloatBarrier
 
 \section{Cellular Automata}
 \label{sec:ca}
