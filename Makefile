@@ -23,7 +23,13 @@ DXF_GRAPHICS_EPS=$(subst $(GRAPHICS_DIR),$(OUTPUT_DIR),$(DXF_GRAPHICS:.dxf=.eps)
 DOT_GRAPHICS=$(wildcard $(GRAPHICS_DIR)/*.dot)
 DOT_GRAPHICS_EPS=$(subst $(GRAPHICS_DIR),$(OUTPUT_DIR),$(DOT_GRAPHICS:.dot=.eps))
 
-all: out_dir mp_graphics svg_graphics dxf_graphics dot_graphics $(PDFS)
+LISTINGS_DIR=listings
+CPP=g++
+CPP_EXAMPLE_SOURCES=$(wildcard $(LISTINGS_DIR)/*.cpp)
+CPP_EXAMPLE_EXECUTABLES=$(subst $(LISTINGS_DIR),$(OUTPUT_DIR),$(CPP_EXAMPLE_SOURCES:.cpp=.o))
+CPP_EXAMPLE_OUTPUTS=$(subst $(LISTINGS_DIR),$(OUTPUT_DIR),$(CPP_EXAMPLE_SOURCES:.cpp=.txt))
+
+all: out_dir mp_graphics svg_graphics dxf_graphics dot_graphics cpp_examples $(PDFS)
 
 out_dir:
 	mkdir -p $(OUTPUT_DIR)
@@ -53,6 +59,14 @@ $(OUTPUT_DIR)/%.eps: $(GRAPHICS_DIR)/%.dot
 
 $(OUTPUT_DIR)/%.eps: $(GRAPHICS_DIR)/%.*
 	$(INKSCAPE) --file $< --export-eps=$@
+
+cpp_examples: out_dir $(CPP_EXAMPLE_EXECUTABLES) $(CPP_EXAMPLE_OUTPUTS)
+
+$(OUTPUT_DIR)/%.o: $(LISTINGS_DIR)/%.cpp
+	$(CPP) $< -o $@
+
+$(OUTPUT_DIR)/%.txt: $(OUTPUT_DIR)/%.o
+	./$< > $@
 
 watch: all
 	when-changed *.tex *.bib -c make
