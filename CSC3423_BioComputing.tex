@@ -956,6 +956,153 @@ TODO
 \section{DNA Computing}
 \label{sec:dna}
 
-TODO
+Performing computations on biological devices, specifically DNA.
+
+\subsection{Structure of DNA}
+
+\begin{itemize}
+  \item Asymmetric double helix
+  \item Complimentary strands A-T and C-G
+  \item $5^{\prime}$ denotes the front of a motif (upstream)
+  \item $3^{\prime}$ denotes the end of a motif (downstream)
+\end{itemize}
+
+\subsection{Features useful for computation}
+
+\begin{itemize}
+  \item Massive parallelism
+    \begin{itemize}
+      \item Small amount of DNA contains many strands
+      \item When strings are randomised then a small volume of DNA will contain
+            a large number of unique strings
+    \end{itemize}
+
+  \item Complementarity
+    \begin{itemize}
+      \item Know that if a string binds to a larger string then the larger
+            string must contain the complementarity string to the smaller string
+      \item e.g. if $5^{\prime}$ ACGT $3^{\prime}$ binds to a longer string
+            $S$, you know that $S$ contains the string $3^{\prime}$ TGCA
+            $5^{\prime}$
+    \end{itemize}
+\end{itemize}
+
+\subsection{Experimental Techniques}
+
+\subsubsection{Polymerase Chain Reaction}
+
+Used to replicate DNA, creating many copies of the base pairs.
+
+\begin{enumerate}
+  \item[1] Separate two base strands at low heat
+  \item[2] Add base pairs, primer sequences and DNA polymerise
+    \begin{itemize}
+      \item Creates double stranded DNA from single strand
+      \item Primer sequence creates seed from which the double stranded DNA
+            grows
+    \end{itemize}
+  \item[3] Repeat, DNA grows exponentially
+\end{enumerate}
+
+\subsubsection{Electrophoresis}
+
+\begin{itemize}
+  \item Phosphate backbone of DNA is negatively charged
+  \item Migration of DNA to agaraose gel shows visible pores on the gel surface
+  \item An electric field is placed over the DNA to force migration
+  \item Size of DNA fragments is determined by pore size
+\end{itemize}
+
+\subsection{Solving the Hamiltonian Path Problem}
+
+Given a directed graph $G=(V,E)$, $V_{start}$ and $V_{end}$, is there a directed
+path starting at $V_{start}$ and finishing at $V_{end}$ that visits all vertices
+exactly once.
+
+\subsubsection{Non-deterministic approach}
+
+\begin{enumerate}
+  \item[1] Generate many random paths through $G$
+  \item[2] Keep only paths that start at $V_{start}$ and end at $V_{end}$
+  \item[3] Keep only paths with length $n = |V|$
+  \item[4] Keep only paths that visit each vertex once
+  \item[5] If any paths remain then result is true, if no paths remain result is
+           false
+\end{enumerate}
+
+Exploits:
+
+\begin{description}
+  \item[Massive parallelism] to take care of non-deterministic nature of
+                             algorithm
+  \item[Complementarity] is used to select and filter solutions
+\end{description}
+
+\subsubsection{Stage 1: Initialisation}
+
+\Para{Vertex and edge encoding}
+
+\begin{itemize}
+  \item A vertex is encoded by a 20-mer length string
+  \item An edge is encoded by the back 10-mer and the front 10-mer from the two
+        connected vertices
+  \item Edges for $V_{0}$ ($V_{start}$) and $V_{n}$ ($V_{end}$) contain the full
+        string for the start and end vertices (i.e. so are 30-mer or 40-mer)
+\end{itemize}
+
+\Para{Building random paths}
+
+50 picomol of the complimentary sequence ($v^{\prime}$) (except $V_{0}$ and
+$V_{n}$) is mixed with 50 picomol of each edge encoding
+
+\subsubsection{Stage 2: PCR amplification}
+
+\begin{itemize}
+  \item Implements step 2
+  \item Amplify using primers: $V_{0}$ and $V^{\prime}_{n}$
+  \item PCR will replicate everything with $V_{0}$ and $V_{n}$ at the ends
+\end{itemize}
+
+\subsubsection{Stage 3: Selecting paths of length $|V|$}
+
+\begin{itemize}
+  \item Double stranded DNA that represents paths going through exactly $n$
+        vertices are selected
+  \item Based on size measured through electrophoresis
+\end{itemize}
+
+\subsubsection{Stage 4: Selecting paths that visit all vertices}
+
+\begin{itemize}
+  \item Double strands from stage 3 are denatured
+  \item Put into a mix with $V^{\prime}_{1}$ which are magnetically attached to
+        beads
+  \item Strands containing $V_{1}$ anneal to $V^{\prime}_{1}$
+  \item Strands not containing $V_{1}$ are washed away
+  \item Repeat for all vertices (except $V_{0}$ and $V_{n}$)
+\end{itemize}
+
+\subsubsection{Stage 5: Result}
+
+\begin{itemize}
+  \item Remaining strands after stage 4 undergo PCR and electrophoresis
+  \item If any strands remain in the gel then $G$ has a Hamiltonian path
+\end{itemize}
+
+\subsection{DNA origami}
+
+\begin{itemize}
+  \item Forcing DNA to form complex shapes and structures by giving it a certain
+        sequence
+  \item Structures formed of:
+    \begin{description}
+      \item[Scaffold] \hfill \\
+        A long single stranded DNA string
+      \item[Staples] \hfill \\
+        A set of short unique strings that bind to the scaffold in specific
+        places
+    \end{description}
+  \item Designed using the De Brujin sequence
+\end{itemize}
 
 \end{document}
