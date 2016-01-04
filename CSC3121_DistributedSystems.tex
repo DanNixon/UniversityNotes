@@ -495,7 +495,7 @@ correct by the time the message is received by the node.
 
 For controlling operations on persistent storage resources.
 
-"ACID" properties:
+\Para{"ACID" properties}
 
 \begin{description}
   \item[Atomicity] \hfill \\
@@ -512,6 +512,137 @@ For controlling operations on persistent storage resources.
     Results produced by a successful execution are not damaged by a subsequent
     failed execution.
 \end{description}
+
+\Para{Transaction primitives}
+
+\begin{description}
+  \item[Begin] \hfill \\
+    Command indicating start of a transaction
+
+  \item[End] \hfill \\
+    Command indicating end of a transaction in which changes should be preserved
+    \begin{description}
+      \item[Normal termination] \hfill \\
+        Normal commit happens
+
+        All changes are made to non-volatile storage
+
+      \item[Aborted termination] \hfill \\
+        Transaction terminates without producing any results.
+
+    \end{description}
+
+  \item[Abort] \hfill \\
+    Explicitly abort the transaction and discard changes
+\end{description}
+
+Transaction operations are often built into stubs to hide implementation details
+from the calling code.
+
+\subsection{Approaches used to support transactions}
+
+\begin{enumerate}
+  \item[1] Concurrency control
+    \begin{enumerate}
+      \item[a] Operations (such as read and write locking) are used to access
+               shared objects \textit{(consistency)}
+      \item[b] While a transaction is running it holds locks it acquires to
+               prevent other transactions accessing or modifying the objects
+               \textit{(independence)}
+    \end{enumerate}
+
+  \item[2] End of transaction (commit)
+    \begin{enumerate}
+      \item[a] Locks are released during commit protocol, therefore changes only
+               become visible after the transaction has completed
+               \textit{(independence)}
+      \item[b] All updates are forced to disk so that node crashes do not
+               destroy the results of a transaction \textit{(durability)}
+    \end{enumerate}
+
+  \item[3] A client or server crash during a transaction leads to an abort
+           \textit{(atomicity)}
+\end{enumerate}
+
+TODO
+
+\subsection{Two Phase Locking}
+
+Assume that:
+
+\begin{itemize}
+  \item Deadlocks are already dealt with by some means
+  \item Client $C$ knows at the start:
+    \begin{itemize}
+      \item The set of all objects accessed during the transaction
+      \item The number of times each object is accessed
+    \end{itemize}
+\end{itemize}
+
+Release an acquired lock only if:
+
+\begin{itemize}
+  \item No new locks are going to be acquired
+  \item The lock to be released will never need to be re-acquired
+\end{itemize}
+
+\subsubsection{Rules}
+
+\begin{itemize}
+  \item A transaction must obtain a lock on an object before using it
+  \item In the growing phase locks are acquired as they are needed and not
+        released
+  \item In the shrinking phase acquired locks are released and no new locks
+        acquired
+  \item At some point the transaction will have acquired all the locks it needs
+        to acquire, this is called the "lock point"
+\end{itemize}
+
+Theorem is that two phase locking only permits serializable schedules.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{out/two_phase_locking.eps}
+  \caption{Two Phase Locking}
+  \label{fig:two_phase_locking}
+\end{figure}
+\FloatBarrier
+
+When releasing locks sequentially (as per figure \ref{fig:two_phase_locking}) it
+is possible that a transaction $T_{1}$ may release the lock on an object $o_{1}$
+which is then locked by transaction $T_{2}$.
+
+If $T_{1}$ aborts before completion then $T_{2}$ will have read dirty data from
+$o_{1}$ and will also need to abort (cascade abort).
+
+This can be avoided using strict two phase locking where all the locks are
+released simultaneously at the end of the transaction.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{out/strict_two_phase_locking.eps}
+  \caption{Strict Two Phase Locking}
+  \label{fig:strict_two_phase_locking}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Deadlock Prevention}
+
+TODO
+
+\Para{Wait-Die}
+
+TODO
+
+\Para{Wound-Wait}
+
+TODO
+
+\subsection{Commit Protocol}
+
+TODO
+
+\subsubsection{Two Phase Commit}
 
 TODO
 
