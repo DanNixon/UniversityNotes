@@ -946,6 +946,46 @@ Close problem to actual ant colony movement.
 \section{Cellular Automata}
 \label{sec:ca}
 
+\begin{itemize}
+  \item Biological inspiration is cells and cell reproduction
+  \item Idea of a self replicating system
+  \item Discrete systems that model complex behaviour using simple logical rules
+  \item Collection of cells
+    \begin{itemize}
+      \item Oriented in an $n$-dimensional grid
+      \item Have a state (taken from a finite set)
+      \item Have a neighbourhood
+      \item State of cell in next time step is computed using rules
+      \item Rules define states based on current state of cells in
+            neighbourhood
+    \end{itemize}
+  \item A cellular automation is evaluated generation by generation until some
+        stopping criteria are reached or it is stopped manually
+\end{itemize}
+
+\subsection{1D eight rule CA}
+
+\begin{itemize}
+  \item 1 dimensional gird
+  \item Two states: 1 or 0
+  \item 8 rules
+  \item 256 possible rule sets
+\end{itemize}
+
+Classification of behaviour for different rule sets:
+
+\begin{description}
+  \item[Class 1: Uniformity] \hfill \\
+    Rapidly converge to a uniform state
+  \item[Class 2: Repetition] \hfill \\
+    Rapidly converge to a repetitive stable state
+  \item[Class 3: Random] \hfill \\
+    Appear to remain in a random state
+  \item[Class 4: Complexity] \hfill \\
+    Form areas of repetitive or stable sates while also forming structures which
+    interact with each other in complex ways
+\end{description}
+
 TODO
 
 \section{Membrane Computing}
