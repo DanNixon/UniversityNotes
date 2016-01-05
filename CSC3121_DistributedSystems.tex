@@ -1023,7 +1023,7 @@ tentative writes.
 \begin{listing}[h]
   \begin{minted}{text}
     if Tr > WTS(X)
-      Tmx = latest X such that Tmx < Tr (TODO)
+      Tmx = latest X such that Tmx < Tr
       if Tmx is committed
         read MRC(X)
       else
@@ -1045,7 +1045,7 @@ Execute two phase commit:
 \begin{itemize}
   \item Transactions are not required to commit in timestamp order
   \item A server replies with \textit{no} for transaction $T_{c} $in phase 1 if
-        $T_{c} > WTS(o)$ of an object $o$ that $T_{c}$ wants to persist (TODO)
+        $T_{c} < WTS(o)$ of an object $o$ that $T_{c}$ wants to persist
 \end{itemize}
 
 \subsection{Comparison of commit protocols}
