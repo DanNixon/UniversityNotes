@@ -850,6 +850,209 @@ properties.
 
 \subsection{Lock Free Transactions}
 
-TODO
+\begin{itemize}
+  \item Alternative to Two Phase Locking
+  \item Still use Two Phase Commit to ensure atomicity and durability
+\end{itemize}
+
+\subsubsection{Sequential Ordering}
+
+Good performance when two transactions accessing the same object is unlikely.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{out/sequential_ordering.eps}
+  \caption{Sequential Ordering Phases}
+  \label{fig:sequential_ordering}
+\end{figure}
+\FloatBarrier
+
+Each object has a write timestamp which records the last time the value of an
+object was modified.
+
+Three phases:
+
+\begin{enumerate}
+  \item[1] Working Phase
+    \begin{itemize}
+      \item On read: return most recently committed (MRC) value from server
+      \item On write: client retains all writes
+    \end{itemize}
+
+  \item[2] Validation Phase
+    \begin{itemize}
+      \item Conflict resolution
+      \item Result of conflict resolution defines if transaction will commit or
+            abort
+    \end{itemize}
+
+  \item[3] Update Phase
+    \begin{itemize}
+      \item Only performed if validation phase was successful
+      \item Perform two phase commit if any writes took place
+    \end{itemize}
+
+\end{enumerate}
+
+\Para{Working Phase}
+
+For every read operation:
+
+\begin{enumerate}
+  \item[1] Read the MRC value $v$ of object $o$ from server $s$
+  \item[2] Store $<o,v,s>$ in read set $RS$
+\end{enumerate}
+
+For every write operation:
+
+\begin{enumerate}
+  \item[1] Store $<o,v,s>$ in write set $WS$
+    \begin{itemize}
+      \item Where $v$ is the new value to be written to object $o$ on server $s$
+    \end{itemize}
+\end{enumerate}
+
+The state of the server is not changed during the working phase.
+
+\Para{Validation Phase}
+
+\begin{itemize}
+  \item After transaction ends it receives a sequence number $n$ (becomes $T_{n}$).
+  \item $T_{n}$ cannot enter the validation phase until $T_{n-1}$ has completed
+        both validation and update phases
+\end{itemize}
+
+When $T_{n}$ enters the validation phase iterate through every value in $RS$ and
+check that the value on the server matches the value read by $T_{n}$.
+
+This check can also be performed by reading the write timestamp of each object
+as it is read (in working phase) and comparing this with the write timestamp
+read in the validation phase. For validation to succeed the timestamps must
+match for all objects.
+
+If all values match (i.e. no values has been changed on a server during the
+transaction) then validation is successful, otherwise validations has failed and
+the transaction must be aborted (a dirty read has taken place).
+
+\Para{Update Phase}
+
+\begin{itemize}
+  \item Skip if $WS$ is empty, transaction is committed/successful
+  \item Execute two phase commit with every server in $WS$
+  \item \textit{get ready} message will include $WS$
+  \item Write timestamp of each modified object is set to $n$
+\end{itemize}
+
+\subsubsection{Timestamp Ordering}
+
+\begin{itemize}
+  \item Each transaction has a timestamp $T_{n}.ts$, originating from a
+        synchronised physical clock
+  \item Timestamps impose total order
+  \item Cannot know how many transactions precede it based on timestamp (as
+        could be done using sequence numbers in sequential ordering)
+\end{itemize}
+
+\Para{Read/Write Issues}
+
+\begin{description}
+  \item[Dirty Read] \hfill \\
+    A transaction ($T_{r}$) reads a value that is stored on the server but yet
+    to be committed (modified by $T_{w}$), $T_{w}$ later aborts.
+
+    Eliminated by:
+
+    \begin{itemize}
+      \item $T_{r} > T_{w}$: force $T_{r}$ to wait until $T_{w}$ commits
+      \item $T_{r} < T_{w}$: consider allowing $T_{r}$ to precede
+    \end{itemize}
+
+  \item[Stale Read] \hfill \\
+    Between a transaction $T_{r}$ reading a value and committing its results
+    another transaction $T_{w}$ modified the value and commits.
+
+    Eliminated by:
+
+    \begin{itemize}
+      \item Stopping $T_{w}$ writing until after $T_{r}$ has read
+    \end{itemize}
+
+\end{description}
+
+\Para{Server side data}
+
+For each object:
+
+\begin{description}
+  \item[Read timestamp $RTS_{max}(X)$] \hfill \\
+    Maximum timestamp of transactions that were permitted to read the value of
+    $X$
+  \item[Write timestamp $WTS(X)$] \hfill \\
+    Timestamp of last committed write to $X$
+\end{description}
+
+Server also maintains tentative versions of objects that have been updated prior
+to them being committed.
+
+\Para{Write rules}
+
+A write attempt is rejected if it is deemed too late with respect to other
+transactions.
+
+$T_{w}$ is allowed to tentatively write to $X$ if and only if:
+
+\begin{enumerate}
+  \item[1]
+    $T_{w} > WTS(X)$
+
+    A later transaction has not already committed a new value of $X$
+
+  \item[2]
+    $T_{w} \geq RTS_{max}(X)$
+
+    A later transaction has not read the value of $X$
+\end{enumerate}
+
+\Para{Read rules}
+
+Reject a read attempt if it is too late with respect to $WTS(X)$.
+
+Force the transaction to wait if it is too early with respect to pending
+tentative writes.
+
+\begin{listing}[h]
+  \begin{minted}{text}
+    if Tr > WTS(X)
+      Tmx = latest X such that Tmx < Tr (TODO)
+      if Tmx is committed
+        read MRC(X)
+      else
+        wait until Tmx commits or aborts
+        read MRC(X)
+    else
+      abort
+  \end{minted}
+  \caption{Read rule pseudocode}
+  \label{listing:read_rule_pseudocode}
+\end{listing}
+
+"all versions" includes the most recently committed and every tentative version.
+
+\Para{End Transaction}
+
+Execute two phase commit:
+
+\begin{itemize}
+  \item Transactions are not required to commit in timestamp order
+  \item A server replies with \textit{no} for transaction $T_{c} $in phase 1 if
+        $T_{c} > WTS(o)$ of an object $o$ that $T_{c}$ wants to persist (TODO)
+\end{itemize}
+
+\subsection{Comparison of commit protocols}
+
+\begin{itemize}
+  \item Two phase commit and timestamp ordering are not equivalent
+  \item Each operate on different subsets of all serializable schedules
+\end{itemize}
 
 \end{document}
