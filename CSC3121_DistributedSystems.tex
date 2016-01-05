@@ -626,23 +626,174 @@ released simultaneously at the end of the transaction.
 \end{figure}
 \FloatBarrier
 
+Strict two phase locking ensured the consistency (C) and independence (I)
+ACID properties.
+
 \subsubsection{Deadlock Prevention}
 
-TODO
+Prevent wait for cycles caused by two transactions attempting to acquire locks
+on objects held by the other transaction.
 
-\Para{Wait-Die}
+\Para{Simple approach}
 
-TODO
+\begin{itemize}
+  \item Transactions never wait
+  \item If lock on object is held by another transaction $T_{2}$ then $T_{1}$
+        aborts
+  \item Simple and easy to implement
+  \item Effective if conflicts are rare
+\end{itemize}
 
-\Para{Wound-Wait}
+\Para{Timestamp Based}
 
-TODO
+Another approach is to permit waiting only if there is no danger of deadlock.
+
+To do this transactions are assigned timestamps such that they are totally
+ordered, these timestamps are then used in conflict resolution.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=0.8\textwidth]{out/deadlock_prevention_old-young.eps}
+    \caption{Old - Young}
+    \label{fig:deadlock_prevention_old-young}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.4\textwidth}
+    \includegraphics[width=0.8\textwidth]{out/deadlock_prevention_young-old.eps}
+    \caption{Young - Old}
+    \label{fig:deadlock_prevention_young-old}
+  \end{subfigure}
+  \caption{Deadlock prevention scenarios}
+  \label{fig:deadlock_prevention}
+\end{figure}
+\FloatBarrier
+
+\begin{description}
+  \item[Wait-Die] \hfill \\
+    \begin{itemize}
+      \item Rule: If $T_{1} < T_{2}$ then $T_{1}$ waits, otherwise $T_{1}$
+            aborts
+      \item Old transactions (figure \ref{fig:deadlock_prevention_old-young})
+            wait, newer transactions (figure
+            \ref{fig:deadlock_prevention_young-old}) die
+    \end{itemize}
+
+  \item[Wound-Wait] \hfill \\
+    \begin{itemize}
+      \item Rule: If $T_{1} < T_{2}$ then $T_{1}$ forces $T_{2}$ to abort,
+            otherwise $T_{1}$ waits
+      \item Old transactions (figure \ref{fig:deadlock_prevention_old-young})
+            abort/wound younger transactions, newer transactions (figure
+            \ref{fig:deadlock_prevention_young-old}) wait
+    \end{itemize}
+
+\end{description}
 
 \subsection{Commit Protocol}
 
-TODO
+The commit protocol ensures the atomicity (A) and durability (D) ACID
+properties.
+
+\begin{itemize}
+  \item Changes to objects are made on copies of the object
+  \item If transaction is aborted these copies are discarded
+  \item If transaction is committed then changes are saved back to non-volatile
+        storage
+  \item This required a multi-pass commit protocol as changes must be made on
+        either every node or no nodes
+\end{itemize}
 
 \subsubsection{Two Phase Commit}
+
+\begin{itemize}
+  \item Termination of the transaction is carried out by the client
+        (coordinator).
+  \item The first phase determines the outcome of the transaction
+  \item The second phase is used to enforce the outcome
+  \item Every node maintains a transaction log:
+    \begin{itemize}
+      \item Maintains information about transactions the node is taking part in
+      \item Writing to log file is ensured to be atomic
+      \item Stored on non-volatile storage
+    \end{itemize}
+  \item Every node has a recovery manager that executes when the node recovers
+        from a crash
+    \begin{itemize}
+      \item Scans transaction log and determines actions required
+      \item Tries to terminate all transactions that were active at the time of
+            crash
+    \end{itemize}
+\end{itemize}
+
+\Para{Phase 1}
+
+\begin{minipage}[t]{0.5\textwidth}
+  Coordinator
+
+  \begin{enumerate}
+    \item[1] Send \textit{get ready} message to all servers
+    \item[2] Wait with timeout for reply from all servers
+    \item[3] If all servers replay with \texttt{yes} then verdict is commit, if
+             any one server replies with \textit{no} then verdict is abort
+    \item[4] If verdict is commit then write transaction ID and server node
+             addresses to the transaction log
+  \end{enumerate}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+  Server
+
+  \begin{enumerate}
+    \item[1]   Wait with timeout fro \textit{get ready} command from coordinator
+    \item[2]   If timeout elapses then abort transaction
+    \item[3.1] If server does not want to commit then reply \textit{no}
+    \item[3.2] Otherwise write transaction ID and coordinator node address to
+               the transaction log and reply \textit{yes}
+  \end{enumerate}
+\end{minipage}
+
+\Para{Phase 2}
+
+\begin{minipage}[t]{0.5\textwidth}
+  Coordinator
+
+  \begin{enumerate}
+    \item[1] Send verdict to all servers
+  \end{enumerate}
+\end{minipage}%
+\begin{minipage}[t]{0.5\textwidth}
+  Server
+
+  \begin{enumerate}
+    \item[1]   Wait without timeout for verdict from coordinator
+    \item[2.1] If verdict is commit then store the copies of the objects on the
+               stable data store
+    \item[2.2] Otherwise if verdict is abort then discard the copies
+  \end{enumerate}
+\end{minipage}
+
+\Para{Remarks}
+
+\begin{itemize}
+  \item In phase 1 any server can replay \textit{no}, this acts as a veto for
+        the entire transaction, only one server needs to reply \texttt{no} for
+        the transaction to be aborted
+  \item In phase 1 if a server replies \textit{yes} then it is in a position
+        to either commit or abort as it holds both original and modified
+        versions of the objects
+  \item Once a server replies \textit{yes} it must wait for the verdict from
+        the coordinator
+  \item If information about a transaction is missing in a transaction log then
+        the transaction will eventually abort (this can happen if a node crashes
+        just before the log is written)
+  \item If a server crashes after writing to the transaction log then the
+        recovery manager reads this log to decide (after communication with the
+        coordinator) if it should commit or abort
+  \item This protocol is a blocking protocol
+  \item If the coordinator crashes in phase 2 and is not restarted then some
+        servers may wait indefinitely
+\end{itemize}
+
+\subsection{Lock Free Transactions}
 
 TODO
 
