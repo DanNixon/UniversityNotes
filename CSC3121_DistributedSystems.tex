@@ -564,7 +564,61 @@ from the calling code.
            \textit{(atomicity)}
 \end{enumerate}
 
-TODO
+\subsection{Serializability}
+
+\begin{itemize}
+  \item Concurrent modification of objects can cause unexpected behaviour
+  \item Transaction executions are required to be a serializable schedule
+\end{itemize}
+
+\subsubsection{Locking}
+
+Concurrent access to shared objects is controlled by locking objects.
+
+Locks are acquired before using an object and released sometime after the
+process has finished with it.
+
+\begin{description}
+  \item[Read Lock] \hfill \\
+    \begin{itemize}
+      \item Reading can be shared between multiple processes
+      \item Read lock is granted assuming there is no write lock on the object
+    \end{itemize}
+
+  \item[Write Lock] \hfill \\
+    \begin{itemize}
+      \item Writing is exclusive to a single process
+      \item Write lock is granted only if there are no other locks on the object
+    \end{itemize}
+\end{description}
+
+\Para{Lock Conflicts}
+
+When a process attempts top acquire a lock on an object that is already locked
+by another process.
+
+Handled by deadlock prevention rules (see \ref{sec:deadlock_prevention}).
+
+Conflicts ([want to acquire] - [already acquired]):
+
+\begin{itemize}
+  \item read-write
+  \item write-read
+  \item write-write
+\end{itemize}
+
+A read-read conflict is not possible.
+
+\Para{Deadlock}
+
+When two processes attempt to lock two objects that are currently locked by the
+other process.
+
+Can either by prevented (see \ref{sec:deadlock_prevention}) or permitted on the
+assumption that they can be recovered from.
+
+Can be detected by monitoring number of "wait for" cycles in acquiring locks,
+not a simple task in a distributed system.
 
 \subsection{Two Phase Locking}
 
@@ -630,6 +684,7 @@ Strict two phase locking ensured the consistency (C) and independence (I)
 ACID properties.
 
 \subsubsection{Deadlock Prevention}
+\label{sec:deadlock_prevention}
 
 Prevent wait for cycles caused by two transactions attempting to acquire locks
 on objects held by the other transaction.
