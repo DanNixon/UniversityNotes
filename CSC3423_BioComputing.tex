@@ -986,7 +986,153 @@ Classification of behaviour for different rule sets:
     interact with each other in complex ways
 \end{description}
 
-TODO
+\subsection{2D cellular automata}
+
+\begin{itemize}
+  \item Very similar to 1 dimensional CA but with larger neighbourhood
+  \item Larger neighbourhood means more complex rules (due to larger number of
+        possible neighbourhood states for a given cell)
+  \item Rule set may become too large to explicitly define
+\end{itemize}
+
+\subsubsection{Neighbourhoods}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{out/2d_ca_neighbourhoods.eps}
+  \caption{Examples of neighbourhoods}
+  \label{fig:2d_ca_neighbourhoods}
+\end{figure}
+\FloatBarrier
+
+Left to right, top to bottom:
+
+\begin{itemize}
+  \item Moore
+  \item Von Neumann
+  \item Margolus
+  \item Extended Moore
+  \item Extended Von Neumann
+\end{itemize}
+
+When a neighbourhood is at the edge of the 2D matrix it can either be cropped to
+form a smaller neighbourhood or wrapped around the matrix.
+
+\subsection{The Game Of Life}
+
+\Para{Goals}
+
+A "lifelike" result with a simple set of rules.
+
+\begin{enumerate}
+  \item[1] There should be no initial patters that can be proved to allow a
+           population to grow indefinitely
+  \item[2] There should be initial patters that appear to grow without limit
+  \item[3] There should be initial patters that grow/change before coming to an
+           end in one of three ways:
+    \begin{itemize}
+      \item Fading away completely (overcrowding or too sparse)
+      \item Settling into a stable state that does not change between
+            generations
+      \item Entering an oscillating state
+    \end{itemize}
+\end{enumerate}
+
+\Para{Rules}
+
+Whether a cell is on or off (lives or dies) in the next iteration is determined
+by the following rules:
+
+\begin{description}
+  \item[Loneliness] \hfill \\
+    A live cell with fewer then two live neighbours dies.
+  \item[Companionship] \hfill \\
+    A live cell with two or three live neighbours lives.
+  \item[Overcrowding] \hfill \\
+    A live cell with more then three live neighbours dies.
+  \item[Reproduction] \hfill \\
+    A dead cell with exactly three live neighbours becomes live.
+\end{description}
+
+\Para{Constructs}
+
+Groups of cells that exhibit specific behaviour.
+
+\begin{description}
+  \item[Still life] \hfill \\
+    Constructs that have reached a state that will not change between
+    generations without interaction from other constructs.
+  \item[Oscillating constructs] \hfill \\
+    Constructs that cycle between two or more states over a given number of
+    generations.
+  \item[Moving constructs] \hfill \\
+    Constructs that move across the grid over time, usually by means of an
+    oscillating set of states.
+\end{description}
+
+\Para{Computation}
+
+Can perform simple computations using glider guns to create "sliding block
+memory" from which logic gates can be simulated.
+
+Can create state machines (using sliding block memory as a counter) to form a
+universal Turing machine.
+
+\subsubsection{Variants}
+
+\begin{description}
+  \item[3D cellular automata] \hfill \\
+    Same principal as 1D and 2D but with a larger neighborhood.
+
+  \item[Different cell shapes] \hfill \\
+    Assuming a shape can be oriented on a grid (tessellated) and assigned a
+    neighbourhood then it can be used in a cellular automation.
+
+    e.g. Triangles and hexagons have been used.
+
+  \item[Probabilistic rules] \hfill \\
+    Have a set of rules that have probability weightings instead of being purely
+    deterministic.
+
+  \item[Continuous cellular automata] \hfill \\
+    Using continuous values rather than discreet states.
+
+  \item[Nested cellular automata] \hfill \\
+    Used to simulate a hierarchical system.
+
+    e.g. County $\rightarrow$ City $\rightarrow$ Person $\rightarrow$ Cell
+
+\end{description}
+
+\subsubsection{Applications}
+
+\begin{description}
+  \item[Computer graphics] \hfill \\
+    Performing filter computations to an image.
+
+    e.g. Blurring is an operation that modifies each pixel depending on the
+    states of the pixels in its neighbourhood.
+
+  \item[Game development] \hfill \\
+    Used for world generation, given a random seed (states in initial
+    generation).
+
+  \item[Cryptography] \hfill \\
+    One way function used for public key encryption.
+
+    Given a rule set it is easy to calculate future states given an early
+    generation, but very difficult to calculate past states given a later
+    generation.
+
+  \item[Simulation] \hfill \\
+    Various biological and physical simulations.
+
+    e.g. Pattern formation, cell development, fluid flow, etc.
+
+  \item[Fractals] \hfill \\
+    Generation of patterns based on simple self replication rules.
+
+\end{description}
 
 \section{Membrane Computing}
 \label{sec:membrane}
