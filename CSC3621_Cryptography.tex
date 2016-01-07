@@ -6,7 +6,280 @@
 
 \tableofcontents
 
+\section{Maths}
+
+\subsection{Discrete Probability}
+
+Given a finite sample space $S = \{s_{1}, s_{2}, \ldots, s_{n}\}$ the probability
+$P$ on $S$ is $\{p_{1}, p_{2}, \ldots,p_{n}\}$ where:
+
+\begin{align*}
+  0 \leq p_{i} \leq 1 \\
+  \sum_{i}p_{i} = 1
+\end{align*}
+
+\subsubsection{Events}
+
+\begin{itemize}
+  \item Event $E$ is a subset of $S$
+  \item Complimentary event $\bar{E}$
+  \item Probability of occurrence $P(E)$
+  \item $P(E) = 1 - P(\bar{E})$
+\end{itemize}
+
+\subsubsection{Joint Probability}
+
+\begin{itemize}
+  \item Probability of both events occurring
+  \item $P(E_{1} \cap E_{2})$
+  \item Events $E_{1}$ and $E_{2}$ are mutually exclusive if $P(E_{1} \cap
+        E_{2}) = 0$
+\end{itemize}
+
+\subsubsection{Conditional Probability}
+
+Assuming $P(E_{2}) > 0$.
+
+Probability of $E_{1}$ happening given that $E_{2}$ has happened:
+\[
+  P(E_{1} | E_{2}) = \frac{P(E_{1} \cap E_{2})}
+                          {P(E_{2})}
+\]
+
+$E_{1}$ and $E_{2}$ are independent if $P(E_{1} | E_{2}) = P(E_{1})P(E_{2})$.
+
+\subsubsection{Bayes Theorem}
+
+Assuming $P(E_{2}) > 0$.
+
+\[
+  P(E_{1} | E_{2}) = \frac{P(E_{1})P(E_{2} | E_{1})}
+                          {P(E_{2})}
+\]
+
+\subsection{Complexity}
+
+\begin{description}
+  \item[Polynomial time] \hfill \\
+    Solved in $O(n^{k})$
+  \item[Exponential time] \hfill \\
+    Cannot be solved in polynomial time
+\end{description}
+
+Decision problems that can be solved in polynomial time are tractable, otherwise
+they are intractable.
+
+\subsubsection{Complexity classes}
+
+\begin{description}
+  \item[P] \hfill \\
+    Can be solved in polynomial time
+  \item[NP] \hfill \\
+    A positive answer can be verified in polynomial time
+  \item[co-NP] \hfill \\
+    A negative answer can be verified in polynomial time
+  \item[NP-complete] \hfill \\
+    Hardest problems in NP
+\end{description}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{out/complexity_classes.eps}
+  \caption{Complexity Classes}
+  \label{fig:complexity_classes}
+\end{figure}
+\FloatBarrier
+
+\subsection{Number Theory}
+
+\begin{itemize}
+  \item $\mathbb{N}$ denotes positive integer such that $N \in \mathbb{N}^{+}$
+  \item $p$ denotes a prime number
+  \item $\mathbb{Z}_{N}$ is the set of integers $\{0, 1, 2, \ldots, N-1\}$
+\end{itemize}
+
+\subsubsection{Modular Arithmetic}
+
+Arithmetic module $Z_{m}$ is the set $\{0, \ldots, m-1\}$ with operations
+$+$ and $\times$ such that:
+
+\begin{enumerate}
+  \item[1] Addition is closed:
+           \[\Forall a, b \in Z_{m}, a + b \in Z_{m}\]
+  \item[2] Addition is commutative: \\
+           \[\Forall a, b \in Z_{m}, a + b = b + a\]
+  \item[3] Addition is associative: \\
+           \[\Forall a, b, c \in Z_{m}, (a + b) + c = a + (b + c)\]
+  \item[4] 0 is an additive identity: \\
+           \[\Forall a \in Z_{m}, a + 0 = 0 + a = a\]
+  \item[5] Additive inverse of any $a \in Z_{m}$ is $m - a$: \\
+           \[\Forall a \in Z_{m}, a + (m - a) = (m - a) + a = 0\]
+  \item[6] Multiplication is closed: \\
+           \[\Forall a, b \in Z_{m}, ab \in Z_{m}\]
+  \item[7] Multiplication is commutative: \\
+           \[\Forall a, b \in Z_{m}, ab = ba\]
+  \item[8] Multiplication is associative:\\
+           \[\Forall a, b, c \in Z_{m}, (ab)c = a(bc)\]
+  \item[9] 1 is a multiplicative identity:
+           \[\Forall a \in Z_{m}, a \times 1 = 1 \times a = a\]
+  \item[10] The distributive property:
+           \[\Forall a, b, c \in Z_{m}, (a + b)c = (ac) + (bc) \ \mathrm{and} \ a(b + c) = (ab) + (ac)\]
+\end{enumerate}
+
+Items 1-5 establish $Z_{m}$ is an abelian group, items 1-10 establish $Z_{m}$ is
+a ring.
+
+\subsubsection{Greatest Common Denominator}
+
+\[\Forall x, y \in \mathbb{Z}, \exists a, b \in \mathbb{Z} :
+a \cdot x + b \cdot y = gcd(x, y)\]
+
+Integers $x$ and $y$ are coprime (relatively prime) if:
+\[gcd(x, y) = 1 = a \cdot x + b \cdot y\]
+
+\Para{Euclidean algorithm to compute GCD}
+
+\begin{itemize}
+  \item Inputs: integers $x$ and $y$
+  \item Output: $gcd(x, y)$
+  \item $gcd(x, 1) = x$ as base case 1
+  \item $\Forall x, y \in \mathbb{Z}, gcd(x, y) = gcd(y, x \Mod y)$
+\end{itemize}
+
+\subsubsection{Multiplicative Modular Inverse}
+
+Modular inverse of $x$ is denoted by $x^{-1}$.
+
+$y$ is the multiplicative inverse of $x \Mod N$ if $x \cdot y = 1 (\Mod N)$.
+
+$x$ has a multiplicative inverse modulo $N$ iff. $gcd(x, N) = 1$.
+
+Compute using Euclidean algorithm:
+\begin{align*}
+  gcd(x, N) = 1 &= a \cdot x + b \cdot N \\
+  a \cdot x &= 1 \in \mathbb{Z}_{N} \\
+  a &= x^{-1} \in \mathbb{Z}_{N} \\
+\end{align*}
+
+\subsubsection{Invertible elements in $\mathbb{Z}_{N}$}
+
+The set of invertible elements is defined by:
+\[(\mathbb{Z}_{N})^{*} = \{x \in \mathbb{Z}_{N} : gcd(x, N) = 1\}\]
+
+If $p$ is prime then $(\mathbb{Z}_{p})^{*} = \mathbb{Z}_{p} / {0}$
+
+Set of invertible elements $\mathbb{Z}_{p}$ is cyclic.
+
+$(\mathbb{Z}_{p})^{*}$ is a cyclic group.
+
+\[
+  \exists g \in (\mathbb{Z}_{n})^{*} :
+  \{1, g, g^{2}, g^{g}, \ldots, g^{p-2}\} = (\mathbb{Z}_{p})^{*}
+\]
+
+$g$ is  generator of $(\mathbb{Z}_{p})^{*}$, for example:
+\[p = 5: \{1, 3, 3^{2}, 3^{3}\} = \{1, 3, 4, 2\} = (\mathbb{Z}_{5})^{*}\]
+
+\subsubsection{Solving linear equations}
+
+To solve:
+\[a \cdot x + b = 0 \in \mathbb{Z}_{N}\]
+
+\begin{enumerate}
+  \item[1] Compute inverse $a^{-1}$
+  \item[2] Subtract $b$
+  \item[3] Multiply by inverse $a^{-1}$
+\end{enumerate}
+
+Solution:
+\[x = -b \cdot a^{-1} \in \mathbb{Z}_{N}\]
+
 \section{Symmetric}
+
+\subsection{Information Theory}
+
+\subsubsection{Entropy}
+
+Let $X$ be a random variable $\in \{x_{1}, x_{2}, \ldots,x_{n}\}$ with
+probabilities $P = \{p_{1}, p_{2}, \ldots, p_{n}\}$.
+
+The entropy (uncertainty) of $X$ is defined as:
+\[
+  H(X) = -\sum_{i} p_{i} log_{2}(p_{i})
+\]
+
+\subsubsection{Rate of a language}
+
+Given language $M$ of length $N$, the rate of $M$ is:
+\[
+  r = H(M) / N
+\]
+
+\subsubsection{Redundancy of English language}
+
+\begin{itemize}
+  \item $N = 26$
+  \item Assume even probability distribution
+  \item Each latter represents $log_{2}(26) = 4.3$ bits
+  \item Taking into account actual distribution each letter only contains 1.3
+        bits
+\end{itemize}
+
+\subsubsection{Confusion and Diffusion}
+
+Two techniques for obscuring a plain text message.
+
+\begin{description}
+  \item[Confusion] \hfill \\
+    Obscures relationship between plain text and cipher text.
+
+    e.g. Character substitution
+
+  \item[Diffusion] \hfill \\
+    Spreads plain text message throughout cipher text to remove patterns.
+
+    i.e. Changing a single bit of the plain text changes multiple bits of the
+    cipher text
+\end{description}
+
+\subsubsection{Perfect Secrecy}
+
+The cipher text yields no possible information about the plain text (except from
+the length).
+
+Requires number of keys $\geq$ number of plain text messages.
+
+Only possible with the one time pad (see TODO).
+
+\subsection{Classical Ciphers}
+
+TODO
+
+\subsubsection{Shift cipher}
+
+TODO
+
+\subsubsection{Substitution cipher}
+
+TODO
+
+\subsubsection{Vigen\`ere cipher}
+
+TODO
+
+\subsection{Stream Cipher}
+
+TODO
+
+\subsection{Block Cipher}
+
+TODO
+
+\subsection{Hash Function}
+
+TODO
+
+\subsection{MAC}
 
 TODO
 
@@ -199,109 +472,5 @@ TODO
 \subsection{Zero Knowledge Proofs}
 
 TODO
-
-\section{Number Theory}
-
-\begin{itemize}
-  \item $\mathbb{N}$ denotes positive integer such that $N \in \mathbb{N}^{+}$
-  \item $p$ denotes a prime number
-  \item $\mathbb{Z}_{N}$ is the set of integers $\{0, 1, 2, \ldots, N-1\}$
-\end{itemize}
-
-\subsection{Modular Arithmetic}
-
-Arithmetic module $Z_{m}$ is the set $\{0, \ldots, m-1\}$ with operations
-$+$ and $\times$ such that:
-
-\begin{enumerate}
-  \item[1] Addition is closed:
-           \[\Forall a, b \in Z_{m}, a + b \in Z_{m}\]
-  \item[2] Addition is commutative: \\
-           \[\Forall a, b \in Z_{m}, a + b = b + a\]
-  \item[3] Addition is associative: \\
-           \[\Forall a, b, c \in Z_{m}, (a + b) + c = a + (b + c)\]
-  \item[4] 0 is an additive identity: \\
-           \[\Forall a \in Z_{m}, a + 0 = 0 + a = a\]
-  \item[5] Additive inverse of any $a \in Z_{m}$ is $m - a$: \\
-           \[\Forall a \in Z_{m}, a + (m - a) = (m - a) + a = 0\]
-  \item[6] Multiplication is closed: \\
-           \[\Forall a, b \in Z_{m}, ab \in Z_{m}\]
-  \item[7] Multiplication is commutative: \\
-           \[\Forall a, b \in Z_{m}, ab = ba\]
-  \item[8] Multiplication is associative:\\
-           \[\Forall a, b, c \in Z_{m}, (ab)c = a(bc)\]
-  \item[9] 1 is a multiplicative identity:
-           \[\Forall a \in Z_{m}, a \times 1 = 1 \times a = a\]
-  \item[10] The distributive property:
-           \[\Forall a, b, c \in Z_{m}, (a + b)c = (ac) + (bc) \ \mathrm{and} \ a(b + c) = (ab) + (ac)\]
-\end{enumerate}
-
-Items 1-5 establish $Z_{m}$ is an abelian group, items 1-10 establish $Z_{m}$ is
-a ring.
-
-\subsection{Greatest Common Denominator}
-
-\[\Forall x, y \in \mathbb{Z}, \exists a, b \in \mathbb{Z} :
-a \cdot x + b \cdot y = gcd(x, y)\]
-
-Integers $x$ and $y$ are coprime (relatively prime) if:
-\[gcd(x, y) = 1 = a \cdot x + b \cdot y\]
-
-\subsubsection{Euclidean algorithm to compute GCD}
-
-\begin{itemize}
-  \item Inputs: integers $x$ and $y$
-  \item Output: $gcd(x, y)$
-  \item $gcd(x, 1) = x$ as base case 1
-  \item $\Forall x, y \in \mathbb{Z}, gcd(x, y) = gcd(y, x \Mod y)$
-\end{itemize}
-
-\subsection{Multiplicative Modular Inverse}
-
-Modular inverse of $x$ is denoted by $x^{-1}$.
-
-$y$ is the multiplicative inverse of $x \Mod N$ if $x \cdot y = 1 (\Mod N)$.
-
-$x$ has a multiplicative inverse modulo $N$ iff. $gcd(x, N) = 1$.
-
-Compute using Euclidean algorithm:
-\begin{align*}
-  gcd(x, N) = 1 &= a \cdot x + b \cdot N \\
-  a \cdot x &= 1 \in \mathbb{Z}_{N} \\
-  a &= x^{-1} \in \mathbb{Z}_{N} \\
-\end{align*}
-
-\subsection{Invertible elements in $\mathbb{Z}_{N}$}
-
-The set of invertible elements is defined by:
-\[(\mathbb{Z}_{N})^{*} = \{x \in \mathbb{Z}_{N} : gcd(x, N) = 1\}\]
-
-If $p$ is prime then $(\mathbb{Z}_{p})^{*} = \mathbb{Z}_{p} / {0}$
-
-Set of invertible elements $\mathbb{Z}_{p}$ is cyclic.
-
-$(\mathbb{Z}_{p})^{*}$ is a cyclic group.
-
-\[
-  \exists g \in (\mathbb{Z}_{n})^{*} :
-  \{1, g, g^{2}, g^{g}, \ldots, g^{p-2}\} = (\mathbb{Z}_{p})^{*}
-\]
-
-$g$ is  generator of $(\mathbb{Z}_{p})^{*}$, for example:
-\[p = 5: \{1, 3, 3^{2}, 3^{3}\} = \{1, 3, 4, 2\} = (\mathbb{Z}_{5})^{*}\]
-
-\subsection{Solving linear equations}
-
-To solve:
-\[a \cdot x + b = 0 \in \mathbb{Z}_{N}\]
-
-\begin{enumerate}
-  \item[1] Compute inverse $a^{-1}$
-  \item[2] Subtract $b$
-  \item[3] Multiply by inverse $a^{-1}$
-\end{enumerate}
-
-Solution:
-\[x = -b \cdot a^{-1} \in \mathbb{Z}_{N}\]
 
 \end{document}
