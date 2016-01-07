@@ -247,29 +247,204 @@ Two techniques for obscuring a plain text message.
 The cipher text yields no possible information about the plain text (except from
 the length).
 
+\[
+  P(m|c) = P(m) \: \forall \: m \in M, c \in C
+\]
+
 Requires number of keys $\geq$ number of plain text messages.
 
-Only possible with the one time pad (see TODO).
+Only possible with the one time pad (see \ref{sec:one_time_pad}).
 
 \subsection{Classical Ciphers}
 
-TODO
-
 \subsubsection{Shift cipher}
 
-TODO
+Every letter is rotated $K$ positions in the alphabet.
+
+Encryption:
+\[
+  e_{K}(x) = (x + K) \: mod \: 26
+\]
+
+Decryption:
+\[
+  d_{K}(x) = (x - K) \: mod \: 26
+\]
+
+For $0 \leq K \leq 26$ and $x, y \in \mathbb{Z}_{26}$.
+
+\begin{description}
+  \item[Caeser cipher]
+    $K=3$
+  \item[ROT13]
+    $K=13$
+\end{description}
+
+\Para{Vulnerabilities}
+
+\begin{itemize}
+  \item Can easily be broken by exhaustive search
+  \item Only 26 keys ($K$) for English alphabet
+\end{itemize}
 
 \subsubsection{Substitution cipher}
 
-TODO
+Replace each letter with a given substitution defined by permutation $\pi$.
+
+$K$ contains all permutations $\pi$ of the English alphabet.
+
+Encryption:
+\[
+  e_{\pi}(x) = \pi(x) \: mod \: 26
+\]
+
+Decryption:
+\[
+  d_{\pi}(x) = \pi^{-1}(x) \: mod \: 26
+\]
+
+For $0 \leq K \leq 26$ and $x, y \in \mathbb{Z}_{26}$.
+
+Key space $|K| = 26!$.
+
+\Para{Vulnerabilities}
+
+\begin{itemize}
+  \item Can easily be broken by frequency analysis
+  \item Probability distribution of English characters is well defined
+  \item This distribution can be remapped to derive the permutation
+  \item Only provides good confusion (and not diffusion)
+\end{itemize}
 
 \subsubsection{Vigen\`ere cipher}
 
-TODO
+Combining several shift ciphers.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{@{}lllllllllllll@{}}
+    \toprule
+    $k$ & A & B & C & A & B & C & A & B & C & A & B & C \\
+    $m$ & B & E & R & E & A & D & Y & A & K & K & A & T \\
+    \midrule
+    $c$ & C & G & U & F & C & G & Z & C & F & L & C & W \\
+    \bottomrule
+  \end{tabular}
+  \caption{Vigen\`ere cipher example}
+  \label{tab:vigenere_cipher_example}
+\end{table}
+\FloatBarrier
+
+Cryptanalysis involves:
+
+\begin{enumerate}
+  \item[1] Finding key length $m$ (number of shift ciphers)
+  \item[2] Breaking each individual shift cipher to obtain each character in the
+           key
+\end{enumerate}
+
+\Para{Obtaining key length: Kasiski test}
+
+Search for identical segments in cipher text and count how far apart they are.
+
+\Para{Obtaining key length: Index or coincidence}
+
+Probability that two elements of of a string of characters are identical.
+
+\[
+  I_{c}(x) = \sum^{26}_{i = 1}p^{2}_{i}
+\]
+
+where $p_{i}$ is the probability of character $i$ in text string $x$.
+
+Can then compare $I_{c}$ with known values for different key lengths.
+
+\Para{Breaking shift ciphers}
+
+Break each individual shift cipher using frequency analysis.
+
+\Para{Vulnerabilities}
+
+\begin{itemize}
+  \item Transposition does not randomly distribute information in cipher text
+  \item A secure cipher text should not contain any decipherable pattern
+\end{itemize}
 
 \subsection{Stream Cipher}
 
-TODO
+Encrypt individual characters one at a time.
+
+\subsubsection{One time pad}
+\label{sec:one_time_pad}
+
+\[
+  c_{i} = k_{i} \oplus m_{i}
+\]
+
+\begin{itemize}
+  \item Perfect secrecy
+  \item Requires key size $\geq$ message size
+  \item Key can only be used for a single encryption
+  \item Perfect but impractical
+\end{itemize}
+
+Idea of stream ciphers: make one time pad practical by generating a long key
+stream using a short secret key.
+
+\subsubsection{Synchronous stream cipher}
+
+Construct a key stream form a short key.
+
+Assume a key of length $m$ bits. A key stream can be generated with a linear
+recurrence of degree $m$.
+
+e.g.:
+\[
+  k_{i+m} = \sum^{m-1}_{j=0} c_{j}k_{i+j} \: mod \: 2
+\]
+
+where $c_{0}, \ldots, c_{m-1}$ are constants.
+
+After a period the key stream will repeat.
+
+This key stream generation can be implemented in application specific hardware
+to make stream generation much faster, such an implementation is known as a
+Linear Feedback Shift Register.
+
+In a synchronous stream cipher the insertion or deletion of cipher text will
+cause decryption to fail (the cipher text and key streams will be out of sync).
+
+\subsubsection{Vulnerabilities/Attacks}
+
+\Para{Two time pad}
+
+Possible when two different plain text messages are encrypted with the same one
+time pad.
+
+Can obtain the XOR of plain text messages:
+\begin{align*}
+               c_{1} &= m_{1} \oplus f(k) \\
+               c_{2} &= m_{2} \oplus f(k) \\
+  c_{1} \oplus c_{2} &= m_{1} \oplus m_{2} \\
+                     &\rightarrow \{m_{1}, m_{2}\}
+\end{align*}
+
+\Para{No integrity}
+
+Problem for all stream ciphers.
+
+Can modify cipher text without detection by the recipient, such that the plain
+text is changed in some meaningful way.
+
+\Para{Weakness in algorithm}
+
+Poorly developed (proprietary) algorithms may have vulnerabilities not found in
+more common, widely used algorithms.
+
+e.g. Content Scramble System (CSS) used to encrypt contents of DVDs.
+
+40 bit key using two LFSRs (17 bit and 25 bit), disk key could be retrieved in
+$2^{25}$ time. Only provided 17 bits of security.
 
 \subsection{Block Cipher}
 
