@@ -452,7 +452,124 @@ TODO
 
 \subsection{Hash Function}
 
+\begin{itemize}
+  \item Compress an arbitrary message into a fixed length output.
+  \item Historically used for detecting data defects or equality
+  \item Cryptographic hash used to verify integrity
+\end{itemize}
+
+\subsubsection{Random Oracle Model}
+
+\begin{itemize}
+  \item Ideal hash function
+  \item Function generates a unique random hash for every new request
+  \item Maintains database of existing hashes for duplicate requests
+  \item No hash collisions
+  \item Not practical to implement
+\end{itemize}
+
+\subsubsection{Security Requirements}
+
+\begin{enumerate}
+  \item[1]
+    Pre-image resistance \\
+    Given $H(m)$, cannot obtain $m$
+  \item[2]
+    Second pre-image resistance \\
+    Given $H(m_{1})$ cannot find $m_{2}$ such that $H(m_{1}) = H(m_{2})$
+  \item[3]
+    Collision resistance \\
+    Cannot obtain unique $m_{1}$ and $m_{2}$ such that $H(m_{1}) = H(m_{2})$
+\end{enumerate}
+
+\subsubsection{Birthday attack (collision resistance)}
+
+Assume a hash function with $n$ bits output.
+
+\begin{enumerate}
+  \item[1] Select $2^{n/2}$ random input messages
+  \item[2] Compute hash of each message
+  \item[3] Look for a collision, if not found repeat until a collision occurs
+\end{enumerate}
+
+For $n$ bit security, hash output must be at least $2n$ bits long.
+
+\subsubsection{Design considerations}
+
+\begin{itemize}
+  \item Operational mode
+  \item Compression function
+  \item Confusion-diffusion operations
+\end{itemize}
+
+\subsubsection{Construction: Merkle-Damgard}
+
+\begin{itemize}
+  \item Start with a fixed initialisation vector $IV$
+  \item Cascade several compression functions, $f$
+  \item $f$ operates over fixed length subsections of the message $m$
+  \item Padding $P$ is added to ensure correct length
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{out/merkle-damgard.eps}
+  \caption{Merkle-Damgard construction}
+  \label{fig:merkle-damgard}
+\end{figure}
+\FloatBarrier
+
+Theorem is that if $f$ is collision resistant then $H$ is also collision
+resistant.
+
+\Para{Proof}
+
 TODO
+
+\subsubsection{Compression function: Davies-Meyer}
+
+$E$ is a block cipher using output of previous $f$ (or $IV$ if is first block)
+as message and $m[i]$ as key.
+
+Defined as:
+\[
+  f(H, m) = E(m, H) \oplus H
+\]
+
+Compression:
+\begin{align*}
+   |input| &= |key| + |block| \\
+  |output| &= |block|
+\end{align*}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{out/davies-meyer.eps}
+  \caption{Davies-Meyer compression function}
+  \label{fig:davies-meyer}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Applications}
+
+\begin{itemize}
+  \item Digital signatures
+  \item Integrity checking
+  \item Random number generator, random function
+  \item Password masking/storage
+\end{itemize}
+
+\subsubsection{Salt}
+
+Hashing passwords with a salt is better practice, this makes it more difficult
+for an attacker to recover the plain text password.
+
+\Para{Dictionary attack}
+
+Given $H(password, salt)$ and $salt$ an attacker can do an exhaustive search for
+all passwords and obtain the correct one.
+
+Feasible since passwords have low entropy.
 
 \subsection{MAC}
 
