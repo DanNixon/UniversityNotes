@@ -452,7 +452,79 @@ Encryption of a fixed size block of data.
 
 \subsubsection{Data Encryption Standard (DES)}
 
-TODO
+\begin{itemize}
+  \item 64 bit block size
+  \item Implemented using 16 round Feistel network
+  \item Use the same circuit to decrypt (possible with the last swap being
+        removed)
+\end{itemize}
+
+Encryption:
+\begin{align*}
+  L_{i+1} &= R_{i} \\
+  R_{i+1} &= L_{i} \oplus F(K_{i}, R_{i})
+\end{align*}
+
+Decryption:
+\begin{align*}
+  R_{i} &= L_{i+1} \\
+  L_{i} &= R_{i+1} \oplus F(K_{i}, R_{i}) \\
+        &= R_{i+1} \oplus F(K_{i}, L_{i+1})
+\end{align*}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[t!]{0.4\textwidth}
+    \includegraphics[width=0.8\textwidth]{out/feistel_network.eps}
+    \caption{Encryption}
+    \label{fig:feistel_network}
+  \end{subfigure}
+  \begin{subfigure}[t!]{0.4\textwidth}
+    \includegraphics[width=0.8\textwidth]{out/feistel_network-decrypt.eps}
+    \caption{Decryption}
+    \label{fig:feistel_network_decrypt}
+  \end{subfigure}
+  \caption{Feistel Networks}
+  \label{fig:feistel_networks}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{out/des.eps}
+  \caption{DES overview}
+  \label{fig:des}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{out/des-function.eps}
+  \caption{$F$ function}
+  \label{fig:des-function}
+\end{figure}
+\FloatBarrier
+
+\begin{itemize}
+  \item $F$ function adds confusion and diffusion
+  \item $S$ box (look up table) adds confusion
+  \item $P$ box (look up table) adds diffusion
+\end{itemize}
+
+\subsubsection{Triple DES}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{out/triple-des.eps}
+  \caption{Triple DES}
+  \label{fig:triple-des}
+\end{figure}
+\FloatBarrier
+
+\begin{itemize}
+  \item Does not triple security
+  \item Design is compatible with standard DES
+\end{itemize}
 
 \subsubsection{Modes of Operation}
 
