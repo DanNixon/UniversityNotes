@@ -448,7 +448,102 @@ $2^{25}$ time. Only provided 17 bits of security.
 
 \subsection{Block Cipher}
 
+Encryption of a fixed size block of data.
+
+\subsubsection{Data Encryption Standard (DES)}
+
 TODO
+
+\subsubsection{Modes of Operation}
+
+Defines how a block cipher $E$ is applied to encrypt data.
+
+\Para{Electronic Code Book (ECB)}
+
+\begin{itemize}
+  \item Simplest mode of operation
+  \item Message split into several blocks and each block encrypted individually
+  \item Deterministic
+  \item Possibility of leaking data through patterns in cipher data
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{out/bc-ecb.eps}
+  \caption{Electronic Codebook}
+  \label{fig:bc-ecb}
+\end{figure}
+\FloatBarrier
+
+\Para{Cipher Block Chaining (CBC)}
+
+\begin{itemize}
+  \item Previous cipher text feeds back to next block
+  \item Padding added to ensure correct block size
+  \item Random initialisation vector $IV$ used to ensure non-deterministic
+        output
+  \item Can resynchronise if a block is lost (not if a single byte is lost)
+  \item Cannot be parallelised
+  \item Widely used
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{out/bc-cbc.eps}
+  \caption{Cipher Block Chaining}
+  \label{fig:bc-cbc}
+\end{figure}
+\FloatBarrier
+
+\Para{Cipher Feedback (CFB)}
+
+\begin{itemize}
+  \item Essentially a stream cipher
+  \item Can resynchronise if a block is lost (not if a single byte is lost)
+  \item Encryption cannot be parallelised
+  \item Decryption is a single $E$ operation per block (can be parallelised)
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{out/bc-cfb.eps}
+  \caption{Cipher Feedback}
+  \label{fig:bc-cfb}
+\end{figure}
+\FloatBarrier
+
+\Para{Output Feedback (OFB)}
+
+\begin{itemize}
+  \item Essentially a stream cipher
+  \item Identical encryption and decryption operations
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{out/bc-ofb.eps}
+  \caption{Output Feedback}
+  \label{fig:bc-ofc}
+\end{figure}
+\FloatBarrier
+
+\Para{Counter (CRT)}
+
+\begin{itemize}
+  \item Essentially a stream cipher
+  \item Uses an incrementing counter $i$ instead of initialisation vector
+  \item Identical encryption and decryption operations
+  \item Both encryption and decryption can be parallelised
+  \item Popular as a replacement for CBC
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{out/bc-crt.eps}
+  \caption{Counter}
+  \label{fig:bc-crt}
+\end{figure}
+\FloatBarrier
 
 \subsection{Hash Function}
 
