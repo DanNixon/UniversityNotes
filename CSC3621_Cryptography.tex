@@ -573,7 +573,87 @@ Feasible since passwords have low entropy.
 
 \subsection{MAC}
 
-TODO
+\begin{itemize}
+  \item Used to verify integrity of a message
+  \item Sender generates a tag $t$ using function $S$ and secret key $k$
+  \item Recipient generates tag from message and $k$ using $S$ and compares to
+        the tag sent by the sender
+  \item Use of a secret key ensures the tab cannot simply be recomputed by an
+        attacker
+\end{itemize}
+
+\subsubsection{Security}
+
+Attacker can use a chosen message attack to try to obtain the key $k$.
+
+Given a set of messages $M = \{m_{1}, m_{2}, \ldots, m_{n}\}$ and their tags $T
+= \{t_{1}, t_{2}, \ldots, t_{n}\}$ such that $t_{i} \leftarrow S(k, m_{i})$.
+
+Attacker's goal is existential forgery, i.e. producing a new message/tag pair
+$(m, t) \in \{M, T\}$. In this case the attacker can successfully forge a tag
+that the recipient would believe is valid.
+
+\subsubsection{Construction 1: block cipher based}
+
+Cipher Block Chaining (CBC) method.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{out/cbc-mac.eps}
+  \caption{CBC-MAC}
+  \label{fig:cbc-mac}
+\end{figure}
+\FloatBarrier
+
+MAC is given by $c[3]$.
+
+\subsubsection{Construction 2: hash function based}
+
+Cannot simply use the hash function $H(k, m)$ as an additional message block can
+be added to the existing hash (see figure \ref{fig:merkle-damgard}).
+
+\Para{HMAC}
+
+Needs to have different secret keys to protect both the front and back of the
+hash.
+
+e.g. $H(k_{1}, H(k_{2}, m))$
+
+In HMAC only one key is used for efficiency and two constants $O_{pad}$ and
+$I_{pad}$ are used to derive $k_{1}$ and $k_{2}$.
+
+\[
+  HMAC(k, m) = H(k \oplus O_{pad} || H(k \oplus I_{pad} || m))
+\]
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.9\textwidth]{out/hmac.eps}
+  \caption{HMAC}
+  \label{fig:hmac}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Verification timing attack}
+
+Some cryptographic libraries implement MAC verification with a byte by byte
+comparison which returns false at the first incorrect byte.
+
+By measuring the time it takes MAC verification to fail an attacker can
+determine which byte of the MAC the verification failed on, therefore allowing
+them to obtain the MAC by exhaustive search.
+
+The solution is to make the verification always take the same time, the simplest
+way is to perform comparison of all bytes regardless of any previous
+inequalities.
+
+\subsubsection{Authenticated encryption}
+
+In real world applications encryption often takes place in authenticated mode,
+as part of this a MAC is generated during the encryption process.
+
+This provides both confidentiality (through the encryption) and integrity
+(through the MAC).
 
 \section{Asymmetric}
 
