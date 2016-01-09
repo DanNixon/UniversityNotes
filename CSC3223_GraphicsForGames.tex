@@ -254,15 +254,118 @@ and $v_{1}$ (start) and $v_{2}$ and $v_{1}$ (end).
 
 \subsection{Scale}
 
-TODO
+Scale matrix to scale by $x$, $y$ and $z$ is each respective axis:
+\[
+  \left [
+    \begin{array}{cccc}
+      x & 0 & 0 & 0 \\
+      0 & y & 0 & 0 \\
+      0 & 0 & z & 0 \\
+      0 & 0 & 0 & 1
+    \end{array}
+  \right ]
+\]
 
 \subsection{Translation}
 
-TODO
+Translation matrix to move by $x$, $y$ and $z$ is each respective axis:
+\[
+  \left [
+    \begin{array}{cccc}
+      1 & 0 & 0 & x \\
+      0 & 1 & 0 & y \\
+      0 & 0 & 1 & z \\
+      0 & 0 & 0 & 1
+    \end{array}
+  \right ]
+\]
 
 \subsection{Rotation}
 
-TODO
+Rotation about $x$ axis by $\theta$:
+\[
+  \left [
+    \begin{array}{cccc}
+      1 & 0           & 0         & 0 \\
+      0 & cos\theta   & sin\theta & 0 \\
+      0 & -sin\theta  & cos\theta & 0 \\
+      0 & 0           & 0         & 1
+    \end{array}
+  \right ]
+\]
+
+Rotation about $y$ axis by $\theta$:
+\[
+  \left [
+    \begin{array}{cccc}
+      cos\theta   & 0 & sin\theta & 0 \\
+      0           & 1 & 0         & 0 \\
+      -sin\theta  & 0 & cos\theta & 0 \\
+      0           & 0 & 0         & 1
+    \end{array}
+  \right ]
+\]
+
+Rotation about $z$ axis by $\theta$:
+\[
+  \left [
+    \begin{array}{cccc}
+      cos\theta   & sin\theta & 0 & 0 \\
+      -sin\theta  & cos\theta & 0 & 0 \\
+      0           & 0         & 1 & 0 \\
+      0           & 0         & 0 & 1
+    \end{array}
+  \right ]
+\]
+
+\subsection{Object definition}
+
+\[
+  \left [
+    \begin{array}{cccc}
+      r_{xx}  & r_{xy}  & r_{xz}  & x \\
+      r_{yx}  & r_{yy}  & r_{yz}  & y \\
+      r_{zx}  & r_{zy}  & r_{zz}  & z \\
+      0       & 0       & 0       & 1
+    \end{array}
+  \right ]
+  \left [
+    \begin{array}{c}
+      V_{x} \\
+      V_{y} \\
+      V_{z} \\
+      1
+    \end{array}
+  \right ]
+\]
+
+$(x, y, z)$ is the object position.
+
+$r$ is the object orientation.
+
+$(r_{xx}, r_{xy}, r_{xz})$ is the object left vector.
+
+$(r_{yx}, r_{yy}, r_{yz})$ is the object up vector.
+
+$(r_{zx}, r_{zy}, r_{zz})$ is the object facing vector.
+
+The vertices of the object $V$ are transformed using the object matrix.
+
+\subsection{MVP matrix}
+
+Three stages of the standard transformation pipeline:
+
+\begin{description}
+  \item[Model] \hfill \\
+    Local space to the world space
+
+  \item[View] \hfill \\
+    World space to camera space
+
+  \item[Projection] \hfill \\
+    Camera space to clip space
+
+\end{description}
 
 \section{Fragment Operations}
 \label{sec:fragment_operations}
