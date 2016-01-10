@@ -318,6 +318,92 @@ Rotation about $z$ axis by $\theta$:
   \right ]
 \]
 
+\subsection{Perspective}
+
+Perspective matrix used to give perspective to camera space.
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{graphics/perspective-orthographic.eps}
+  \caption{Perspective (left) vs Orthographic (right)}
+  \label{fig:perspective-orthographic}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Orthographic}
+
+Simple clip to a defined box defined by vertices $(left, bottom near)$ and
+$(right, top, far)$.
+\[
+  P =
+  \left [
+    \begin{array}{cccc}
+      \frac{2}{right - left}  & 0                       & 0                     & -\frac{right + left}{right - left} \\
+      0                       & \frac{2}{top - bottom}  & 0                     & -\frac{top + bottom}{top - bottom} \\
+      0                       & 0                       & \frac{2}{far - near}  & -\frac{far + near}{far - near} \\
+      0                       & 0                       & 0                     & 1
+    \end{array}
+  \right ]
+\]
+
+Typically used for "flat" elements, e.g. menu, HUD, etc.
+
+\subsubsection{Perspective}
+
+Traditional perspective as perceived in real life.
+
+\[
+  P =
+  \left [
+    \begin{array}{cccc}
+      \frac{f}{aspect}  & 0 & 0                             & 0 \\
+      0                 & f & 0                             & 0 \\
+      0                 & 0 & \frac{near + far}{near - far} & \frac{2 \cdot near \cdot far}{near - far} \\
+      0                 & 0 & -1                            & 0
+    \end{array}
+  \right ]
+\]
+
+where:
+\[
+  f = \frac{1}{tan(fov / 2)}
+\]
+
+and $fov$ is the desired field of view.
+
+\begin{description}
+  \item[$x$ and $y$] \hfill \\
+    Used to obtain distance along $x$ and $y$ axis with relation to $z$ and
+    $fov$
+
+  \item[$z$] \hfill \\
+    Scale and translate $z$ position such that $z$ is in the range -1 to 1 after
+    division by $w$
+
+  \item[$w$] \hfill \\
+    Set to $w = -1 \cdot z = -z$, this is used for the perspective divide
+
+\end{description}
+
+\subsubsection{Perspective Divide}
+
+Have a vector $V$ for a vertex:
+\[
+  V =
+  \left [
+    \begin{array}{c}
+      V_{x} \\
+      V_{y} \\
+      V_{z} \\
+      w
+    \end{array}
+  \right ]
+\]
+
+Divide components of $V$ by $w$. This operation moves objects that are further
+away (in $z$ axis) closer to the centre of the screen, this gives the effect of
+a vanishing point.
+
 \subsection{Object definition}
 
 \[
@@ -411,5 +497,157 @@ One other alternative is additive blending:
   F_{source} &= 1 \\
     F_{dest} &= 1
 \end{align*}
+
+\subsection{Depth Buffer / Depth Test}
+
+Have a depth buffer which records the depth ($z$ coordinate) of the fragment
+that has been rendered on a each pixel.
+
+\begin{enumerate}
+  \item[1]   When a pixel is to be shaded compare the $z$ coordinate of the new
+             fragment with that in the depth buffer $D_{i}$
+  \item[2.1] If $x \leq D_{i}$ then depth test passes, the pixel is shaded based
+             on the new fragment and the depth buffer updated
+  \item[2.1] Otherwise the test fails and the fragment is discarded
+  \item[3]   The depth buffer is rest to maximum depth at the start of each
+             frame
+\end{enumerate}
+
+Can have "z fighting" when two objects with close $z$ coordinates are rasterised
+inside each other. A higher precision depth buffer avoids this.
+
+\section{Texture Mapping}
+
+\begin{itemize}
+  \item Texture coordinates $(u, v)$ defined per vertex
+  \item Coordinated interpolated to obtain per fragment texture coordinates
+  \item $(u, v)$ are normalised texture coordinates within $[0, 1]$
+  \item Textures coordinates out of the $[0, 1]$ can be handled differently:
+    \begin{description}
+      \item[Clamp] \hfill \\
+        Anything above 1 is set to 1 \\
+        Anything below 0 is set to 0
+      \item[Repeat] \hfill \\
+        $1.1 = 0.1$ \\
+        $-0.1 = 0.9$ \\
+        etc.
+      \item[Mirror] \hfill \\
+        $1.1 = 0.9$ \\
+        $-0.1 = 0.1$ \\
+        etc.
+    \end{description}
+  \item All textures for a mesh typically stored in a single texture image
+\end{itemize}
+
+\subsection{Affine Transform}
+
+Textures may not appear correctly if an object is tilted with respect to the
+camera.
+
+Caused by texture interpolation being linear but not fragment area.
+
+Solution is to use affine transform:
+
+\begin{enumerate}
+  \item[1] Divide texture coordinates by $P_{w}$
+  \item[2] Interpolate texture coordinates
+  \item[3] Multiply by $P_{w}$
+\end{enumerate}
+
+\subsection{Bilinear Filtering}
+
+When a texture is viewed close enough to the camera such that the rasterised
+object takes up more pixel space than the texture image.
+
+Sample multiple texels and blend them together.
+
+e.g. for texel coordinate 7.6 blend colour of texel 7 and 8 by factor 0.6.
+
+\subsection{MIP mapping /  minification}
+
+Generating smaller textures using the original fill size texture so that objects
+further away can sample a smaller texture.
+
+Forms a set of textures in decrecing size, known as a MIP chain.
+
+MIP map is selected using the level of detail (LOD) $\lambda$.
+
+This is calculated using the derivatives of the interpolated $x$ and $y$
+texture coordinates, i.e. how fast the texture coordinates are changing.
+
+Faster change in texture coordinates (higher $\lambda$) means less unique texels
+hence less detail. The size of $\lambda$ denotes how far down the MIP change the
+texture is selected.
+
+MIP chain is pre processed when the texture is loaded.
+
+Requires more memory to store entire MIP chain opposed to a single texture, but
+gives faster processing as less work needs to be done during rasterisation and
+gives a better texture quality due to texel averaging.
+
+\subsubsection{Trilinear filtering}
+
+Similar to bilinear filtering (operating in $x$ and $y$ axes) but also operating
+in $z$ axis to interpolate between two MIP map levels.
+
+Solves issue when an object spans multiple MIP levels and a noticeable line where
+the texture quality changes can be seen.
+
+\section{OpenGL}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.8\textwidth]{out/opengl_pipeline.eps}
+  \caption{OpenGL Pipeline}
+  \label{fig:opengl_pipeline}
+\end{figure}
+\FloatBarrier
+
+Vertex post processing operations:
+
+\begin{itemize}
+  \item Vertex clipping
+  \item Perspective divide
+  \item Viewport transform
+\end{itemize}
+
+Sample processing operations:
+
+\begin{itemize}
+  \item Depth test
+  \item Alpha blending
+\end{itemize}
+
+Note that tessellation shaders, the tessellator, and geometry shaders are
+optional.
+
+\subsection{Shaders}
+
+\begin{description}
+  \item[Attributes] \hfill \\
+    Values specific to the vertex or fragment being processed
+  \item[Uniforms] \hfill \\
+    Constant for all shader executions
+  \item[Interface block] \hfill \\
+    Used to interface shaders to each other, e.g. vertex shader $\rightarrow$
+    fragment shader
+\end{description}
+
+Automatic interpolation between shaders (e.g. values in output block of
+vertex/geometry shaders get interpolated before the fragment shader) (can be
+disabled using \texttt{flat} layout qualifier).
+
+Textures accessed from any shader through samplers. Textures are bound to a
+texture unit which maps to texturing hardware.
+
+TODO: more shaders
+
+\section{Scene Hierarchy and Skeletal animation}
+
+TODO
+
+\section{Lighting}
+
+TODO
 
 \end{document}

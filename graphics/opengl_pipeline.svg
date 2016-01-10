@@ -10,11 +10,11 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="412.50586"
-   height="357.99609"
+   height="411.00003"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.4 r9939"
-   sodipodi:docname="graphic_pipeline.svg">
+   sodipodi:docname="opengl_pipeline.svg">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -26,13 +26,13 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
      inkscape:cx="327.3233"
-     inkscape:cy="151.7818"
+     inkscape:cy="204.78573"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1916"
+     inkscape:window-width="956"
      inkscape:window-height="1041"
-     inkscape:window-x="0"
+     inkscape:window-x="960"
      inkscape:window-y="18"
      inkscape:window-maximized="0"
      fit-margin-top="0"
@@ -47,7 +47,7 @@
        enabled="true"
        snapvisiblegridlinesonly="true"
        originx="142.00586px"
-       originy="-82.503906px" />
+       originy="-29.499983px" />
   </sodipodi:namedview>
   <metadata
      id="metadata7">
@@ -72,23 +72,23 @@
        width="100"
        height="50"
        x="0"
-       y="882.36218" />
+       y="942.36218" />
     <rect
-       style="fill:#00ffff;stroke:#ff0000"
+       style="fill:#00ffff;stroke:#ffff00"
        id="rect3006-8"
        width="100"
        height="50"
        x="0"
        y="822.36218" />
     <rect
-       style="fill:#00ffff;stroke:#ff0000"
+       style="fill:#00ffff;stroke:#ffff00"
        id="rect3006-0"
        width="100"
        height="50"
        x="0"
        y="762.36218" />
     <rect
-       style="fill:#00ffff;stroke:#ff0000"
+       style="fill:#00ffff;stroke:#ffff00"
        id="rect3006-3"
        width="100"
        height="50"
@@ -116,26 +116,19 @@
        x="160"
        y="702.36218" />
     <rect
-       style="fill:#00ff00;stroke:#ff0000"
-       id="rect3006-70"
-       width="100"
-       height="50"
-       x="160"
-       y="822.36218" />
-    <rect
-       style="fill:none;stroke:#0000ff;stroke-width:0.85090572"
+       style="fill:none;stroke:#0000ff;stroke-width:0.92898107"
        id="rect3082"
-       width="120.14909"
-       height="310.95108"
-       x="-10.074547"
-       y="632.28766" />
+       width="120.07102"
+       height="370.87302"
+       x="-10.035509"
+       y="632.32672" />
     <rect
-       style="fill:none;stroke:#008000"
+       style="fill:none;stroke:#008000;stroke-width:0.87416303"
        id="rect3084"
-       width="120"
-       height="250"
-       x="150"
-       y="632.36218" />
+       width="120.12584"
+       height="190.84012"
+       x="149.93709"
+       y="632.29926" />
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -144,66 +137,76 @@
        id="text3086"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         id="tspan3088"
          x="50"
          y="662.36218"
-         style="font-size:12px">Vertex</tspan><tspan
+         style="font-size:12px"
+         id="tspan3041">Vertex</tspan><tspan
          sodipodi:role="line"
          x="50"
          y="677.36218"
-         id="tspan3090"
-         style="font-size:12px">Transformation</tspan></text>
+         style="font-size:12px"
+         id="tspan3045">Shader</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="50"
-       y="722.36218"
+       y="718.36218"
        id="text3086-8"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
-         id="tspan3088-6"
          x="50"
-         y="722.36218"
-         style="font-size:12px">Vertex</tspan><tspan
+         y="718.36218"
+         id="tspan3090-6"
+         style="font-size:12px">Tessellation</tspan><tspan
          sodipodi:role="line"
          x="50"
-         y="737.36218"
-         id="tspan3090-6"
-         style="font-size:12px">Clipping</tspan></text>
+         y="733.36218"
+         style="font-size:12px"
+         id="tspan3049">Control</tspan><tspan
+         sodipodi:role="line"
+         x="50"
+         y="748.36218"
+         style="font-size:12px"
+         id="tspan3051">Shader</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="50"
-       y="842.36218"
+       y="836.36218"
        id="text3086-1"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          x="50"
-         y="842.36218"
-         id="tspan3090-0"
-         style="font-size:12px">Viewpoint</tspan><tspan
+         y="836.36218"
+         style="font-size:12px"
+         id="tspan3155">Tessellator</tspan><tspan
          sodipodi:role="line"
          x="50"
-         y="857.36218"
+         y="851.36218"
          style="font-size:12px"
-         id="tspan3155">Transform</tspan></text>
+         id="tspan3059">Evaluation</tspan><tspan
+         sodipodi:role="line"
+         x="50"
+         y="866.36218"
+         style="font-size:12px"
+         id="tspan3061">Shader</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="50"
-       y="902.36218"
+       y="962.36218"
        id="text3086-9"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          x="50"
-         y="902.36218"
-         id="tspan3090-2"
-         style="font-size:12px">Primitive</tspan><tspan
+         y="962.36218"
+         style="font-size:12px"
+         id="tspan3069">Post</tspan><tspan
          sodipodi:role="line"
          x="50"
-         y="917.36218"
+         y="977.36218"
          style="font-size:12px"
-         id="tspan3159">Assembly</tspan></text>
+         id="tspan3073">Processing</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -214,18 +217,13 @@
          sodipodi:role="line"
          x="50"
          y="782.36218"
-         id="tspan3090-3"
-         style="font-size:12px">Perspective</tspan><tspan
+         style="font-size:12px"
+         id="tspan3151">Fixed Function</tspan><tspan
          sodipodi:role="line"
          x="50"
          y="797.36218"
          style="font-size:12px"
-         id="tspan3151">Divide</tspan></text>
-    <path
-       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 50,942.36218 0,20 80,0 0,-350 80,0 0,20 -10,-10"
-       id="path3161"
-       inkscape:connector-curvature="0" />
+         id="tspan3055">Tessellator</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 220,622.36218 -10,10"
@@ -235,21 +233,21 @@
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="210"
-       y="932.36218"
+       y="872.36218"
        id="text3165"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3167"
          x="210"
-         y="932.36218">OUTPUT</tspan></text>
+         y="872.36218">OUTPUT</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 210,882.36218 0,30 -10,-10"
+       d="m 210,822.36218 0,30 -10,-10"
        id="path3169"
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 220,902.36218 -10,10"
+       d="m 220,842.36218 -10,10"
        id="path3171"
        inkscape:connector-curvature="0" />
     <text
@@ -314,17 +312,17 @@
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="210"
-       y="952.36218"
+       y="892.36218"
        id="text3181-1"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          x="210"
-         y="952.36218"
+         y="892.36218"
          id="tspan3193-6"
          style="font-size:12px">Fragment Colour</tspan><tspan
          sodipodi:role="line"
          x="210"
-         y="967.36218"
+         y="907.36218"
          style="font-size:12px"
          id="tspan3251">Fragment Depth</tspan></text>
     <text
@@ -350,31 +348,19 @@
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="210"
-       y="842.36218"
-       id="text3086-40-1"
-       sodipodi:linespacing="125%"><tspan
-         sodipodi:role="line"
-         x="210"
-         y="842.36218"
-         id="tspan3090-4-1"
-         style="font-size:12px">Frame</tspan><tspan
-         sodipodi:role="line"
-         x="210"
-         y="857.36218"
-         style="font-size:12px"
-         id="tspan3333">Buffer</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-       x="210"
-       y="732.36218"
+       y="722.36218"
        id="text3086-40-6"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          x="210"
-         y="732.36218"
+         y="722.36218"
          id="tspan3090-4-7"
-         style="font-size:12px">Depth Test</tspan></text>
+         style="font-size:12px">Fragment</tspan><tspan
+         sodipodi:role="line"
+         x="210"
+         y="737.36218"
+         style="font-size:12px"
+         id="tspan3075">Shader</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
@@ -385,12 +371,46 @@
          sodipodi:role="line"
          x="210"
          y="782.36218"
-         id="tspan3090-4-78"
-         style="font-size:12px">Alpha</tspan><tspan
+         style="font-size:12px"
+         id="tspan3353">Sample</tspan><tspan
          sodipodi:role="line"
          x="210"
          y="797.36218"
          style="font-size:12px"
-         id="tspan3353">Blending</tspan></text>
+         id="tspan3079">Processing</tspan></text>
+    <rect
+       style="fill:#00ffff;stroke:#ffff00"
+       id="rect3006-6-1"
+       width="100"
+       height="50"
+       x="0"
+       y="882.36218" />
+    <text
+       xml:space="preserve"
+       style="font-size:20px;font-style:normal;font-weight:normal;text-align:center;line-height:125%;letter-spacing:0px;word-spacing:0px;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+       x="50"
+       y="902.36218"
+       id="text3086-9-1"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         x="50"
+         y="902.36218"
+         style="font-size:12px"
+         id="tspan3073-0">Geometry</tspan><tspan
+         sodipodi:role="line"
+         x="50"
+         y="917.36218"
+         style="font-size:12px"
+         id="tspan3110">Shader</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 200,622.36218 10,10"
+       id="path3112"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 210,632.36218 0,-20 -80,0 0,410.00002 -80,0 0,-20"
+       id="path3114"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
