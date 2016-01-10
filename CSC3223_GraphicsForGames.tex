@@ -640,7 +640,59 @@ disabled using \texttt{flat} layout qualifier).
 Textures accessed from any shader through samplers. Textures are bound to a
 texture unit which maps to texturing hardware.
 
-TODO: more shaders
+\subsection{Geometry Shader}
+
+Used to create new primitives from those created by the CPU side code.
+
+\begin{itemize}
+  \item Invoked once per primitive
+  \item Input is array of vertices
+  \item Output is a number of new primitives
+\end{itemize}
+
+Usage examples:
+
+\begin{itemize}
+  \item Normal visualisation
+  \item Particle systems
+\end{itemize}
+
+Reduces processing to be done by the CPU and earlier stages of the pipeline by
+reducing the number of vertices they need to process.
+
+Limited number of output vertices (based on specific hardware).
+
+\subsection{Tessellation}
+
+\begin{itemize}
+  \item Used for larger scale geometry amplification
+  \item Tessellation used to "fill" an existing primitive with more primitives
+  \item More vertices generated which can be transformed
+\end{itemize}
+
+The hardware tessellator operates on patches (areas bound by a number of
+vertices) and turns them in to wither lines, triangles or quads.
+
+Instead of a position, output vertices have a weighting which specifies its
+position relative to a number of the input vertices.
+
+Patches have tessellation factors that define how many new new vertices are
+generated. One factor for the inside of the patch and several for the outside.
+
+Using these factors it is possible to correctly line up patches with differing
+tessellation levels without having "cracks" in the object.
+
+\subsubsection{Tessellation Control Shader}
+
+Invoked once per input patch vertex.
+
+Feeds vertex information to tessellator and controls tessellation levels.
+
+\subsubsection{Tessellation Evaluation Shader}
+
+Invoked for every new vertex.
+
+Converts barycentric weightings created by the tessellator into positions.
 
 \section{Scene Hierarchy and Skeletal animation}
 
