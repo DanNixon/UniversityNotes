@@ -700,6 +700,81 @@ TODO
 
 \section{Lighting}
 
-TODO
+\subsection{Normals}
+
+\begin{itemize}
+  \item Unit vector perpendicular to the surface
+  \item Can be calculated using cross product of two side vectors
+  \item Usually stored as part of the model
+  \item Vertex normals are interpolated across the primitive
+  \item Interpolation may cause problems if an object has sharp corners
+\end{itemize}
+
+\subsection{Lighting Models}
+
+\begin{description}
+  \item[Static lighting] \hfill \\
+    Combining texture with a light map. \\
+    No real time updates. \\
+    No additional computation.
+
+  \item[Flat shading] \hfill \\
+    Per surface lighting. \\
+    No interpolation over surface. \\
+    Computationally fast.
+
+  \item[Gourard shading] \hfill \\
+    Per vertex shading. \\
+    Normal interpolated across primitive. \\
+    More computationally expensive.
+
+  \item[Phong shading] \hfill \\
+    Per fragment lighting. \\
+    Normal interpolated across primitive. \\
+    Most computationally intensive.
+
+  \item[Bump Mapping] \hfill \\
+    Normals stored in texture. \\
+    Each texel has its own normal.
+
+\end{description}
+
+\subsection{Phong Reflection Model}
+
+Types of light:
+
+\begin{description}
+  \item[Ambient] \hfill \\
+    Lights all faces of all objects in a scene equally
+  \item[Diffuse] \hfill \\
+    Light from a source that has been scattered evenly
+  \item[Specular] \hfill \\
+    Light from a source that has been reflected towards the camera
+\end{description}
+
+Lighting colour $c$ of a fragment (for a single light):
+\begin{align*}
+      c &= c_{a} + (c_{d} + c_{s}) \times a \\
+  c_{d} &= (N \cdot |(L - P)|) \times C_{d} \\
+  c_{s} &= (N \cdot \frac{1}{2}(V + L))^{n} \times C_{s}\\
+      a &= 1 - \frac{L}{L_{max}}
+\end{align*}
+
+where:
+
+\begin{itemize}
+  \item $k_{a}$ is the constant ambient light for the scene
+  \item $L_{max}$ is the maximum distance that a light source can be away from a
+        source
+  \item $L$ is the distance from the light source to the surface
+  \item $n$ is the specular power (higher for shinier materials)
+  \item $C_{d}$ and $C_{s}$ are colours of the diffuse and specular light
+  \item $P$ is the fragment position
+  \item $V$ is the view vector
+  \item $L$ is the light vector
+\end{itemize}
+
+Attenuation factor $a$ ensures that the light gets weaker as the light source
+moves away from the surface.
 
 \end{document}
