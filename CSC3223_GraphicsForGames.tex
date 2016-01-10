@@ -696,7 +696,66 @@ Converts barycentric weightings created by the tessellator into positions.
 
 \section{Scene Hierarchy and Skeletal animation}
 
-TODO
+\subsection{Scene Graphs}
+
+\begin{itemize}
+  \item Hierarchical tree structure of meshes
+  \item Each mesh has a model matrix that gets applied to it and all its
+        children
+  \item Typically use a tree as shallow as possible to reduce traversal time
+  \item Can include many other (non graphical) objects on the tree:
+    \begin{itemize}
+      \item Sound emitters
+      \item Shaders
+      \item etc.
+    \end{itemize}
+\end{itemize}
+
+Need to ensure transparent objects are drawn in the correct order. Solution is
+to add a "transparency" tag to each node.
+
+When processing objects:
+\begin{enumerate}
+  \item[1] Traverse the tree and build a list of opaque objects and a list of
+           transparent objects
+  \item[2] Render all the opaque objects
+  \item[3] Sort the list of transparent objects by their $z$ position
+  \item[4] Render transparent object from furthest away to closest
+\end{enumerate}
+
+\subsection{Animation}
+
+Can do simple animation by manipulating a tree of objects and their model
+matrices. This works well for simple objects such as cars and robots.
+
+It will not work for objects that have a flexible skin (such as humans).
+
+\subsubsection{Skinned meshes}
+
+Instead a skinned mesh is used and each vertex is pulled in the direction of
+several skeletal nodes (joints) by a set of weights.
+
+Skeletal nodes are arranged in a hierarchical tree and inherit transformations.
+
+Skinning (the process of transforming vertices of the mesh based on weights) is
+typically done on the vertex shader. An array of transformations can be passed
+to the shader through a uniform.
+
+The assignment of weights to each vertex and node (rigging) is done offline in
+the 3D modelling suite.
+
+In order to get a good frame rate in a skeletal animation without having to
+reskin the mesh every frame animation can be interpolated.
+
+In order to combine multiple animations that affect different parts of the
+skeleton, different animations can be blended together to form a new animation.
+
+Joints can usually be queried to obtain the transformation, useful when
+attaching other meshes to them (e.g. attach a gun to a hand).
+
+Inverse kinematics can be used to position a child node in a given position and
+have the parent nodes move in a realistic manner (e.g. placing a hand on a door
+handle).
 
 \section{Lighting}
 
