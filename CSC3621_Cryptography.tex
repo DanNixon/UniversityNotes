@@ -1128,9 +1128,140 @@ unique keys in total) using the session key and a known salt.
   \item Slower then symmetric encryption
 \end{itemize}
 
+\subsubsection{Chosen Plaintext Attack Security}
+
+Proof of chosen plaintext attack security:
+\begin{enumerate}
+  \item[1] Eve chooses two messages $m_{o}$ and $m_{1}$
+  \item[2] Alice chooses one of two messages to encrypt and sends ciphertext $c$
+           to Eve (selected by generating a random bit $b$)
+  \item[3] Eve determines which message the $c$ was generated from
+  \item[4] Eve sends $b^{\prime}$ to Alice denoting which message Eve believes
+           $c$ was generated form
+  \item[5] Eve is successful if $b = b^{\prime}$
+\end{enumerate}
+
+\subsubsection{Hybrid Encryption}
+
+Use an asymmetric cipher to distribute a symmetric cipher key between two
+parties, then use symmetric encryption to transfer large amounts of data.
+
+Combines efficiency of asymmetric encryption with convenience of asymmetric.
+
 \subsubsection{RSA}
 
-TODO
+Key Generation: GenRSA($1^{n}$)
+\begin{itemize}
+  \item
+    Input: \\
+    Key length $n$
+  \item Generate two large $n$ bit primes $p$ and $q$
+  \item Compute $N = p \cdot q$
+  \item Compute $\phi(N) = (p - 1) \cdot (q - 1)$
+  \item Choose a random integer $e \: : \: gcd(e, \phi(N)) = 1$
+  \item Compute inverse of $e$, $e \cdot d = 1 \: (mod \: \phi(N))$
+  \item
+    Output: \\
+    Secret key $(N, e)$ \\
+    Public key $(N, d)$
+\end{itemize}
+
+Encryption:
+\begin{itemize}
+  \item
+    Input: \\
+    Public key $(N, e)$ \\
+    Message $m$
+  \item $c = m^{e}$
+\end{itemize}
+
+Decryption:
+\begin{itemize}
+  \item
+    Input: \\
+    Secret key $(N, e)$ \\
+    Cipher text $c$
+  \item $m = c^{d}$
+\end{itemize}
+
+Proof:
+\begin{align*}
+  Dec_{sk}(Enc_{pk}(m)) &= m \\
+                      c &= m^{e} \\
+                  c^{d} &= (m^{e})^{d} \\
+                        &= m^{de} \\
+                        &= m^{1 + k\phi(N)} \\
+                        &= m^{1} \cdot m^{k\phi(N)} \\
+                        &= m \cdot 1 = m
+\end{align*}
+
+It is theoretically possible to obtain $d$ given public key $(N, e)$, however
+the method would involve factoring $N$ (a difficult problem) ad no such method
+currently exists.
+
+Textbook RSA is not secure, attacks include:
+\begin{description}
+  \item[Encryption with small $e$] \hfill \\
+    If both $e$ and $m$ are small then the encryption does not "wrap around" the
+    modulus $N$. \\
+    Can then compute $e$th root over integer to decrypt message.
+
+  \item[Common modulus attack] \hfill \\
+    If the same modulus $N$ is used throughout an organisation then it is
+    possible for one user to obtain the private keys for all other users.
+    \begin{align*}
+      e \cdot d &= 1 \: (mod \: \phi(N)) \\
+                &= 1 + k\phi(N)
+    \end{align*}
+    Can then compute $d$ for any user using the inverse of their public exponent
+    $e$ using:
+    \[
+      e \cdot d = 1 \: (mod \: \phi(N))
+    \]
+
+  \item[Ciphertext mangling] \hfill \\
+    No integrity built in so a cipher text can be modified without detection.
+
+\end{description}
+
+Padding is used to ensure integrity (two methods listed: PKCS \& OAEP).
+
+Messages are encoded with a structure and random padding before encryption.
+
+When decrypting check that the structure is intact, changes to the structure
+indicate that the cipher text has been tampered with.
+
+\Para{PKCS}
+
+Byte structure:
+\[
+  (00000000|00000010|r|00000000|m)^{e} \: (mod \: N)
+\]
+
+Structure is:
+\begin{itemize}
+  \item 16 bit integer 2
+  \item Random padding $r$
+  \item 8 bit integer 0
+  \item Message $m$
+\end{itemize}
+
+\Para{OAEP}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{out/rsa-oaep.eps}
+  \caption{RSA OAEP}
+  \label{fig:rsa-oaep}
+\end{figure}
+\FloatBarrier
+
+\begin{itemize}
+  \item Operates in module $N$
+  \item Uses two hash functions $G$ and $H$
+  \item Message can only be half modulo size, remainder of modulo is padded with
+        zeros
+\end{itemize}
 
 \subsubsection{ElGamal}
 
