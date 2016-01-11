@@ -164,11 +164,13 @@ Compute using Euclidean algorithm:
 \subsubsection{Invertible elements in $\mathbb{Z}_{N}$}
 
 The set of invertible elements is defined by:
-\[(\mathbb{Z}_{N})^{*} = \{x \in \mathbb{Z}_{N} : gcd(x, N) = 1\}\]
+\[
+  (\mathbb{Z}_{N})^{*} = \{x \in \mathbb{Z}_{N} : gcd(x, N) = 1\}
+\]
+
+$x^{-1}$ is the inverse of $x$ if $x \cdot x^{-1} = 1$
 
 If $p$ is prime then $(\mathbb{Z}_{p})^{*} = \mathbb{Z}_{p} / {0}$
-
-Set of invertible elements $\mathbb{Z}_{p}$ is cyclic.
 
 $(\mathbb{Z}_{p})^{*}$ is a cyclic group.
 
@@ -193,6 +195,135 @@ To solve:
 
 Solution:
 \[x = -b \cdot a^{-1} \in \mathbb{Z}_{N}\]
+
+\subsubsection{Fermat's Little Theorem}
+
+\[
+  \forall \: x \in (\mathbb{Z}_{p})^{*}: \: x^{p-1} = 1 (mod \: p)
+\]
+
+Calculating inverses:
+\[
+  x^{-1} = x^{p-2} (mod \: p)
+\]
+
+Generating large prime numbers:
+\begin{enumerate}
+  \item[1] Choose random base $a$ such that $2 \leq a < p - 1$
+  \item[2] Choose a random candidate number $p$ of required bit length
+  \item[3] Test $a^{p-1} = 1 (mod \: p)$, if test passes the $p$ is prime
+\end{enumerate}
+
+\subsubsection{Euler's $\phi$ function}
+
+The number of invertible elements in $\mathbb{Z}_{n}$.
+
+\[
+  \phi(n) = |(\mathbb{Z_{n}})^{*}|
+\]
+
+\subsubsection{Group order}
+
+Order of $g$ in $(\mathbb{Z}_{p})^{*}$ is the size of the group $<g>$.
+
+Raising a generator $g$ to its order $c$ gives 1:
+\[
+  g^{c} = 1 (mod \: p)
+\]
+
+\subsubsection{Euler's Theorem}
+
+\[
+  \forall \: x \in (\mathbb{Z}_{N})^{*}: \: x^{\phi(N)} = 1 \: (mod \: N)
+\]
+
+Can be used to cancel out elements where the group order in in an exponent,
+useful to remove the encryption operation.
+
+\subsubsection{$e$th root}
+
+$e$th root of $c$ ($c^{1/e}$) is $x \in (\mathbb{Z}_{p})^{*}$:
+\[
+  x^{e} = c \: (mod \: p)
+\]
+
+\Para{Computing $e$th root}
+
+Easy if two conditions are met:
+\begin{enumerate}
+  \item[1] Operating in $(\mathbb{Z}_{p})^{*}$
+  \item[2] $e$ is coprime to $p-1$
+\end{enumerate}
+
+If both conditions are true $e$th root can be computed by:
+\begin{enumerate}
+  \item[1]
+    Compute the inverse $d$ of $e$ \\
+    \[
+      d = e^{-1} \: (mod \: p - 1)
+    \]
+
+  \item[2]
+    Compute the $e$th root using $c^{d}$
+
+\end{enumerate}
+
+\subsection{Intractability}
+
+Intractability of a problem is tested used a setup defining the inputs and
+outputs to/from an adversary and the criteria in which the adversary is
+successful.
+
+\begin{itemize}
+  \item Setup
+  \item Inputs (to adversary)
+  \item Outputs (from adversary)
+  \item Success criteria
+\end{itemize}
+
+A problem is hard when probabilistic and polynomial time adversaries have only
+a small chance of success.
+
+\subsubsection{Factoring}
+
+\begin{description}
+  \item[Setup] \hfill \\
+    $(N, p, q)$ such that $p \cdot q = N$
+  \item[Inputs] \hfill \\
+    $N$
+  \item[Outputs] \hfill \\
+    $p^{\prime}$ and $q^{\prime}$
+  \item[Success criteria] \hfill \\
+    $p^{\prime} \cdot q^{\prime} = N$
+\end{description}
+
+\subsubsection{$e$th root (RSA)}
+
+\begin{description}
+  \item[Setup] \hfill \\
+    $(N, e, d)$ such that $e \cdot d = 1 \: (mod \: \phi(N))$ \\
+    Choose $y$ from $(\mathbb{Z}_{N})^{*}$
+  \item[Inputs] \hfill \\
+    $N$, $e$, $y$
+  \item[Outputs] \hfill \\
+    $x \in (\mathbb{Z}_{N})^{*}$
+  \item[Success criteria] \hfill \\
+    $e^{x} = y \: (mod \: N)$
+\end{description}
+
+\subsubsection{Discrete Logarithms (Diffie-Hellman key exchange)}
+
+\begin{description}
+  \item[Setup] \hfill \\
+    $((\mathbb{Z}_{p})^{*}, q, g)$ such that $q = order(g)$ \\
+    Choose $h$ from $(\mathbb{Z}_{p})^{*}$ such that $h = g^{x} \: (mod \: p)$
+  \item[Inputs] \hfill \\
+    $(\mathbb{Z}_{p})^{*}$, $q$, $g$, $h$
+  \item[Outputs] \hfill \\
+    $x \in (\mathbb{Z}_{q})^{*}$
+  \item[Success criteria] \hfill \\
+    $g^{x} = h \: (mod \: p)$
+\end{description}
 
 \section{Symmetric}
 
@@ -689,10 +820,6 @@ For $n$ bit security, hash output must be at least $2n$ bits long.
 Theorem is that if $f$ is collision resistant then $H$ is also collision
 resistant.
 
-\Para{Proof}
-
-TODO
-
 \subsubsection{Compression function: Davies-Meyer}
 
 $E$ is a block cipher using output of previous $f$ (or $IV$ if is first block)
@@ -993,6 +1120,13 @@ Key derivation generates different keys for cipher and MAC in both directions (4
 unique keys in total) using the session key and a known salt.
 
 \subsection{Public Key Encryption}
+
+\begin{itemize}
+  \item Encrypt using public key
+  \item Decrypt using secret key
+  \item Only one secret key to keeps secure
+  \item Slower then symmetric encryption
+\end{itemize}
 
 \subsubsection{RSA}
 
