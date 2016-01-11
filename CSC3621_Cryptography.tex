@@ -268,6 +268,11 @@ If both conditions are true $e$th root can be computed by:
 
 \end{enumerate}
 
+\subsubsection{Discrete Logarithm}
+
+Given $h \in (\mathbb{Z}_{p})^{*}$ and generator $g$, find $x$ such that $g^{x}
+= h$.
+
 \subsection{Intractability}
 
 Intractability of a problem is tested used a setup defining the inputs and
@@ -323,6 +328,21 @@ a small chance of success.
     $x \in (\mathbb{Z}_{q})^{*}$
   \item[Success criteria] \hfill \\
     $g^{x} = h \: (mod \: p)$
+\end{description}
+
+\subsubsection{Diffie-Hellman decision}
+
+\begin{description}
+  \item[Setup] \hfill \\
+    $((\mathbb{Z}_{p})^{*}, q, g)$ such that $q = order(g)$ \\
+    Choose $h_{1} = g^{x} \: (mod \: p)$ and $h_{2} = g^{y} \: (mod \: p)$ \\
+    Choose at random $K = g^{z}$ or $K = g^{xy}$
+  \item[Inputs] \hfill \\
+    $(\mathbb{Z}_{p})^{*}$, $q$, $g$, $h_{1}$, $h_{2}$, K
+  \item[Outputs] \hfill \\
+    Decision if $K = g^{z}$ or $K = g^{xy}$
+  \item[Success criteria] \hfill \\
+    If decision about $K$ is correct
 \end{description}
 
 \section{Symmetric}
@@ -1128,6 +1148,14 @@ unique keys in total) using the session key and a known salt.
   \item Slower then symmetric encryption
 \end{itemize}
 
+Key points:
+\begin{itemize}
+  \item Key distribution is authentic
+  \item Cipher texts are indistinguishable from random
+  \item Randomized
+  \item Efficiency with hybrid encryption
+\end{itemize}
+
 \subsubsection{Chosen Plaintext Attack Security}
 
 Proof of chosen plaintext attack security:
@@ -1149,6 +1177,12 @@ parties, then use symmetric encryption to transfer large amounts of data.
 Combines efficiency of asymmetric encryption with convenience of asymmetric.
 
 \subsubsection{RSA}
+
+Based on:
+\begin{itemize}
+  \item Factoring
+  \item $e$th root
+\end{itemize}
 
 Key Generation: GenRSA($1^{n}$)
 \begin{itemize}
@@ -1251,7 +1285,7 @@ Structure is:
 \begin{figure}[h!]
   \centering
   \includegraphics[width=0.6\textwidth]{out/rsa-oaep.eps}
-  \caption{RSA OAEP}
+  \caption{RSA OAEP encryption}
   \label{fig:rsa-oaep}
 \end{figure}
 \FloatBarrier
@@ -1263,9 +1297,66 @@ Structure is:
         zeros
 \end{itemize}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{out/rsa-oaep-dec.eps}
+  \caption{RSA OAEP decryption}
+  \label{fig:rsa-oaep-dec}
+\end{figure}
+\FloatBarrier
+
 \subsubsection{ElGamal}
 
-TODO
+Based on:
+\begin{itemize}
+  \item Discrete logarithm problem
+  \item Diffie-Hellman problem
+\end{itemize}
+
+Key generation: $GenElGamal(1^{n})$
+\begin{itemize}
+  \item
+    Input: \\
+    Key length $n$
+  \item Generate a cyclic group $G$, with order $q$ and generator $g$
+  \item Choose random $x \in \mathbb{Z}_{p}$
+  \item Compute $h = g^{x} \: (mod \: q)$
+  \item
+    Output: \\
+    Public key: $(G, q, g, h)$ \\
+    Secret key: $(G, q, g, x)$
+\end{itemize}
+
+Encryption:
+
+Choose random $y \in \mathbb{Z}_{q}$.
+\begin{align*}
+  c_{1} &= g^{y} \\
+  c_{2} &= h^{y} \cdot m
+\end{align*}
+
+Decryption:
+\[
+  m = c_{2} \cdot (c_{1}^{x})^{-1}
+\]
+
+Proof:
+\begin{align*}
+  m &= c_{2} \cdot (c_{1}^{x})^{-1} \\
+    &= m \cdot h^{y} \cdot (c_{1}^{x})^{-1}   \tag*{($c_{2} = h^{y} \cdot m$)} \\
+    &= m \cdot h^{y} \cdot (g^{xy})^{-1}      \tag*{($c_{1} = g^{y})$} \\
+    &= m \cdot g^{xy} \cdot (g^{xy})^{-1}     \tag*{($h = g^{x}$)} \\
+    &= m \cdot 1 = m                          \tag*{($a \cdot a^{-1} = 1$)}
+\end{align*}
+
+\Para{Attack on weak randomness}
+
+If the same $y$ is used to encrypt multiple messages $m_{a}$ and $m_{b}$ then
+the cipher texts can be divided to obtain:
+\[
+  \frac{c_{2a}}{c_{2b}} = \frac{h^{y} \cdot m_{a}}{h^{y} \cdot m_{b}}
+                        = \frac{m_{a}}{m_{b}}
+\]
 
 \subsection{Digital Signatures}
 
