@@ -1177,6 +1177,7 @@ parties, then use symmetric encryption to transfer large amounts of data.
 Combines efficiency of asymmetric encryption with convenience of asymmetric.
 
 \subsubsection{RSA}
+\label{sec:rsa_encryption}
 
 Based on:
 \begin{itemize}
@@ -1360,11 +1361,108 @@ the cipher texts can be divided to obtain:
 
 \subsection{Digital Signatures}
 
+\begin{itemize}
+  \item Goal: integrity
+  \item
+    Public verifiability \\
+    Anyone with access to public key can berify a signature
+  \item
+    Transferability \\
+    One can convince others that the key is valid
+  \item
+    Non-repudiation \\
+    Alice can not dispute that she has signed the message
+  \item
+    Key authenticity \\
+    Public key is distributed with integrity
+\end{itemize}
+
+A MAC is not equivalent of a digital signature:
+\begin{itemize}
+  \item Signatures have no pre shared secret (do not need key exchange)
+  \item Signatures cna be verified by anyone
+  \item A signature only requires one secret key
+  \item Signatures have non-repudiation
+  \item (Signatures are slower then MAC)
+\end{itemize}
+
+\subsubsection{Existential Unforgeability}
+
+\begin{description}
+  \item[Setup] \hfill \\
+    Key pair: $(pk, sk)$
+  \item[Inputs] \hfill \\
+    $pk$, signing function $S_{sk}()$ and set of messages $m \in Q$
+  \item[Outputs] \hfill \\
+    Message-signature pair: $(m^{\prime}, \sigma)$
+  \item[Success criteria] \hfill \\
+    $m^{\prime} \not\in Q$
+\end{description}
+
 \subsubsection{RSA}
+
+Key generation: $GenRSA(1^{n})$ (see \ref{sec:rsa_encryption})
+
+Sign:
+\[
+  \sigma = m^{d} \: (mod \: N)
+\]
+
+Verify:
+\[
+  m = \sigma^{e} \: (mod \: N)
+\]
+
+\Para{No message attack}
+
+TODO
+
+\Para{Selected message attack}
+
+TODO
+
+\subsubsection{Digital Signature Standard (DSS)}
+
+Key generation: $GenDSS(1^{n})$
+\begin{itemize}
+  \item
+    Input: \\
+    Key length $n$
+  \item Generate a cyclic group $G$, with order $q$ and generator $g$
+  \item Choose random $x \in \mathbb{Z}_{p}$
+  \item Compute $y = g^{x} \: (mod \: q)$
+  \item
+    Output: \\
+    Public key: $(G, q, g, y)$ \\
+    Secret key: $(G, q, g, x)$
+\end{itemize}
+
+Sign:
+
+TODO
+
+Verify:
+
+TODO
+
+\begin{itemize}
+  \item Widely used
+  \item No security proof exists yet
+\end{itemize}
+
+\subsubsection{Hash and Sign paradigm}
+
+\begin{itemize}
+  \item Hash the message before it is signed
+  \item Hashed RSA proven to be existentally unforgeable
+\end{itemize}
 
 TODO
 
 \subsection{Zero Knowledge Proofs}
+
+Problem: How to prove knowledge of a secret without disclosing any information
+about the secret.
 
 TODO
 
