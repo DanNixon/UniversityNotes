@@ -279,18 +279,25 @@ Intractability of a problem is tested used a setup defining the inputs and
 outputs to/from an adversary and the criteria in which the adversary is
 successful.
 
-\begin{itemize}
-  \item Setup
-  \item Inputs (to adversary)
-  \item Outputs (from adversary)
-  \item Success criteria
-\end{itemize}
-
 A problem is hard when probabilistic and polynomial time adversaries have only
 a small chance of success.
 
 \subsubsection{Factoring}
 
+\begin{description}
+  \item[Problem]
+    Find $p$ and $q$ given $N = p \cdot q$
+  \item[Over]
+    $\mathbb{Z}$
+  \item[Generation]
+    $p \cdot q$
+  \item[Solution]
+    Factorise $N$
+  \item[Used For]
+    RSA encryption, RSA signatures
+\end{description}
+
+Proof:
 \begin{description}
   \item[Setup] \hfill \\
     $(N, p, q)$ such that $p \cdot q = N$
@@ -305,6 +312,20 @@ a small chance of success.
 \subsubsection{$e$th root (RSA)}
 
 \begin{description}
+  \item[Problem]
+    Find $x$ given $x^{e} =y \: (mod \: N)$
+  \item[Over]
+    $(\mathbb{Z}_{n})^{*}$
+  \item[Generation]
+    $x^{e} \: (mod \: N)$
+  \item[Solution]
+    Find $e$th root $x$ given $y$
+  \item[Used For]
+    RSA encryption, RSA signatures
+\end{description}
+
+Proof:
+\begin{description}
   \item[Setup] \hfill \\
     $(N, e, d)$ such that $e \cdot d = 1 \: (mod \: \phi(N))$ \\
     Choose $y$ from $(\mathbb{Z}_{N})^{*}$
@@ -316,8 +337,22 @@ a small chance of success.
     $e^{x} = y \: (mod \: N)$
 \end{description}
 
-\subsubsection{Discrete Logarithms (Diffie-Hellman key exchange)}
+\subsubsection{Discrete Logarithms}
 
+\begin{description}
+  \item[Problem]
+    Find $x$ given $g^{x} = h \: (mod \: p)$
+  \item[Over]
+    Subgroups of $(\mathbb{Z}_{p})^{*}$
+  \item[Generation]
+    $g^{x} \: (mod \: p)$
+  \item[Solution]
+    Find discrete log $x$ given $h$
+  \item[Used For]
+    ElGamal encryption, DSA signatures, Schnorr
+\end{description}
+
+Proof:
 \begin{description}
   \item[Setup] \hfill \\
     $((\mathbb{Z}_{p})^{*}, q, g)$ such that $q = order(g)$ \\
@@ -332,6 +367,20 @@ a small chance of success.
 
 \subsubsection{Diffie-Hellman decision}
 
+\begin{description}
+  \item[Problem]
+    Distinguish $g^{xy}$ from $g^{z}$
+  \item[Over]
+    Subgroups of $(\mathbb{Z}_{p})^{*}$
+  \item[Generation]
+    $g^{xy} \: (mod \: p)$
+  \item[Solution]
+    Decide if $K$ is DH or random
+  \item[Used For]
+    ElGamal encryption, DSA signatures, Schnorr
+\end{description}
+
+Proof:
 \begin{description}
   \item[Setup] \hfill \\
     $((\mathbb{Z}_{p})^{*}, q, g)$ such that $q = order(g)$ \\
@@ -1094,10 +1143,10 @@ Requires $2^{l}$ brute force decryption attempts to solve.
 Proof of correctness of session keys:
 \begin{align*}
   k_{AB(alice)} &= k_{AB(bob)} \\
-  B^{a} &= A^{b} \\
-  g^{b^{a}} &= g^{a^{b}} \\
-  g^{ba} &= g^{ab} \\
-  g^{ab} &= g^{ab}
+          B^{a} &= A^{b} \\
+      g^{b^{a}} &= g^{a^{b}} \\
+         g^{ba} &= g^{ab} \\
+         g^{ab} &= g^{ab}
 \end{align*}
 
 \Para{Difficulty}
@@ -1365,7 +1414,7 @@ the cipher texts can be divided to obtain:
   \item Goal: integrity
   \item
     Public verifiability \\
-    Anyone with access to public key can berify a signature
+    Anyone with access to public key can verify a signature
   \item
     Transferability \\
     One can convince others that the key is valid
@@ -1380,7 +1429,7 @@ the cipher texts can be divided to obtain:
 A MAC is not equivalent of a digital signature:
 \begin{itemize}
   \item Signatures have no pre shared secret (do not need key exchange)
-  \item Signatures cna be verified by anyone
+  \item Signatures can be verified by anyone
   \item A signature only requires one secret key
   \item Signatures have non-repudiation
   \item (Signatures are slower then MAC)
@@ -1422,6 +1471,7 @@ TODO
 TODO
 
 \subsubsection{Digital Signature Standard (DSS)}
+\label{sec:dsa_signatures}
 
 Key generation: $GenDSS(1^{n})$
 \begin{itemize}
@@ -1454,10 +1504,18 @@ TODO
 
 \begin{itemize}
   \item Hash the message before it is signed
-  \item Hashed RSA proven to be existentally unforgeable
+  \item Hashed RSA proven to be existentially unforgeable
 \end{itemize}
 
 TODO
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.2\textwidth]{out/hash_and_sign_rsa.eps}
+  \caption{Hash and Sign for RSA}
+  \label{fig:hash_and_sign_rsa}
+\end{figure}
+\FloatBarrier
 
 \subsection{Zero Knowledge Proofs}
 
@@ -1465,5 +1523,30 @@ Problem: How to prove knowledge of a secret without disclosing any information
 about the secret.
 
 TODO
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{out/interactive_proof.eps}
+  \caption{Interactive proof}
+  \label{fig:interactive_proof}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Schnorr protocol}
+
+Key generation: $GenSchnorr(1^{n})$ (same as $GenDSA$, see
+\ref{sec:dsa_signatures}).
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{out/schnorr.eps}
+  \caption{Schnorr protocol}
+  \label{fig:schnorr}
+\end{figure}
+\FloatBarrier
+
+TODO
+
+(Schnorr can also be used as a signature scheme)
 
 \end{document}
