@@ -1464,11 +1464,30 @@ Verify:
 
 \Para{No message attack}
 
-TODO
+Adversary only has access to a public key $pk = (N, e)$.
+
+Use RSA as encryption scheme:
+\begin{enumerate}
+  \item[1] Select random signature $\sigma \in (\mathbb{Z}_{N})^{*}$
+  \item[2] Compute message $m = \sigma^{e}$
+\end{enumerate}
 
 \Para{Selected message attack}
 
-TODO
+Adversary has access to public key $pk = (N, e)$ and can obtain two signatures
+on messages of their choosing.
+
+To forge a signature on message $m$:
+\begin{enumerate}
+  \item[1] Choose random message $m_{1} \in (\mathbb{Z}_{N})^{*}$
+  \item[2] Compute $m_{2} = m / m_{1} \: (mod \: N)$
+  \item[3] Obtain signatures $\sigma_{1}$, $\sigma_{2}$ for messages $m_{1}$,
+           $m_{2}$
+  \item[4] Compute signature $\sigma$ for $m$: $\sigma = \sigma_{1} \cdot
+           \sigma_{2} \: (mod \: N)$
+\end{enumerate}
+
+(same principle as mangling ciphertext attack used in RSA encryption)
 
 \subsubsection{Digital Signature Standard (DSS)}
 \label{sec:dsa_signatures}
@@ -1488,12 +1507,27 @@ Key generation: $GenDSS(1^{n})$
 \end{itemize}
 
 Sign:
-
-TODO
+\begin{itemize}
+  \item Choose random $k \in \mathbb{Z}_{q}$
+\end{itemize}
+\begin{align*}
+       r &= g^{k} \: (mod \: p) \: (mod \: q)) \\
+  s &= (H(m) + xr) \cdot k^{-1} \: (mod \: q) \\
+  \sigma &= r
+\end{align*}
 
 Verify:
 
-TODO
+Compute:
+\begin{align*}
+  u_{1} &= H(m) \cdot s^{-1} \: (mod \: q) \\
+  u_{2} &= r \cdot s^{-1} \: (mod \: q)
+\end{align*}
+
+Check:
+\[
+  r = g^{u_{1}} \cdot y^{u_{2}} \: (mod \: p) \: (mod \: q)
+\]
 
 \begin{itemize}
   \item Widely used
@@ -1505,24 +1539,49 @@ TODO
 \begin{itemize}
   \item Hash the message before it is signed
   \item Hashed RSA proven to be existentially unforgeable
+  \item Attacks now depend on collisions in hash values produced by $H$
 \end{itemize}
 
-TODO
-
-\begin{figure}[h!]
+\begin{figure}[h]
   \centering
-  \includegraphics[width=0.2\textwidth]{out/hash_and_sign_rsa.eps}
-  \caption{Hash and Sign for RSA}
-  \label{fig:hash_and_sign_rsa}
+  \begin{subfigure}[t!]{0.45\textwidth}
+    \centering
+    \includegraphics[width=0.4\textwidth]{out/hash_and_sign_rsa.eps}
+    \caption{Hash and Sign for RSA}
+    \label{fig:hash_and_sign_rsa}
+  \end{subfigure}
+  \begin{subfigure}[t!]{0.45\textwidth}
+    \centering
+    \includegraphics[width=0.4\textwidth]{out/hash_and_sign.eps}
+    \caption{General Hash and Sign paradigm}
+    \label{fig:hash_and_sign}
+  \end{subfigure}
+  \caption{}
+  \label{fig:hash_and_sign_paradigm}
 \end{figure}
 \FloatBarrier
+
+General Hash and Sign paradigm:
+\begin{enumerate}
+  \item[1]
+    Hash with a random key $s$ \\
+    Key can either be a standardised key known to everyone or attached to the
+    signature body
+  \item[2]
+    Sign message with a signature function using shared key $sk$
+\end{enumerate}
 
 \subsection{Zero Knowledge Proofs}
 
 Problem: How to prove knowledge of a secret without disclosing any information
 about the secret.
 
-TODO
+Properties:
+\begin{enumerate}
+  \item[1] If the prover knows the secret then the proof always succeeds
+  \item[2] There should exist a knowledge extractor $M$ that can extract the
+           secret knowledge from the prover in polynomial time
+\end{enumerate}
 
 \begin{figure}[h!]
   \centering
@@ -1531,6 +1590,23 @@ TODO
   \label{fig:interactive_proof}
 \end{figure}
 \FloatBarrier
+
+\subsubsection{Simulator}
+
+Generate a transcript (witness, challenge and response) without contacting a
+prover.
+
+Using a simulator it is possible to generate a transcript that is
+indistinguishable from the transcript between a prover and a verifier.
+
+Simulator computes transcript in reverse:
+\begin{enumerate}
+  \item[1] Choose random response
+  \item[2] Choose a challenge
+  \item[3] Compute the initial witness randomness
+\end{enumerate}
+
+Possible because simulator is not bound to initial witness.
 
 \subsubsection{Schnorr protocol}
 
@@ -1545,8 +1621,13 @@ Key generation: $GenSchnorr(1^{n})$ (same as $GenDSA$, see
 \end{figure}
 \FloatBarrier
 
-TODO
+Simulator for zero-knowledge proof:
+\begin{enumerate}
+  \item[1] Choose $c, s \in \mathbb{Z}_{q}$
+  \item[2] Compute $t = g^{s} / y^{c}$
+  \item[3] Transcript: $(t, c, s)$
+\end{enumerate}
 
-(Schnorr can also be used as a signature scheme)
+Schnorr is honest verifier zero-knowledge.
 
 \end{document}
