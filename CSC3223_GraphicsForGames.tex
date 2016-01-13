@@ -779,17 +779,16 @@ handle).
 
   \item[Flat shading] \hfill \\
     Per surface lighting. \\
-    No interpolation over surface. \\
+    Single value used on a surface. \\
     Computationally fast.
 
   \item[Gourard shading] \hfill \\
     Per vertex shading. \\
-    Normal interpolated across primitive. \\
+    Interpolated across primitive. \\
     More computationally expensive.
 
   \item[Phong shading] \hfill \\
     Per fragment lighting. \\
-    Normal interpolated across primitive. \\
     Most computationally intensive.
 
   \item[Bump Mapping] \hfill \\
@@ -831,7 +830,11 @@ where:
   \item $P$ is the fragment position
   \item $V$ is the view vector
   \item $L$ is the light vector
+  \item $N$ is the normal
 \end{itemize}
+
+Normal $N$ can be calculates using two side vectors: $N = (v_{0} - v{1}) \times
+(v_{0} - v_{2})$
 
 Attenuation factor $a$ ensures that the light gets weaker as the light source
 moves away from the surface.
