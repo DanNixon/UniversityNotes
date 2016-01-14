@@ -214,7 +214,7 @@ each failure case.
 \Para{At Least Once}
 
 If client makes a call and it times out then it retries a finite number of
-times, if it continues the fail then the client terminates abnormally.a
+times, if it continues the fail then the client terminates abnormally.
 
 Server always executes the request from the client and sends the reply
 regardless of previous client requests (stateless server).
@@ -798,7 +798,7 @@ properties.
   Server
 
   \begin{enumerate}
-    \item[1]   Wait with timeout fro \textit{get ready} command from coordinator
+    \item[1]   Wait with timeout for \textit{get ready} command from coordinator
     \item[2]   If timeout elapses then abort transaction
     \item[3.1] If server does not want to commit then reply \textit{no}
     \item[3.2] Otherwise write transaction ID and coordinator node address to
