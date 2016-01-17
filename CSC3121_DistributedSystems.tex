@@ -571,6 +571,11 @@ from the calling code.
   \item Transaction executions are required to be a serializable schedule
 \end{itemize}
 
+A schedule $S$ consisting of a set of transactions $\{T_{1}, T_{2}, \ldots,
+T_{n}\}$ is serializable if there is no situation where a transaction needs to
+obtain a lock on an object that is already held by another transaction that has
+not yet completed.
+
 \subsubsection{Locking}
 
 Concurrent access to shared objects is controlled by locking objects.
@@ -621,6 +626,11 @@ Can be detected by monitoring number of "wait for" cycles in acquiring locks,
 not a simple task in a distributed system.
 
 \subsection{Two Phase Locking}
+
+Two phase locking ensures the consistency (C) and independence (I) ACID
+properties.
+
+The schedule $S$ being processed must be serializable.
 
 Assume that:
 
