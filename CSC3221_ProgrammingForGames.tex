@@ -25,6 +25,10 @@ A selection of data types that always seem to be on the exam:
     A pointer to an array of integers of length 3.
   \item[\texttt{int char *(*a)[]}] \hfill \\
     A pointer to an array of pointers to characters.
+  \item[\texttt{const int * a}] \hfill \\
+    A pointer to a \texttt{const} integer.
+  \item[\texttt{int * const a}] \hfill \\
+    A \texttt{const} pointer to an integer
 \end{description}
 
 \subsection{Declaration vs Definition}
@@ -77,6 +81,10 @@ Notes:
   \item The implementation of a function not declared \texttt{virtual} will be
         that of the type (not the type if the instance)
   \item For this reason destructors should always be \texttt{virtual}
+  \item Virtual inheritance is used to avoid the "diamond pattern" problem when
+        a class inherits from multiple children of a single base class
+  \item Without virtual inheritance this results in multiple copies of the base
+        class being created
 \end{itemize}
 
 \end{document}
