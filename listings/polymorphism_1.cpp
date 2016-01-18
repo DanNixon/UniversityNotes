@@ -9,13 +9,13 @@ class ITouhou {
   virtual string name() const = 0;
 };
 
-class Youkai : public ITouhou {
+class Youkai : public virtual ITouhou {
  public:
   Youkai() : ITouhou() { cout << "Youkai constructed" << endl; }
   virtual ~Youkai() { cout << "Youkai destructed" << endl; }
 };
 
-class IFlyable {
+class IFlyable: public virtual ITouhou {
  public:
   IFlyable() { cout << "IFlyable constructed" << endl; }
   virtual ~IFlyable() { cout << "IFlyable destructed" << endl; }
@@ -28,6 +28,14 @@ class Yuuka : public Youkai, public IFlyable {
   ~Yuuka() { cout << "Yuuka destructed" << endl; }
   string name() const { return "Yuuka"; }
   void fly() { cout << "Yuuka::fly()" << endl; }
+};
+
+class Reimu : public virtual ITouhou, public IFlyable
+{
+ public:
+  Reimu() : ITouhou(), IFlyable() { cout << "Reimu constructed" << endl; }
+  ~Reimu() { cout << "Reimu destructed" << endl; }
+  string name() const { return "Reimu"; }
 };
 
 int main() {
@@ -50,6 +58,12 @@ int main() {
   IFlyable *y4 = new Yuuka();
   y4->fly();
   delete y4;
+
+  cout << "=====" << endl;
+
+  IFlyable *r1 = new Reimu();
+  r1->fly();
+  delete r1;
 
   return 0;
 }
