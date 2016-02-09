@@ -6,6 +6,111 @@
 
 \tableofcontents
 
+\section{Equations and their Solutions}
+
+\subsection{Newton's First Law}
+
+\textit{When viewed in an inertial reference frame, an object is either at rest
+or moves at a constant velocity, unless acted upon by an external force.}
+
+\begin{itemize}
+  \item
+    Objects in a scene that are to be kept in a constant position (e.g. ground)
+    should be immune to physics calculations.
+
+  \item
+    Movable objects should have a "rest" state in which no physics calculations
+    are performed for that object until something will cause it to move.
+
+    This both makes the simulation less computationally intensive and reduced
+    the chance of jitter and error caused by two nearly equal floating point
+    numbers.
+\end{itemize}
+
+\subsection{Newton's Second Law}
+
+\textit{The vector sum of the forces acting on an object is equal to the total
+mass of that object multiplied by the acceleration of the object.}
+
+\[
+  F = ma
+\]
+
+\subsection{Newton's Third Law}
+
+\textit{When one body exerts a force on a second body, the second body
+simultaniously exerts a force equal in magnitude and opposite in direction to
+that of the first body.}
+
+\subsection{Law of Conservation of Momentum}
+
+\textit{In a closed system, total momentum is consistent.}
+
+\[
+  p = mv
+\]
+
+Ignoring all other forces if two objects of mass $m_{n}$ travelling towards each
+other with momentum $u_{n}$, the total momentum of the system is:
+\[
+  p_{initial} = m_{1}u_{1} + m_{2}u_{2}
+\]
+
+After they collide the two objects will have two new velocities while keeping
+the same masses:
+\begin{align*}
+  p_{final} &= m_{1}v_{1} + m_{2}v_{2} \\
+  p_{final} &= p_{initial}
+\end{align*}
+
+\subsection{SUVAT equations}
+
+\begin{description}
+  \item[$s$] Displacement
+  \item[$u$] Initial velocity
+  \item[$v$] Final velocity
+  \item[$a$] Acceleration
+  \item[$t$] Time
+\end{description}
+
+\begin{align*}
+      v &= u + at \\
+      s &= ut + \frac{1}{2}at^{2} \\
+      s &= \frac{1}{2} \left(u + v\right) t \\
+  v^{2} &= u^{2} + 2as \\
+      s &= vt - \frac{1}{2}at^{2}
+\end{align*}
+
+Constant acceleration is assumed, this is not an issue in simulation as updates
+are calculated in time steps sufficiently small that constant acceleration can
+be assumed.
+
+\section{Newtonian Physics}
+
+TODO
+
+\section{Springs}
+
+TODO
+
+\section{Fluid Dynamics}
+
+TODO
+
+\section{Collision Detection and Response}
+
+TODO
+
+\section{Particles}
+
+TODO
+
+\section{Path Finding}
+
+TODO
+
+\section{Choice and States}
+
 TODO
 
 \end{document}
