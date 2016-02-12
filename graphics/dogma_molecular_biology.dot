@@ -1,0 +1,6 @@
+digraph DogmaOfMolecularBiology
+{
+  DNA   -> DNA      [label="Replication"]
+  DNA   -> mRNA     [label="Transcription"]
+  mRNA  -> Protein  [label="Translation"]
+}
