@@ -85,6 +85,99 @@ Constant acceleration is assumed, this is not an issue in simulation as updates
 are calculated in time steps sufficiently small that constant acceleration can
 be assumed.
 
+\subsection{Numerical Integration}
+
+Using time step: $\Delta t = t_{x + 1} - t_{x}$
+
+\subsubsection{Explicit Euler}
+
+\begin{itemize}
+  \item Simple
+  \item Computationally cheap
+  \item Unstable at high $\Delta t$
+\end{itemize}
+
+\begin{align*}
+  v_{x + 1} &= v_{x} + a_{x} \Delta t \\
+  s_{x + 1} &= s_{x} + v_{x} \Delta t
+\end{align*}
+
+\subsubsection{Implicit Euler}
+
+\begin{itemize}
+  \item Similar to explicit Euler but uses rate of change in next state
+  \item Stable
+  \item Computationally expensive
+\end{itemize}
+
+\begin{align*}
+  v_{x + 1} &= v_{x} + a_{x + 1} \Delta t \\
+  s_{x + 1} &= s_{x} + v_{x + 1} \Delta t
+\end{align*}
+
+\subsubsection{Semi-implicit Euler}
+
+\begin{itemize}
+  \item A combination of explicit and implicit Euler
+  \item Stable
+  \item Avoid expensive operations
+\end{itemize}
+
+\begin{align*}
+  v_{x + 1} &= v_{x} + a_{x} \Delta t \\
+  s_{x + 1} &= s_{x} + v_{x + 1} \Delta t
+\end{align*}
+
+\subsubsection{Verlet}
+
+\begin{itemize}
+  \item Similar computational cost to Semi-implicit Euler
+  \item Entities must store their historical positions (in a FIFO buffer)
+  \item Reversible
+\end{itemize}
+
+Substitute $v = u + at$ into Euler equations:
+\begin{align*}
+  s_{x + 1} &= s_{x} + v_{x + 1} \Delta t \\
+            &= s_{x} + (v_{x} + a_{x} \Delta t) \Delta t \\
+            &= s_{x} + v_{x} \Delta t + a_{x} \Delta t^{2}
+\end{align*}
+
+This can be solved for $v_{x}$ using the past two displacements:
+\begin{align*}
+  v_{x} &= \frac{s_{x} - s_{x - 1}}{\Delta t}
+\end{align*}
+
+The substituted back into:
+\begin{align*}
+  s_{x + 1} &= s_{x} + v_{x} \Delta t + a_{x} \Delta t^{2} \\
+            &= s_{x} + (s_{x} - s_{x - 1}) + a_{x} \Delta t^{2}
+\end{align*}
+
+\subsection{Drag}
+
+In simple simulations the forces that act against an object to eventually bring
+it to a stop (e.g. friction, air resistance, etc.) can be represented by a
+damping factor $0 < d < 1$.
+
+This factor is used to attenuate the velocity of a moving entity in each physics
+frame.
+
+This factor can be varied as a cheap way of simulating different environments.
+
+\subsection{Rest}
+
+When the velocity of an entity is close to zero, set the velocity to zero.
+
+This is done to avoid excessive computation for entities at rest.
+
+\subsection{Gravity}
+
+Gravity is simple to handle as a constant that is added to acceleration in the
+$y$ axis.
+
+This constant can be varied as a cheap way of simulating different environments.
+
 \section{Newtonian Physics}
 
 TODO
