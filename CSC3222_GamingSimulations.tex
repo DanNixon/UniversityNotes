@@ -253,15 +253,65 @@ partitioning or BSP.
 
 \subsubsection{Narrowphase}
 
-TODO
+Accurately check the remaining pairs of entities.
+
+Narrowphase checks should also provide the necessary data to calculate the
+collision response:
+
+\begin{description}
+  \item[Contact point: $P$] \hfill \\
+    Point at which the interface was detected.
+  \item[Contact normal: $N$] \hfill \\
+    A unit vector describing the direction in which the entities must be moved
+    to resolve the interface.
+  \item[Penetration depth: $p$] \hfill \\
+    The minimum distance the entities must be moved to resolve the interface,
+    i.e. the distance required for them to be touching, not intersecting.
+\end{description}
+
+Due to the mature of the time stepped physics model, entities will intersect
+(interface) before they are detected. i.e. Collisions are not detected,
+intersections are.
+
+The time step must be small enough such that the contact point is on the correct
+side of both entities, otherwise the interface will be resolved in the opposite
+direction.
 
 \Para{Sphere-Sphere detection}
 
-TODO
+Two spheres are said to have collided if the following equation is true:
+\[
+  d < r_{1} + r_{2}
+\]
+
+Where $d$ is the distance between the centres of the spheres and $r_{1}$ and
+$r_{2}$ are the radii of each sphere.
+
+The collision response data can be extracted as follows:
+\begin{align*}
+  p &= r_{1} + r_{2} - d \\
+  N &= |S_{1} - S_{2}| \\
+  P &= S_{1} - N \times (r_{1} - p)
+\end{align*}
 
 \Para{Sphere-Plane detection}
 
-TODO
+A sphere and plane are said to have collided if the following equation is true:
+\[
+  N \cdot S + d < r
+\]
+
+Where $N$ is the normal to the plane, $S$ is the position of the sphere, $d$ is
+the distance from the plane to the world origin and $r$ is the radius of the
+sphere.
+
+The collision response data can be extracted as follows:
+\begin{align*}
+  p &= r - (N \cdot S + d) \\
+  P &= S - N \times (r - p)
+\end{align*}
+
+Note that in this case an infinite plane is assumed.
 
 \subsection{Response}
 
