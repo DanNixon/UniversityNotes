@@ -178,6 +178,95 @@ $y$ axis.
 
 This constant can be varied as a cheap way of simulating different environments.
 
+\section{Collision Detection and Response}
+
+\subsection{Detection}
+
+Collision detection is a naturally expensive operation for scenes with large
+numbers of entities.
+
+Without optimisation it becomes an $N^{2}$ problem (where $N$ is the number of
+entities).
+
+An approach to reducing the number of comparison operations is to separate
+collision detection into two phases: broadphase and narrowphase.
+
+\subsubsection{Broadphase}
+
+Broadphase collision detection reduces the number of collision checks required
+by culling checks for entities that cannot have collided.
+
+\Para{Bounding Box Test}
+
+Tests for collisions using a bounding box defined by the extremes of an entity
+in each axis.
+
+In the case where there is no other entity "close" to the one being tested, this
+replaces the complex collision check with a much simpler one.
+
+Works well in scenes with low numbers of entities.
+
+\Para{World Partitioning}
+
+Partition the world into several subsections, converting the large $N^{2}$
+problem into several smaller $n^{2}$ problems.
+
+Provision has to be made for an entity to exist in multiple partitions if it is
+on a boundary.
+
+Entities are sorted into partitions based on their size and position.
+
+If performing a simple geographical division then it is possible for the
+distribution of entities to mean this is no faster (or sometimes slower) than
+performing a bounding box check (e.g. if all entities are in the same
+partition).
+
+\Para{Binary Search Partitioning}
+
+Binary search partitioning (BSP) solves the problem of uneven entity
+distribution in world partitioning by recursively subdividing partitions based
+on the number of entities in a partition.
+
+An Octree is a common approach to this in which the world is split into
+progressively smaller cubes.
+
+The world is split into several partitions, if the number of entities in a
+partition is above a set threshold then the partition is split into several sub
+partitions. This process repeats until the number of entities in each sub
+partition is below the set threshold.
+
+The threshold must be chosen well: too high and the benefits of BSP are not
+visible, too low and the process becomes inefficient due to the number of
+sorting operations when partitions are divided.
+
+\Para{Sort and Sweep}
+
+Sort and sweep can be used in conjunction with any other method of culling
+checks where collision is impossible.
+
+In this process bounding boxes of all entities are projected onto a single axis
+and any pairs of entities that do not overlap are culled from more expensive
+comparisons.
+
+This can be performed during the test for partition occupancy in world
+partitioning or BSP.
+
+\subsubsection{Narrowphase}
+
+TODO
+
+\Para{Sphere-Sphere detection}
+
+TODO
+
+\Para{Sphere-Plane detection}
+
+TODO
+
+\subsection{Response}
+
+TODO
+
 \section{Newtonian Physics}
 
 TODO
@@ -187,10 +276,6 @@ TODO
 TODO
 
 \section{Fluid Dynamics}
-
-TODO
-
-\section{Collision Detection and Response}
 
 TODO
 
