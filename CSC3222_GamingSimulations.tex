@@ -315,6 +315,73 @@ Note that in this case an infinite plane is assumed.
 
 \subsection{Response}
 
+Three methods:
+\begin{description}
+  \item[Projection] \hfill \\
+    Moves colliding objects far enough apart for them not to be colliding,
+    operating on position alone.
+  \item[Impulse] \hfill \\
+    Calculates new velocity for each object based on the law of conservation of
+    momentum.
+  \item[Penalty] \hfill \\
+    Calculates new acceleration for each object by applying force required to
+    push objects apart.
+\end{description}
+
+\subsubsection{Impulse method}
+
+Impulse $J$ is the force $F$ applied over a time $\Delta t$.
+
+\begin{align*}
+  J &= F \Delta t \\
+  J &= ma \Delta t \tag*{$F = ma$} \\
+  J &= m \frac{\Delta v}{\Delta t} \Delta t = m \Delta v
+    \tag*{$a = \Delta v / \Delta t$} \\
+\end{align*}
+
+As momentum $p = mv$, impulse $J$ is simply the change in momentum for an object
+of constant mass.
+
+For two colliding objects $A$ and $B$, the velocity is given by:
+\begin{align*}
+  v_{ab} &= v_{a} + v_{b} \\
+   v_{N} &= v_{ab} \cdot N
+\end{align*}
+
+Where $v_{N}$ is the total velocity in the direction of the collision normal
+$N$.
+
+The final velocity along the normal after the collision is proportional to the
+coefficient of elasticity $\epsilon$. Where $\epsilon = 1$ is an elastic
+collision (i.e. all momentum is conserved) and $\epsilon = 0$ is an inelastic
+collision (i.e. all momentum is dissipated).
+\begin{align*}
+  v_{N}^{final} &= - \epsilon \: v_{N}^{initial} \\
+  (v_{a}^{final} + v_{b}^{final}) \cdot N &=
+    - \epsilon \: \left(v_{a}^{initial} + v_{b}^{initial}\right) \cdot N
+\end{align*}
+
+Momentum injected into the system must be balanced to maintain the law of
+conservation of momentum:
+\begin{align*}
+  m_{a} v_{a}^{final} &= m_{a} v_{a}^{initial} + J_{N} \\
+  m_{b} v_{b}^{final} &= m_{b} v_{b}^{initial} - J_{N}
+\end{align*}
+
+The impulse $J$ is given by:
+\[
+  J = \frac{-\left(1 + \epsilon \right) v_{ab} \cdot N}
+           {N \cdot N \left(\frac{1}{m_{a}} + \frac{1}{m_{b}}\right)}
+\]
+
+Then the new velocities for each object are computed by:
+\begin{align*}
+  v_{a}^{final} &= v_{a}^{initial} + \frac{J}{m_{a}} N \\
+  v_{b}^{final} &= v_{b}^{initial} - \frac{J}{m_{b}} N
+\end{align*}
+
+\subsubsection{Penalty method}
+
 TODO
 
 \section{Newtonian Physics}
