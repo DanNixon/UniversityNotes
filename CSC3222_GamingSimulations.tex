@@ -7,6 +7,7 @@
 \tableofcontents
 
 \section{Equations and their Solutions}
+\label{sec:equations_and_their_solutions}
 
 \subsection{Newton's First Law}
 
@@ -179,6 +180,7 @@ $y$ axis.
 This constant can be varied as a cheap way of simulating different environments.
 
 \section{Collision Detection and Response}
+\label{sec:collision_detection_and_response}
 
 \subsection{Detection}
 
@@ -382,29 +384,91 @@ Then the new velocities for each object are computed by:
 
 \subsubsection{Penalty method}
 
-TODO
+See Springs first (\ref{sec:springs}).
 
-\section{Newtonian Physics}
+Assume that:
+\begin{itemize}
+  \item A "virtual" spring exists between the colliding objects
+  \item The penetration depth $p$ is the displacement of the spring
+\end{itemize}
 
-TODO
+Then the relative velocity of the colliding objects is given as:
+\[
+  v = N \cdot (v_{a} - v_{b})
+\]
+
+Therefore the collision can be modelled as a spring using equation:
+\[
+  F = -kp - c \left(N \cdot (v_{a} - v_{b})\right)
+\]
+
+This calculates the resultant force of the collision, the new acceleration
+values are then calculated by:
+\begin{align*}
+  a_{a}^{final} &= a_{a}^{initial} + \frac{F}{m_{a}} \\
+  a_{b}^{final} &= a_{b}^{initial} + \frac{F}{m_{b}}
+\end{align*}
+
+The value of $k$ behaves in the same way as that of $\epsilon$ in the impulse
+method.
+
+The value of $c$ determines how much the object reacts to the spring, i.e. a
+higher value gives a more "bouncy" collision.
 
 \section{Springs}
+\label{sec:springs}
 
-TODO
+A spring has rest length to which it will return when any force compressing or
+extending it has been removed.
+
+The force required to displace a spring by distance $x$ from its rest length is
+given by Hooke's law of Elasticity:
+\[
+  F = -kx
+\]
+
+Where $k$ is the spring constant.
+
+In a simulation an additional damping factor is added to ensure that objects
+affected by the spring eventually come to rest:
+\[
+  F = -kx - cv
+\]
+
+Where $c$ is a damping factor and $v$ is the velocity of an object in the axis
+of the spring.
+
+\section{Soft Bodies}
+\label{sec:soft_bodies}
+
+Soft bodies (such as cloth) are modelled as a collection of rigid bodies bound
+by "virtual" springs.
+
+A piece of cloth at rest will have no tension in all springs (i.e. all springs
+at their rest length), when it is moved the springs closest to the point at
+which the cloth is being moved will begin to act upon their neighbouring meshes
+which populates back to almost all of the surface.
+
+Simulating soft bodies using springs can lead to amplification of movement
+within the system if damping factors are not properly tuned.
 
 \section{Fluid Dynamics}
+\label{sec:fluid_dynamics}
 
 TODO
 
 \section{Particles}
+\label{sec:particles}
 
 TODO
 
 \section{Path Finding}
+\label{sec:path_finding}
 
 TODO
 
 \section{Choice and States}
+\label{sec:choice_and_states}
 
 TODO
 
