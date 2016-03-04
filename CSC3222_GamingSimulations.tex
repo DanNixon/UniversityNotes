@@ -298,14 +298,30 @@ The collision response data can be extracted as follows:
 
 \Para{Sphere-Plane detection}
 
+Using the plane equation:
+\begin{align*}
+  ax + by + cz + d &= 0 \\
+  - ax_{0} - by_{0} - cx_{0} &\equiv d
+\end{align*}
+
+Where $N = {a, b, c}$ is the normal to the plane, $(x_{0}, y_{0}, z_{0})$ is a
+point on the plane and any given point on the plane is given by $(x, y, z)$.
+
 A sphere and plane are said to have collided if the following equation is true:
 \[
   N \cdot S + d < r
 \]
 
 Where $N$ is the normal to the plane, $S$ is the position of the sphere, $d$ is
-the distance from the plane to the world origin and $r$ is the radius of the
-sphere.
+the distance from the centre of the sphere to the nearest point on the plane and
+$r$ is the radius of the sphere.
+
+The distance $d$ can be calculated by:
+\[
+  d = -(x \cdot N)
+\]
+
+Where $x$ is any point on the plane.
 
 The collision response data can be extracted as follows:
 \begin{align*}
