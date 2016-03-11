@@ -468,6 +468,74 @@ which populates back to almost all of the surface.
 Simulating soft bodies using springs can lead to amplification of movement
 within the system if damping factors are not properly tuned.
 
+\section{Choice and States}
+\label{sec:choice_and_states}
+
+Game AI is described as any decision making process within the game and is
+typically implemented using a finite state machine (FSM).
+
+An FSM is a collection of states that describe what an entity is supposed to be
+doing and a set of conditions that will cause a transition to another state.
+
+\subsection{Implementation methods}
+
+\begin{description}
+  \item[Hard coded switch] \hfill \\
+    States are enumerated and transition conditions are checked based on the
+    current state in a single conditional structure.
+
+    Simple and efficient for small FSMs, becomes unmanageable for a larger/more
+    complex FSM.
+
+  \item[Hard coded state pattern] \hfill \\
+    All states are child classes of a base class \texttt{State}, each state
+    class is responsible for managing its own behaviour and state.
+
+    Reduces complexity of large conditional structures.
+
+  \item[Interpreted state pattern] \hfill \\
+    Similar to above but states, behaviours and transitions are read from a file
+    and the structure is constructed at game startup.
+
+\end{description}
+
+\subsection{Issues}
+
+\begin{description}
+  \item[Missed transitions] \hfill \\
+    If the logical conditions for a state transition do not evaluate to true,
+    however the transition should have happened.
+
+    E.g. comparison using equality at a spatial boundary.
+
+  \item[Complexity] \hfill \\
+    A growing number of states can make an FSM complex, this issue is partially
+    negated by hierarchical FSMs.
+
+  \item[State oscillations] \hfill \\
+    Occurs when no hysteresis is implemented in the transition conditions for
+    continuous variables.
+
+    As a result states constantly change due to over compensation of the
+    behaviour of the activated state.
+
+\end{description}
+
+\subsection{Hierarchical FSMs}
+
+Applying a hierarchy to the states of an FSM can simplify the set of transitions
+and overall structure of the FSM.
+
+Divide groups of states that correspond to a single NPC behaviour into their own
+parent states.
+
+Transition conditions for each active state in the hierarchy must be checked.
+
+\section{Path Finding}
+\label{sec:path_finding}
+
+TODO
+
 \section{Fluid Dynamics}
 \label{sec:fluid_dynamics}
 
@@ -475,16 +543,6 @@ TODO
 
 \section{Particles}
 \label{sec:particles}
-
-TODO
-
-\section{Path Finding}
-\label{sec:path_finding}
-
-TODO
-
-\section{Choice and States}
-\label{sec:choice_and_states}
 
 TODO
 
