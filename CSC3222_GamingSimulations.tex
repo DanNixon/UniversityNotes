@@ -730,7 +730,23 @@ mapped to a series of $x$ and $z$ coordinates in a fixed grid.
 
 \subsection{Column approach}
 
-TODO
+If the fluid body is represented as a collection of cuboid of fixed $x$ and $z$
+dimensions with the $y$ dimension equivalent to the height of one point on the
+heightmap then the fluid volume can be defined by the fixed area in the $XY$
+plane multiplied by the height.
+
+The fluid velocity is then the change in height with respect to time. A
+reduction to a single dimension which greatly simplified the implementation of
+the Navier-Stokes equation.
+
+One issue to be addressed is the range to which the height of a fluid body
+should be clamped.
+
+Without proper boundary clamping energy can build up in a system which causes
+undesired behaviour, however incorrectly set boundaries will detract from the
+realism of the simulation in the case where a boundary is reached (e.g. flat
+plateaus being generated where several fluid bodies are above the height
+threshold).
 
 \subsection{Functional approach}
 
@@ -749,6 +765,10 @@ computational cost.
 \subsection{Optimisations and Issues}
 
 \begin{itemize}
+  \item
+    Any implementation using the Navier-Stokes approach will be computationally
+    intensive.
+
   \item
     If representing the surface of a fluid body as a soft body then additional
     engineering challenges need to be addressed in the handling of multiple
