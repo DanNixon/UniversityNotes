@@ -534,21 +534,187 @@ Transition conditions for each active state in the hierarchy must be checked.
 \section{Path Finding}
 \label{sec:path_finding}
 
-TODO
-
 \subsection{A* algorithm}
 
-TODO
+\begin{itemize}
+  \item
+    Algorithm uses a best first approach to build up an optimal path from a
+    starting node to a target node
+
+  \item
+    Operates over a graph described by nodes and edges connecting them
+
+  \item
+    Nodes and edges can be marked as impassible in which case they are not
+    considered by the algorithm when searching for a path
+
+  \item
+    Edges can have weights adjusted to represent the cost of traversing them
+    (e.g. to reflect difficulty in traversing a certain type of terrain)
+\end{itemize}
+
+The A* algorithm requires several key features:
+
+\begin{description}
+  \item[Node structure] \hfill \\
+    Several additional pieces of information about nodes on the graph need to be
+    stored:
+
+    \begin{description}
+      \item[Parent node] \hfill \\
+        The shortest path from this node to the start node.
+
+      \item[$g$-value] \hfill \\
+        The cost of the shortest path from the start node to this node.
+
+      \item[$h$-value] \hfill \\
+        The estimated cost of the path from this node to the end node.
+
+      \item[$f$-value] \hfill \\
+        The estimated cost of the shortest path from the start node to end node
+        that traverses this node.
+
+        \[
+          f = g + h
+        \]
+
+    \end{description}
+
+  \item[Heuristic equation] \hfill \\
+    An equation used to estimate the cost of travelling from a given node to the
+    target node.
+
+    This \textbf{must} be either an underestimate or the exact cost. Providing a
+    heuristic that is an overestimate will result in a path other than the
+    optimal path being found.
+
+  \item[Open list] \hfill \\
+    A list of nodes that the algorithm is aware of, i.e. those that are
+    connected to nodes in the closed list.
+
+    The open list is sorted by ascending $f$-value, this allows the node that is
+    assumed to have the cost form start to end node to be selected from the top
+    of the list.
+
+  \item[Closed list] \hfill \\
+    A list of nodes that have been considered as part of the shortest path by
+    the algorithm.
+
+    Every node will have been on the open list at some point.
+
+    The shortest path always be made up of a subset of nodes from the closed
+    list.
+
+\end{description}
+
+The workflow of the algorithm is as follows:
+
+\begin{enumerate}
+  \item[1]
+    Add start node to the open list
+
+  \item[2]
+    For each node P on the open list
+
+    \begin{enumerate}
+      \item[1]
+        Move P to the closed list
+
+      \item[2]
+        If P is the end node the shortest path has been found, then break from the
+        loop
+
+      \item[3]
+        For each node Q connected to P
+
+      \begin{enumerate}
+        \item[1]
+          Skip Q if it is not traversable
+
+        \item[2]
+          Calculate $g$ and $f$ scores for Q
+
+        \item[3]
+          If Q is on either the open list or closed list and the calculated
+          $g$-value is less than its current $g$-value then update the $g$ and
+          $f$ scores and set its parent to P
+
+        \item[4]
+          If Q is not on any list then add it to the open list and set its
+          parent to P
+      \end{enumerate}
+    \end{enumerate}
+
+  \item[4]
+    If a path has been found the build the path by traversing the parents of the
+    last node added to the closed list adding each node to a list, then
+    reversing this list to obtain the path from start to end
+\end{enumerate}
 
 \subsection{Goal Oriented Action Planning}
 
-TODO
+A speciality of path finding that combines path finding with a finite state
+machine in order to find the most optimal series of state changes that lead to a
+final state given an initial state.
+
+\begin{itemize}
+  \item
+    Each possible state is a node on a graph and state changes are edges
+
+  \item
+    Each state change has a cost associated with it
+
+  \item
+    The way states are encoded allows a similarity comparison which can be used
+    to calculate the $h$-score
+\end{itemize}
+
+It then follows that the optimal series of state changes can be determined by
+performing A* over the graph of states and state transitions.
 
 \subsection{Optimisations and Issues}
 
-TODO
+\begin{itemize}
+  \item
+    When using Euclidean distance as a heuristic in A* it is common to greatly
+    underestimate the lowest distance.
 
-\section{Fluid Dynamics}
+    Underestimation of the heuristic can result in greater computational cost of
+    the entire path finding algorithm due to the increased number of paths that
+    are considered before the optimal path is found.
+
+    As a result more complex heuristics are typically used which take into
+    account specifics of the game and its world.
+
+  \item
+    Nodes or edges that are not traversable can be marked with a boolean flag to
+    prevent them from being considered by the A* algorithm (as opposed to
+    assigning an infinite weight).
+
+  \item
+    Groups of objects that move in an identical path together (e.g. squads in an
+    RTS) only one instance of the path finding must be performed for the entire
+    group and the positions of individuals computed using positions relative to
+    the centre, leader, etc.
+
+  \item
+    A* is an expensive algorithm and in the worst case will perform a full
+    exploration of the search space.
+
+  \item
+    A* only works in practice for single agent path finding. Multi agent path
+    finding is PSPACE difficult.
+
+  \item
+    Paths should only be recomputed when the best path is likely to change.
+
+    Usually this would be once when the entity in motion first starts to move
+    and an additional time for each event that changes parts of the graph that
+    form parts of the path the entity is taking.
+
+\end{itemize}
+
+\section{Fluid and Wave simulation}
 \label{sec:fluid_dynamics}
 
 TODO
@@ -558,11 +724,6 @@ TODO
 TODO
 
 \subsection{Fluids as a sinusoidal function}
-
-TODO
-
-\section{Particles}
-\label{sec:particles}
 
 TODO
 
