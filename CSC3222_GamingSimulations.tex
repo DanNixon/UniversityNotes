@@ -717,14 +717,70 @@ performing A* over the graph of states and state transitions.
 \section{Fluid and Wave simulation}
 \label{sec:fluid_dynamics}
 
+The correct way to simulate fluids is typically based around the Navier-Stokes
+equation. Such methods are too computationally expensive to be used in real time
+simulations, as such graphical ricks are typically used to create the effect of
+bodies of water in games.
+
+\subsection{Dimensional reduction heightmaps}
+
+If only the surface of the fluid body is to be considered then it can be
+represented using a simple heightmap where a $y$ coordinate (the height) is
+mapped to a series of $x$ and $z$ coordinates in a fixed grid.
+
+\subsection{Column approach}
+
 TODO
 
-\subsection{Fluids as heightmaps}
+\subsection{Functional approach}
 
-TODO
+A simpler method is to model the movement of waves on the fluid bodies surface
+using a series of periodic functions, typically sinusoidal functions, overlapped
+on top of each other to determine the height of a particular point in the
+heightmap.
 
-\subsection{Fluids as a sinusoidal function}
+This can be applied continuously to give the effect of rippling waves, etc. or
+applied using a finite state machine to simulate the water being disturbed by a
+player.
 
-TODO
+This technique can be used to generate a realistic simulation with very little
+computational cost.
+
+\subsection{Optimisations and Issues}
+
+\begin{itemize}
+  \item
+    If representing the surface of a fluid body as a soft body then additional
+    engineering challenges need to be addressed in the handling of multiple
+    sustained collisions when objects either sink, float on or bounce off the
+    surface of the fluid.
+
+  \item
+    If using a heightmap to represent the surface of the fluid then tessellation
+    can be used in the graphical pipeline to increase the quality of the
+    simulated water surface.
+
+  \item
+    If objects are to be submerged in a fluid then the issue of submersion can
+    be addressed by attaching a spring between the entity being submerged and
+    the surface of the fluid.
+
+    Once the entity sinks far enough into the fluid body it breaks the spring
+    and frees the column of water.
+
+    This approach works well when representing the fluid surface as a soft body
+    or when functional rippling is triggered by an entity entering the fluid
+    body as it provides realistic response from the fluid surface.
+
+  \item
+    Buoyancy can be addressed in several ways, the simplest is to apply a fixed
+    acceleration in the $y$ axis to counteract the fixed acceleration due to
+    gravity.
+
+    Depending on the value relative to gravity this can either slow (for
+    entities denser than the fluid) or reverse (for entities less dense than the
+    fluid) the rate of submersion.
+
+\end{itemize}
 
 \end{document}
