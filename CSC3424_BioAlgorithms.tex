@@ -583,13 +583,171 @@ Prediction of protein coding genes in bacterial genomes is simple and relatively
 accurate. In eukaryotes predicting intron-exon regions is only around 65\%
 accurate and non-coding exons can cause issues.
 
-\subsubsection{Promoter finding}
-
-TODO
-
 \section{Evolution}
 
-TODO
+Key relevance is similarity between close evolutionary ancestors which aids
+prediction of features such as protein function and structure from a sequence.
+
+\subsection{Mutations}
+
+\Para{Point Mutation}
+
+When a single nucleotide in the DNA sequence changes.
+
+This can have several different effects on the protein sequence:
+
+\begin{description}
+  \item[Silent] \hfill \\
+    The change in DNA sequence does not change the protein sequence.
+
+    e.g. the mutation \texttt{TTC $\rightarrow$ TTT} gives
+    \texttt{Lys $\rightarrow$ Lys}
+
+  \item[Nonsense] \hfill \\
+    The change in DNA sequence causes a change in protein sequence that does not
+    make sense.
+
+    e.g. the mutation \texttt{TTC $\rightarrow$ ATC} gives
+    \texttt{Lys $\rightarrow$ STOP}
+
+  \item[Missense] \hfill \\
+    The change in DNA sequence causes a change in protein sequence that is valid
+    but may affect the function.
+
+    This can be either conservative in which case the new protein has a similar
+    function to the previous or non-conservative in which case the functional
+    change is significant.
+
+\end{description}
+
+\Para{Deletion}
+
+Where a section of the sequence is removed.
+
+\Para{Duplication}
+
+Where a section of the sequence is duplicated and inserted after the original
+section.
+
+\Para{Inversion}
+
+Where a section of the sequence is reversed in the new sequence.
+
+\Para{Insertion}
+
+Where a section of the sequence of one chromosome is inserted into the sequence
+of another chromosome.
+
+\Para{Translocation}
+
+Where two sections of the sequence of two different chromosomes are swapped.
+
+\Para{Frameshift mutations}
+
+Mutations where the relative location of coding information is changed due to
+the insertion, deletion or exchange of a subsequence of a different length to
+the original.
+
+\subsubsection{Gene duplication}
+
+\begin{itemize}
+  \item
+    Evolutionary constraints define the tolerance of how much the gene can
+    diverge from its original function after an evolutionary cycle
+
+  \item
+    After gene duplication duplicates have reduced evolutionary constraints as
+    the original copy still exists therefore retention of the original function
+    is less important
+
+  \item
+    Gene duplication leads to wider divergence in function and evolution of new
+    proteins
+
+  \item
+    In bacteria gene duplication can be triggered by external stimuli
+
+    e.g. temperature, pressure, starvation, etc.
+
+  \item
+    In eukaryotes gene duplication is vital for evolution. Around $\frac{1}{3}$
+    of a eukaryotic genome consists of duplicates
+
+  \item
+    Duplicate genes with redundant functions can help towards protection against
+    deletion mutations
+
+\end{itemize}
+
+\subsection{Homology, orthology and parology}
+
+\begin{description}
+  \item[Homology] \hfill \\
+    Genes that share a common ancestor.
+
+  \item[Orthology] \hfill \\
+    Homologous genes which diverged as a result of speciation.
+
+  \item[Parology] \hfill \\
+    Homologous genes within the same genome created as a result of gene
+    duplication.
+
+  \item[Xenology] \hfill \\
+    Homologous genes where one gene has been obtained through transfer of
+    genetic material between organisms.
+
+\end{description}
+
+TODO: diagram
+
+\subsection{Homology}
+
+\begin{itemize}
+  \item
+    Proteins and genes that have diverged from a common ancestor are homologous
+
+  \item
+    Homology is a boolean state, not analogous to sequence similarity
+
+  \item
+    Homology cannot be definitively determined from sequence similarity alone,
+    it can however be inferred if the sequences are more than 50\% similar
+
+  \item
+    Homologous proteins often share properties: same/related function, sites,
+    structure
+
+  \item
+    As sequences diverge non-conservative mutations increase and the sequence
+    similarity to the common ancestor decreases while remaining functionally
+    similar, this can make determining homology difficult
+
+\end{itemize}
+
+\subsection{Orthology}
+
+\begin{itemize}
+  \item
+    Homologous genes from different genomes within the same gene family
+
+  \item
+    Derived as a result of speciation
+
+  \item
+    Often encode proteins that perform the same function in different organisms
+
+\end{itemize}
+
+\subsection{Parology}
+
+\begin{itemize}
+  \item
+    Homologous genes within the same genome within different gene families
+
+  \item
+    May perform different functions in each host due to functional change with
+    evolution
+\end{itemize}
 
 \section{Phylogenetics}
 
