@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="744.09448"
+   height="1052.3622"
+   id="svg2">
+  <desc
+     id="desc4">/home/dan/university_notes/graphics/logical_clock_eg.dxf - scale = 1.826087</desc>
+  <metadata
+     id="metadata146">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6">
+    <marker
+       refX="0"
+       refY="0"
+       orient="auto"
+       id="DistanceX"
+       style="overflow:visible">
+      <path
+         d="M 3,-3 -3,3 M 0,-5 0,5"
+         inkscape:connector-curvature="0"
+         id="path9"
+         style="stroke:#000000;stroke-width:0.5" />
+    </marker>
+    <pattern
+       y="0"
+       x="0"
+       width="8"
+       patternUnits="userSpaceOnUse"
+       id="Hatch"
+       height="8">
+      <path
+         id="path12"
+         stroke-width="0.25"
+         stroke="#000000"
+         linecap="square"
+         d="M8 4 l-4,4" />
+      <path
+         id="path14"
+         stroke-width="0.25"
+         stroke="#000000"
+         linecap="square"
+         d="M6 2 l-4,4" />
+      <path
+         id="path16"
+         stroke-width="0.25"
+         stroke="#000000"
+         linecap="square"
+         d="M4 0 l-4,4" />
+    </pattern>
+    <symbol
+       id="*Model_Space" />
+    <symbol
+       id="*Paper_Space" />
+  </defs>
+  <g
+     id="g20">
+    <text
+       x="53.919891"
+       y="470.02737"
+       id="text22"
+       style="font-size:64.69999695px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan24">A</tspan>
+    </text>
+    <text
+       x="377.43924"
+       y="470.02737"
+       id="text26"
+       style="font-size:64.69999695px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan28">B</tspan>
+    </text>
+    <text
+       x="700.95856"
+       y="470.02737"
+       id="text30"
+       style="font-size:64.69999695px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan32">C</tspan>
+    </text>
+    <path
+       d="m 700.95858,534.73126 0,517.63094"
+       inkscape:connector-curvature="0"
+       id="path34"
+       style="fill:none;stroke:#000000;stroke-linecap:round" />
+    <path
+       d="m 377.43923,534.73126 0,517.63094"
+       inkscape:connector-curvature="0"
+       id="path36"
+       style="fill:none;stroke:#000000;stroke-linecap:round" />
+    <path
+       d="m 53.91989,1052.3622 0,-517.63094"
+       inkscape:connector-curvature="0"
+       id="path38"
+       style="fill:none;stroke:#000000;stroke-linecap:round" />
+    <text
+       x="66.860664"
+       y="586.49432"
+       id="text40"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan42">F1</tspan>
+    </text>
+    <text
+       x="390.38"
+       y="845.30981"
+       id="text44"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan46">E1</tspan>
+    </text>
+    <text
+       x="377.43924"
+       y="340.61966"
+       id="text48"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan50">Cb=0</tspan>
+      <tspan
+         id="tspan52">Ib=1</tspan>
+    </text>
+    <text
+       x="700.95856"
+       y="340.61966"
+       id="text54"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan56">Cc=0</tspan>
+      <tspan
+         id="tspan58">Ic=1</tspan>
+    </text>
+    <text
+       x="345.08731"
+       y="567.08319"
+       id="text60"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan62">0</tspan>
+    </text>
+    <text
+       x="668.60663"
+       y="567.08319"
+       id="text64"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan66">0</tspan>
+    </text>
+    <text
+       x="21.567957"
+       y="567.08319"
+       id="text68"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan70">10</tspan>
+    </text>
+    <text
+       x="21.567957"
+       y="631.78705"
+       id="text72"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan74">20</tspan>
+    </text>
+    <text
+       x="53.919891"
+       y="340.61966"
+       id="text76"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan78">Ca=10</tspan>
+      <tspan
+         id="tspan80">Ia=10</tspan>
+    </text>
+    <text
+       x="668.60663"
+       y="696.49091"
+       id="text82"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan84">11</tspan>
+    </text>
+    <text
+       x="345.08731"
+       y="696.49091"
+       id="text86"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan88">11</tspan>
+    </text>
+    <text
+       x="345.08731"
+       y="761.19482"
+       id="text90"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan92">12</tspan>
+    </text>
+    <text
+       x="345.08731"
+       y="890.60254"
+       id="text94"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan96">13</tspan>
+    </text>
+    <text
+       x="668.60663"
+       y="761.19482"
+       id="text98"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan100">12</tspan>
+    </text>
+    <text
+       x="668.60663"
+       y="955.3064"
+       id="text102"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan104">13</tspan>
+    </text>
+    <text
+       x="668.60663"
+       y="1020.0103"
+       id="text106"
+       style="font-size:32.40000153px;line-height:125%;fill:#000000;font-family:Arial">
+      <tspan
+         id="tspan108">14</tspan>
+    </text>
+  </g>
+  <g
+     id="g110">
+    <path
+       d="M 53.91989,599.43512 700.95858,728.84286"
+       inkscape:connector-curvature="0"
+       id="path112"
+       style="fill:none;stroke:#ff0000;stroke-linecap:round" />
+    <path
+       d="M 53.91989,599.43512 377.43923,728.84286"
+       inkscape:connector-curvature="0"
+       id="path114"
+       style="fill:none;stroke:#ff0000;stroke-linecap:round" />
+    <path
+       d="m 691.23812,720.30025 9.72046,8.54261"
+       inkscape:connector-curvature="0"
+       id="path116"
+       style="fill:none;stroke:#ff0000;stroke-linecap:round" />
+    <path
+       d="m 688.70022,732.98972 12.25836,-4.14686"
+       inkscape:connector-curvature="0"
+       id="path118"
+       style="fill:none;stroke:#ff0000;stroke-linecap:round" />
+    <path
+       d="m 369.4368,718.67307 8.00243,10.16979"
+       inkscape:connector-curvature="0"
+       id="path120"
+       style="fill:none;stroke:#ff0000;stroke-linecap:round" />
+    <path
+       d="m 364.63072,730.68828 12.80851,-1.84542"
+       inkscape:connector-curvature="0"
+       id="path122"
+       style="fill:none;stroke:#ff0000;stroke-linecap:round" />
+    <text
+       x="448.61349"
+       y="670.60938"
+       id="text124"
+       style="font-size:32.40000153px;line-height:125%;fill:#ff0000;font-family:Arial">
+      <tspan
+         id="tspan126">10</tspan>
+    </text>
+    <text
+       x="209.20917"
+       y="670.60938"
+       id="text128"
+       style="font-size:32.40000153px;line-height:125%;fill:#ff0000;font-family:Arial">
+      <tspan
+         id="tspan130">10</tspan>
+    </text>
+  </g>
+  <g
+     id="g132">
+    <path
+       d="M 377.43923,858.2506 700.95858,987.65834"
+       inkscape:connector-curvature="0"
+       id="path134"
+       style="fill:none;stroke:#0000ff;stroke-linecap:round" />
+    <path
+       d="m 688.15006,989.50375 12.80852,-1.84541"
+       inkscape:connector-curvature="0"
+       id="path136"
+       style="fill:none;stroke:#0000ff;stroke-linecap:round" />
+    <path
+       d="m 692.95614,977.48854 8.00244,10.1698"
+       inkscape:connector-curvature="0"
+       id="path138"
+       style="fill:none;stroke:#0000ff;stroke-linecap:round" />
+    <text
+       x="539.19891"
+       y="929.42487"
+       id="text140"
+       style="font-size:32.40000153px;line-height:125%;fill:#0000ff;font-family:Arial">
+      <tspan
+         id="tspan142">12</tspan>
+    </text>
+  </g>
+</svg>
