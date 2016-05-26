@@ -1,0 +1,23 @@
+language: shell
+
+sudo: required
+dist: trusty
+
+env:
+  global:
+    - GH_REF: github.com/DanNixon/UniversityNotes.git
+    - secure: "AMiwzY8mNplVI0fcK5kULNPYO5vY1zay3be4xHXUdPnyhpLVrUf3jZy6Wk8vzeNh2f5RLJE+UlCUJRjguYAhsikAa+Ti8vldLabIR2fM4jjQni0OFY/oM1AmHYSI4wyPBhykSjIr65IJWbrXz1WHOU1rWU4jQDTbznRomn3WUyr9Pi8UXTGr2CD1BTVMqaJBI1/vp4K4hZrFU9gHfBRSRoGdYM3bpBtTSN5n+rCoBCNQMH65CezjpPl/DGQIuZdGdBSpDOaWgEpl3IZjZaKkJvTX5UC/hAPoOG6+UkIV5kjDplDa2Oj+cQt0zTtLSpC+FvSRweUxP3UbzHnqOSNhj93rrSjYLk1u/wxq+EpFVxa0cawGzz5W3Dg/PYqUOE1XXOc3NVzGKEywtLY3G8tTby6Zfcxxxhpn0vcHMV5uTAfUZ+PArOuMs5UZWs4+2yH+O994hgts1YcaUAdSzC/6EMkebulego1JeO09gfYZYlEH/AUt8n7BbpHNZvjf25An/BpGK3Vo6JnRiKljbn2dst5Dl56cUOA4jUYad2gyCLADwaB6qFdfvgBf8RmcH5WUzS43QXAzOF71QYWhTjVtcGv1b0whN8zs7e8YGElLk2qv5BrnbAsfN0U1S/L92jjWpLMW5/f/hhBbLy34+Jc9hg1xpBLIVbyHmOPTrQIk/9M="
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y texlive biber graphviz
+  - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
+
+script:
+  - make
+  - ./.travis_deploy.sh
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change
