@@ -10,7 +10,7 @@ env:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y texlive texlive-latex-extra pgf python-pygments latexmk biber graphviz inkscape --no-install-recommends
+  - sudo apt-get install -y texlive texlive-latex-extra texlive-font-utils pgf python-pygments latexmk biber graphviz inkscape --no-install-recommends
 
 script:
   - make
