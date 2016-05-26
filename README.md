@@ -1,4 +1,6 @@
 University Notes
 ================
 
-Notes for 3rd year university modules.
+[![Build Status](https://travis-ci.org/DanNixon/UniversityNotes.svg?branch=master)](https://travis-ci.org/DanNixon/UniversityNotes)
+
+Notes for university modules (starting from 3rd year).
