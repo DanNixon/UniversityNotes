@@ -812,10 +812,91 @@ the original.
 
 \subsubsection{Evolutionary model fitting}
 
+Multiple methods:
+
 \begin{itemize}
   \item
-    TODO
+    Unweighted pair group method with arithmetic mean (UPGMA) (simple)
+
+  \item
+    Maximum likelihood (advanced)
+
+  \item
+    Bayesian (advanced)
+
 \end{itemize}
+
+\Para{Unweighted pair group method with arithmetic mean}
+
+\begin{itemize}
+  \item
+    Uses distance matrix that tabulates the distance between each pair of
+    species.
+
+  \item
+    Each iteration merge two closest species and recalculate matrix values based
+    on mean of merged species.
+
+  \item
+    Repeat until all species are grouped.
+
+  \item
+    Order of grouping gives tree structure.
+
+\end{itemize}
+
+Example with 5 species: \texttt{A}, \texttt{B}, \texttt{C}, \texttt{D},
+\texttt{E}.
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{@{}lllll@{}}
+    \toprule
+    Species & A  & B  & C  & D \\
+    \midrule
+    B       & 9  & -  & -  & - \\
+    C       & 8  & 11 & -  & - \\
+    D       & 12 & 15 & 10 & - \\
+    E       & 15 & 18 & 13 & 5 \\
+    \bottomrule
+  \end{tabular}
+  \caption{UPGMA iteration 1}
+  \label{tab:upgma_1}
+\end{table}
+\FloatBarrier
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{@{}llll@{}}
+    \toprule
+    Species & A    & B    & C    \\
+    \midrule
+    B       & 9    & -    & -    \\
+    C       & 8    & 11   & -    \\
+    DE      & 13.5 & 16.5 & 11.5 \\
+    \bottomrule
+  \end{tabular}
+  \caption{UPGMA iteration 2}
+  \label{tab:upgma_2}
+\end{table}
+\FloatBarrier
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Species & B    & AC   \\
+    \midrule
+    AC      & 10   & -    \\
+    DE      & 16.5 & 12.5 \\
+    \bottomrule
+  \end{tabular}
+  \caption{UPGMA iteration 3}
+  \label{tab:upgma_3}
+\end{table}
+\FloatBarrier
+
+TODO: fig
 
 \subsubsection{Analyse tree}
 
@@ -830,6 +911,35 @@ the original.
 \end{itemize}
 
 \section{Sequence Similarity and Comparison}
+
+\begin{itemize}
+  \item Similarity score required for sequence alignment
+\end{itemize}
+
+\subsection{String based}
+
+\begin{itemize}
+  \item Typically not used for biological sequences
+  \item Certain changes are more likely to occur as a result of evolution
+\end{itemize}
+
+\subsubsection{Hamming distance}
+
+\begin{itemize}
+  \item Number of positions with mismatching characters in two strings of equal
+        length
+  \item Lower score denotes similar sequences
+\end{itemize}
+
+\subsubsection{Levenshtein distance}
+
+\begin{itemize}
+  \item Minimum number of edits to change one string into another
+  \item Lower score denotes similar sequences
+  \item A change can be an addition, deletion or substitution
+\end{itemize}
+
+\subsection{TODO}
 
 TODO
 
