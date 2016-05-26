@@ -7,7 +7,7 @@ PDFS=$(addprefix $(OUTPUT_DIR)/,$(DOCUMENTS:.tex=.pdf))
 
 LATEXMK=latexmk
 TEXCOUNT=texcount
-TEX_OPTIONS=-pdf -shell-escape
+TEX_OPTIONS=-pdf -shell-escape -halt-on-error
 
 GRAPHICS_DIR=graphics
 METAPOST=mpost
