@@ -10,8 +10,7 @@ env:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y texlive latexmk biber graphviz inkscape
-  - source <(curl -SLs https://raw.githubusercontent.com/adafruit/travis-ci-arduino/master/install.sh)
+  - sudo apt-get install -y texlive-full latexmk biber graphviz inkscape
 
 script:
   - make
