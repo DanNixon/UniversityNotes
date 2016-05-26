@@ -10,7 +10,7 @@ env:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y texlive latexmk biber graphviz inkscape texlive-latex-extra --no-install-recommends
+  - sudo apt-get install -y texlive texlive-latex-extra latexmk biber graphviz inkscape --no-install-recommends
 
 script:
   - make
