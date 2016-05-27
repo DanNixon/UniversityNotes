@@ -1062,7 +1062,35 @@ Reconstruct tree from order of merges:
 
 \begin{itemize}
   \item
-    TODO
+    Multiple alignments of short, continuous (without gaps) sequences are
+    arranged into blocks
+
+  \item
+    Substitution frequencies for all pairs of amino acids are calculated for
+    each block
+
+  \item
+    Used in a similar way to PAM matrices to create log-odds scores for amino
+    acid substitution
+
+  \item
+    Similarity of protein sequences in a block can be adjusted to obtain
+    different similarity matrices
+
+  \item
+    All BLOSSUM matrices are derived from direct measurements
+
+    i.e. not extrapolated as is done for PAM
+
+  \item
+    BLOSSUM allows for detection of more distantly related sequences than PAM
+    by reducing the importance of more similar sequences in the block when
+    building the matrix
+
+  \item
+    BLOSSUM62 (default for many comparison tools) created from blocks where 62\%
+    of the amino acids were identical
+
 \end{itemize}
 
 \subsection{Sequence Alignment}
