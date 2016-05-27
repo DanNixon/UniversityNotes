@@ -969,6 +969,7 @@ Reconstruct tree from order of merges:
     Complex schemes may take into account that a purine-purine or
     pyrimidine-pyrimidine mismatch is more common that a purine-pyrimidine
     mismatch
+
 \end{itemize}
 
 \Para{Proteins}
@@ -1015,7 +1016,46 @@ Reconstruct tree from order of merges:
 
 \begin{itemize}
   \item
-    TODO
+    Based on knowledge of evolution
+
+  \item
+    Probability of a given change can be determined from alignment of homologous
+    sequences
+
+  \item
+    Relative frequencies of amino acid changes are encoded in the PAM scoring
+    matrix as the probability of mutation to every other amino acid
+
+  \item
+    Sample data is restricted to sequences sufficiently similar to ensure
+    multiple substitutions have not occurred on the same site
+
+  \item
+    A PAM matrix measures sequence divergence
+
+    i.e. a 1 PAM substitution matrix is generated from two sequences that are
+    99\% similar
+
+  \item
+    To assert similarity of more diverse sequences need matrices for much lower
+    sequence similarity
+
+  \item
+    Can derive PAM matrices for lower similarity by taking powers of existing
+    matrices
+
+  \item
+    A range of PAM matrices have been generated in this way and the divergence
+    percentage is used in the name of the matrix (e.g. PAM250 denotes expected
+    change of 250\%)
+
+  \item
+    For use in protein comparison the PAM matrix is first normalised and the
+    logarithm taken (known as a log-odds matrix)
+
+    This allows the scores to be added rather than multiplied (as would have had
+    to be done with probabilities)
+
 \end{itemize}
 
 \subsubsection{BLOSSUM matrices}
