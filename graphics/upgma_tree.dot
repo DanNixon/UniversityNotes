@@ -1,0 +1,11 @@
+digraph UPGMA_Tree
+{
+  CommonAncestor -> ACB
+  ACB            -> AC
+  AC             -> A
+  AC             -> C
+  ACB            -> B
+  CommonAncestor -> DE
+  DE             -> D
+  DE             -> E
+}

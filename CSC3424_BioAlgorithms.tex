@@ -865,6 +865,8 @@ Example with 5 species: \texttt{A}, \texttt{B}, \texttt{C}, \texttt{D},
 \end{table}
 \FloatBarrier
 
+Merge \texttt{D} and \texttt{E} (shortest distance 5):
+
 \begin{table}[h!]
   \centering
   \begin{tabular}{@{}llll@{}}
@@ -881,6 +883,8 @@ Example with 5 species: \texttt{A}, \texttt{B}, \texttt{C}, \texttt{D},
 \end{table}
 \FloatBarrier
 
+Merge \texttt{A} and \texttt{C} (shortest distance 8):
+
 \begin{table}[h!]
   \centering
   \begin{tabular}{@{}lll@{}}
@@ -896,7 +900,15 @@ Example with 5 species: \texttt{A}, \texttt{B}, \texttt{C}, \texttt{D},
 \end{table}
 \FloatBarrier
 
-TODO: fig
+Reconstruct tree from order of merges:
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.7\textwidth]{out/upgma_tree.eps}
+  \caption{Phylogenetic tree created using UPGMA}
+  \label{fig:upgma_tree}
+\end{figure}
+\FloatBarrier
 
 \subsubsection{Analyse tree}
 
@@ -916,7 +928,7 @@ TODO: fig
   \item Similarity score required for sequence alignment
 \end{itemize}
 
-\subsection{String based}
+\subsection{String based similarity}
 
 \begin{itemize}
   \item Typically not used for biological sequences
@@ -939,7 +951,81 @@ TODO: fig
   \item A change can be an addition, deletion or substitution
 \end{itemize}
 
-\subsection{TODO}
+\subsection{Sequence Similarity}
+
+\begin{itemize}
+  \item Assignment of variable weights to each misalignment
+  \item Additive step scores
+  \item Gap penalty for areas of no alignment
+\end{itemize}
+
+\Para{DNA and RNA}
+
+\begin{itemize}
+  \item
+    Typically +1 for match and -1 for mismatch
+
+  \item
+    Complex schemes may take into account that a purine-purine or
+    pyrimidine-pyrimidine mismatch is more common that a purine-pyrimidine
+    mismatch
+\end{itemize}
+
+\Para{Proteins}
+
+\begin{itemize}
+  \item
+    Learn a matrix of scores based on known amino acid changes during evolution
+
+  \item
+    Scores derived from frequency of of amino acid substitutions
+
+  \item
+    Data encoded in PAM matrices
+
+\end{itemize}
+
+\subsubsection{Gap penalty}
+
+\begin{itemize}
+  \item
+    Penalise gaps in sequence alignment
+
+  \item
+    Larger penalty added for opening a gap than extending an already open gap
+
+  \item
+    Typical penalties for DNA:
+
+    \begin{description}
+      \item[Opening] 10
+      \item[Extending] 0.1
+    \end{description}
+
+  \item
+    Typical penalties for proteins:
+
+    \begin{description}
+      \item[Opening] 11
+      \item[Extending] 1
+    \end{description}
+\end{itemize}
+
+\subsubsection{Percent Accepted Mutation (PAM) matrices}
+
+\begin{itemize}
+  \item
+    TODO
+\end{itemize}
+
+\subsubsection{BLOSSUM matrices}
+
+\begin{itemize}
+  \item
+    TODO
+\end{itemize}
+
+\subsection{Sequence Alignment}
 
 TODO
 
