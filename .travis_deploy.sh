@@ -10,9 +10,11 @@ fi
 git config --global user.email "nobody@nobody.org"
 git config --global user.name "Travis CI"
 
+cp -r html/* out
+
 cd out
 git init
 
-git add CSC*.pdf
+git add CSC*.pdf *.html
 git commit -m "Deploy PDFs"
 git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages > /dev/null 2>&1
