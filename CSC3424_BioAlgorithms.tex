@@ -1136,7 +1136,31 @@ Reconstruct tree from order of merges:
 
 \Para{Exact method: Trajectories}
 
-TODO
+\begin{itemize}
+  \item
+    Trajectory visualised by a 2D matrix with each sequence as indexing row and
+    columns
+
+  \item
+    Diagonal arrow denotes an alignment between residues
+
+    This can be either a match or mismatch
+
+  \item
+    A horizontal arrow denotes a gap in the sequence indexing the columns
+
+  \item
+    A vertical arrow denotes a gap in the sequence indexing the rows
+
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.3\textwidth]{graphics/alignment_trajectory.eps}
+  \caption{Trajectory example}
+  \label{fig:alignment_trajectory}
+\end{figure}
+\FloatBarrier
 
 \Para{Global alignment: Needleman Wunsch algorithm}
 
@@ -1147,6 +1171,20 @@ TODO
   \item
     Construct matrix of dimensions $(m, n)$ where $m$ and $n$ are the sizes of
     each sequence
+
+  \item
+    A cell in the matrix $(i, j)$ will contain the optimal score of aligning the
+    first $i$ residues of the first sequence with the first $j$ residues of the
+    second
+
+    Therefore cell $(m, n)$ will contain the optimal score of the global
+    alignment between the two sequences
+
+  \item
+    Matrix is filled incrementally
+
+    The value of cell $(i, j)$ is determined by the value of cells $(i-1, j)$,
+    $(i, j-1)$ and $(i-1, j-1)$
 
   \item
     TODO
