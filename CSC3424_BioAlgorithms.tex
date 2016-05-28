@@ -1106,21 +1106,65 @@ Reconstruct tree from order of merges:
 
 \subsubsection{Global alignment}
 
-TODO
+\begin{itemize}
+  \item
+    Attempts to align all residues in sequence
+
+  \item
+    Useful when sequences are very similar and of equal length
+
+\end{itemize}
+
+\Para{Exact methods}
+
+\begin{itemize}
+  \item
+    Will always find the best possible alignment between two sequences
+
+  \item
+    Based on dynamic programming algorithm
+
+  \item
+    Algorithms:
+
+    \begin{description}
+      \item[Global] Needleman Wunsch
+      \item[Local] Small Waterman
+    \end{description}
+
+\end{itemize}
 
 \Para{Exact method: Trajectories}
 
 TODO
 
-\Para{Needleman Wunsch algorithm}
+\Para{Global alignment: Needleman Wunsch algorithm}
 
-TODO
+\begin{itemize}
+  \item
+    Computationally intensive
 
-\Para{Smith Waterman algorithm}
+  \item
+    Construct matrix of dimensions $(m, n)$ where $m$ and $n$ are the sizes of
+    each sequence
 
-TODO
+  \item
+    TODO
+
+\end{itemize}
 
 \subsubsection{Local alignment}
+
+\begin{itemize}
+  \item
+    Aligns subsection of sequences that align best
+
+  \item
+    Useful when sequences contain sub regions of similarity
+
+\end{itemize}
+
+\Para{Local alignment: Smith Waterman algorithm}
 
 TODO
 
