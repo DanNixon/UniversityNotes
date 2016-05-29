@@ -1,5 +1,7 @@
 % Set document attributes
+\def\DOCDATE{\today}
 \title{\DOCTITLE}
+\date{\DOCDATE}
 
 \usepackage{fullpage}
 \usepackage{scrextend}
@@ -22,7 +24,7 @@
 \rhead{}
 \rfoot{}
 \cfoot{\thepage}
-\lfoot{}
+\lfoot{\DOCDATE}
 
 % New page for each section
 \newcommand{\sectionbreak}{\clearpage}
