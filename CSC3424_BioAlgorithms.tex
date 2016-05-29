@@ -1297,12 +1297,15 @@ Scores are given by:
 Value of cell $(i, j)$ is given by:
 
 \[
-  S(i, j) = max {
-    S(i-1, j-1) + mis/match score
-    S(i-1, j) + gap score
-    S(i, j-1) + gap score
-    0
-  }
+  S(i, j) = max
+    \left (
+    \begin{array}{ll}
+      S(i-1, j-1) + mis/match score \\
+      S(i-1, j) + gap score \\
+      S(i, j-1) + gap score \\
+      0 \\
+    \end{array}
+    \right )
 \]
 
 Where 0 ends the alignment.
