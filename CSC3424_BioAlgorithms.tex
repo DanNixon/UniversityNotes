@@ -1169,6 +1169,9 @@ Reconstruct tree from order of merges:
     Computationally intensive
 
   \item
+    Can use PAM, BLOSSUM, etc. as a similarity matrix to obtain alignment score
+
+  \item
     Construct matrix of dimensions $(m, n)$ where $m$ and $n$ are the sizes of
     each sequence
 
@@ -1177,17 +1180,66 @@ Reconstruct tree from order of merges:
     first $i$ residues of the first sequence with the first $j$ residues of the
     second
 
-    Therefore cell $(m, n)$ will contain the optimal score of the global
-    alignment between the two sequences
-
   \item
     Matrix is filled incrementally
 
+  \item
     The value of cell $(i, j)$ is determined by the value of cells $(i-1, j)$,
     $(i, j-1)$ and $(i-1, j-1)$
 
+    The value is the lowest movement score given by the score of the last cell
+    plus the score of the alignment of the current cell (i.e. score of mismatch,
+    gap opening or gap extending)
+
   \item
-    TODO
+    An arrow is placed from the cell in the direction of the lowest score
+
+  \item
+    When all cells are filled cell $(m, n)$ will contain the optimal score of
+    the global alignment
+
+  \item
+    By following the arrows from cell $(m, n)$ one can obtain the optimal global
+    alignment(s)
+
+    Note that multiple equally scored optimal alignments may be possible, each
+    indicated by branching and joining in the path
+
+\end{itemize}
+
+Example:
+
+\begin{figure}[h!]
+  \centering
+  % \includegraphics[width=0.7\textwidth]{graphics/nw_alignment_eg.eps}
+  TODO
+  \caption{Needleman Wunsch alignment example}
+  \label{fig:nw_alignment_eg}
+\end{figure}
+\FloatBarrier
+
+Four optimal alignments for figure \ref{fig:nw_alignment_eg}:
+
+\begin{itemize}
+  \item
+    \texttt{ggaatgg}
+
+    \texttt{---atg-}
+
+  \item
+    \texttt{ggaatgg}
+
+    \texttt{---at-g}
+
+  \item
+    \texttt{ggaatgg}
+
+    \texttt{--a-t-g}
+
+  \item
+    \texttt{ggaatgg}
+
+    \texttt{--a-tg-}
 
 \end{itemize}
 
