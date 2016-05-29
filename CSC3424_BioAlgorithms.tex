@@ -1090,6 +1090,14 @@ Reconstruct tree from order of merges:
 
   \item
     Alignment also shows which parts of the sequence are similar
+
+  \item
+    If two proteins have over 45\% identical residue structure then they are
+    likely to have a common or related structure
+
+  \item
+    If they have over 25\% identical residues then they are likely to have
+    similar folding patterns
 \end{itemize}
 
 \subsubsection{Exact vs. heuristic}
@@ -1312,13 +1320,119 @@ Where 0 ends the alignment.
 
 \Para{Approximate method: k-tuple}
 
-TOOD
+\begin{itemize}
+  \item
+    Take a sample sequence and split it into all possible incremental
+    subsequences of a given size $k$
+
+    For proteins: $k = 3$
+
+  \item
+    Search a database for each substring
+
+    Reduces number of candidate strings
+
+  \item
+    Then extend alignment using sequences of good alignment with substrings
+\end{itemize}
 
 \Para{BLAST algorithm}
 
-TODO
+\begin{itemize}
+  \item
+    (Basic Local Alignment Search Tool)
+
+  \item
+    ~100 times faster than exact dynamic programming approaches
+\end{itemize}
+
+Workflow:
+
+\begin{enumerate}
+  \item[1]
+    Split into $k$ letter substrings.
+
+    e.g:
+    \texttt{\hfill \\
+      MATCHES \\
+      MAT.... \\
+      .ATC... \\
+      ..TCH.. \\
+      ...CHE. \\
+      ....HES \\
+    }
+
+  \item[2]
+    Align each sequence to all possible $k$ length subsequences
+
+  \item[3]
+    Compute the similarity scores of all alignments
+
+    \begin{itemize}
+      \item
+        Discard those that have a score less than the neighbourhood score
+        threshold
+
+      \item
+        This greatly reduces the number of alignments to be considered
+    \end{itemize}
+
+  \item[4]
+    Search database for exact matches of each word
+
+  \item[5]
+    Ungapped alignments
+
+    \begin{itemize}
+      \item
+        If for the same sequence in the database, two non-overlapping hits are
+        found less than a threshold number of residues apart
+
+      \item
+        In this case the alignment is extended starting with these hits as long
+        as the score is no worse than a given threshold respective of the best
+        score found so far
+    \end{itemize}
+
+  \item[6]
+    Gapped alignments
+
+    \begin{itemize}
+      \item
+        Dynamic programming method is used for gapped alignments
+    \end{itemize}
+\end{enumerate}
+
+\Para{E value}
+
+\begin{itemize}
+  \item
+    Describes the number of hits expected when searching a database of a given
+    size
+
+  \item
+    Decreases exponentially as the score increases
+
+  \item
+    Essentially describes the amount of background noise
+
+    e.g. $E=1$ denotes that in a database of the current size, it is expected to
+    find 1 match with a similar score by chance
+
+  \item
+    Lower E value denotes a higher probability that the sample sequence has
+    matched a homologous protein
+
+    However, almost identical short alignments have a high E value as the length
+    of the sequence is taken into account
+\end{itemize}
 
 \subsection{Multiple Sequence Alignment}
+
+\begin{itemize}
+  \item
+    TODO
+\end{itemize}
 
 TODO
 
