@@ -676,7 +676,6 @@ the original.
   \item
     Duplicate genes with redundant functions can help towards protection against
     deletion mutations.
-
 \end{itemize}
 
 \subsection{Homology, orthology and parology}
@@ -727,7 +726,6 @@ the original.
     As sequences diverge non-conservative mutations increase and the sequence
     similarity to the common ancestor decreases while remaining functionally
     similar, this can make determining homology difficult.
-
 \end{itemize}
 
 \subsection{Orthology}
@@ -741,7 +739,6 @@ the original.
 
   \item
     Often encode proteins that perform the same function in different organisms.
-
 \end{itemize}
 
 \subsection{Parology}
@@ -807,7 +804,6 @@ the original.
   \item
     Areas of high similarity infer homology, low similarity cannot be used to
     infer either way.
-
 \end{itemize}
 
 \subsubsection{Evolutionary model fitting}
@@ -823,7 +819,6 @@ Multiple methods:
 
   \item
     Bayesian (advanced)
-
 \end{itemize}
 
 \Para{Unweighted pair group method with arithmetic mean}
@@ -842,7 +837,6 @@ Multiple methods:
 
   \item
     Order of grouping gives tree structure.
-
 \end{itemize}
 
 Example with 5 species: \texttt{A}, \texttt{B}, \texttt{C}, \texttt{D},
@@ -919,7 +913,6 @@ Reconstruct tree from order of merges:
   \item
     Position of fork in tree in terms of depth is reflective of the point in
     history that the two organisms diverged.
-
 \end{itemize}
 
 \section{Sequence Similarity and Comparison}
@@ -969,7 +962,6 @@ Reconstruct tree from order of merges:
     Complex schemes may take into account that a purine-purine or
     pyrimidine-pyrimidine mismatch is more common that a purine-pyrimidine
     mismatch
-
 \end{itemize}
 
 \Para{Proteins}
@@ -983,7 +975,6 @@ Reconstruct tree from order of merges:
 
   \item
     Data encoded in PAM matrices
-
 \end{itemize}
 
 \subsubsection{Gap penalty}
@@ -1055,7 +1046,6 @@ Reconstruct tree from order of merges:
 
     This allows the scores to be added rather than multiplied (as would have had
     to be done with probabilities)
-
 \end{itemize}
 
 \subsubsection{BLOSSUM matrices}
@@ -1090,7 +1080,6 @@ Reconstruct tree from order of merges:
   \item
     BLOSSUM62 (default for many comparison tools) created from blocks where 62\%
     of the amino acids were identical
-
 \end{itemize}
 
 \subsection{Sequence Alignment}
@@ -1101,7 +1090,39 @@ Reconstruct tree from order of merges:
 
   \item
     Alignment also shows which parts of the sequence are similar
+\end{itemize}
 
+\subsubsection{Exact vs. heuristic}
+
+\begin{itemize}
+  \item
+    Exact
+
+    \begin{itemize}
+      \item
+        Guaranteed to find an optimal solution
+
+      \item
+        Computationally intensive
+
+      \item
+        Good for small numbers of sequences or when algorithm is implemented in
+        hardware
+    \end{itemize}
+
+  \item
+    Heuristic
+
+    \begin{itemize}
+      \item
+        Not guaranteed to find an optimal solution
+
+      \item
+        More computationally efficient
+
+      \item
+        Better for searching large databases
+    \end{itemize}
 \end{itemize}
 
 \subsubsection{Global alignment}
@@ -1112,26 +1133,6 @@ Reconstruct tree from order of merges:
 
   \item
     Useful when sequences are very similar and of equal length
-
-\end{itemize}
-
-\Para{Exact methods}
-
-\begin{itemize}
-  \item
-    Will always find the best possible alignment between two sequences
-
-  \item
-    Based on dynamic programming algorithm
-
-  \item
-    Algorithms:
-
-    \begin{description}
-      \item[Global] Needleman Wunsch
-      \item[Local] Small Waterman
-    \end{description}
-
 \end{itemize}
 
 \Para{Exact method: Trajectories}
@@ -1151,7 +1152,6 @@ Reconstruct tree from order of merges:
 
   \item
     A vertical arrow denotes a gap in the sequence indexing the rows
-
 \end{itemize}
 
 \begin{figure}[h!]
@@ -1204,7 +1204,6 @@ Reconstruct tree from order of merges:
 
     Note that multiple equally scored optimal alignments may be possible, each
     indicated by branching and joining in the path
-
 \end{itemize}
 
 Example:
@@ -1240,7 +1239,6 @@ Four optimal alignments for figure \ref{fig:nw_alignment_eg}:
     \texttt{ggaatgg}
 
     \texttt{--a-tg-}
-
 \end{itemize}
 
 \subsubsection{Local alignment}
@@ -1251,12 +1249,63 @@ Four optimal alignments for figure \ref{fig:nw_alignment_eg}:
 
   \item
     Useful when sequences contain sub regions of similarity
-
 \end{itemize}
 
 \Para{Local alignment: Smith Waterman algorithm}
 
-TODO
+\begin{itemize}
+  \item
+    Variation of global alignment method using matrix
+
+  \item
+    At initialisation all cells are set to zero
+
+  \item
+    Gaps at the beginning of the sequence are not penalised
+
+  \item
+    The additional option of ending the sequence is also considered when
+    deciding the score of a given cell
+
+  \item
+    The optimal score (end of the alignment) can appear anywhere in the matrix
+
+  \item
+    The start of the alignment can appear anywhere before the end of the
+    alignment in the matrix
+\end{itemize}
+
+Example:
+
+\begin{figure}[h!]
+  \centering
+  % \includegraphics[width=0.7\textwidth]{graphics/sw_alignment_eg.eps}
+  TODO
+  \caption{Smith Waterman alignment example}
+  \label{fig:sw_alignment_eg}
+\end{figure}
+\FloatBarrier
+
+Scores are given by:
+
+\begin{itemize}
+  \item Match = +5
+  \item Mismatch = -3
+  \item Gap = -5
+\end{itemize}
+
+Value of cell $(i, j)$ is given by:
+
+\[
+  S(i, j) = max {
+    S(i-1, j-1) + mis/match score
+    S(i-1, j) + gap score
+    S(i, j-1) + gap score
+    0
+  }
+\]
+
+Where 0 ends the alignment.
 
 \Para{Approximate method: k-tuple}
 
