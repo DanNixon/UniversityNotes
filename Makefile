@@ -29,13 +29,16 @@ CPP_EXAMPLE_SOURCES=$(wildcard $(LISTINGS_DIR)/*.cpp)
 CPP_EXAMPLE_EXECUTABLES=$(subst $(LISTINGS_DIR),$(OUTPUT_DIR),$(CPP_EXAMPLE_SOURCES:.cpp=.o))
 CPP_EXAMPLE_OUTPUTS=$(subst $(LISTINGS_DIR),$(OUTPUT_DIR),$(CPP_EXAMPLE_SOURCES:.cpp=.txt))
 
-all: out_dir mp_graphics svg_graphics dxf_graphics dot_graphics cpp_examples $(PDFS)
+all: out_dir copy_html mp_graphics svg_graphics dxf_graphics dot_graphics cpp_examples $(PDFS)
 
 out_dir:
 	mkdir -p $(OUTPUT_DIR)
 
 clean:
 	rm -rf $(OUTPUT_DIR)
+
+copy_html:
+	cp -r html/* $(OUTPUT_DIR)
 
 $(OUTPUT_DIR)/%.pdf: %.tex
 	$(LATEXMK) $(TEX_OPTIONS) -jobname=$(subst .pdf,,$@) $<
