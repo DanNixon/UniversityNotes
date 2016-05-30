@@ -1657,7 +1657,128 @@ Workflow:
 
 \subsubsection{Analysis}
 
-TODO
+\Para{Motif}
+
+\begin{itemize}
+  \item
+    Region that is conserved between families of proteins
+
+  \item
+    Typically conserved because they encode part of the function of the protein
+
+  \item
+    Presence of a motif in a protein sequence can be used to imply function
+\end{itemize}
+
+\Para{Pattern}
+
+\begin{itemize}
+  \item
+    An amino acid sequence that is related to a motif
+
+  \item
+    Presence of this pattern denotes a conserved region between protein
+    sequences
+
+  \item
+    A pattern defines a motif in terms of amino acid sequence
+\end{itemize}
+
+\Para{Profile}
+
+\begin{itemize}
+  \item
+    An extension of a pattern
+
+  \item
+    Assigned probabilities of to the occurrence of a particular amino acid at
+    each position of the motif
+
+  \item
+    Consists of a table of amino acid and gap costs for each position and a set
+    of probabilities for each amino acid at each position
+
+  \item
+    Used for alignment of more distantly related sequences
+\end{itemize}
+
+\subsubsection{Protein Databases}
+
+\begin{itemize}
+  \item
+    Several databases have been created which describe motifs in terms of
+    patterns and profiles
+
+  \item
+    Allows searching for patterns and profiles in a protein query sequence to
+    find possible functions
+
+  \item
+    The Interpro database combines data from multiple sources to provide a
+    database of protein families and functional sites
+
+  \item
+    Protein domains typically relate to the conservation of 3D structure
+
+  \item
+    Multiple sequence alignments can be used to obtain better quality results
+    from searching such databases
+
+    \begin{itemize}
+      \item
+        More sensitive search methods that allow detection of more distant
+        relationships
+
+      \item
+        Reducing the number of false reported homologous sequences
+    \end{itemize}
+\end{itemize}
+
+\Para{PSI-BLAST}
+
+\begin{itemize}
+  \item
+    (Position Specific Iterative BLAST)
+
+  \item
+    More powerful than BLAST for detection of distant relationships
+
+  \item
+    Starts with a normal BLAST execution
+
+  \item
+    Derives a pattern from the multiple sequence alignment of the BLAST hits,
+    known as the Position Sensitive Scoring Matrix
+
+    \begin{itemize}
+      \item
+        For each residue in the sequence, compute the distribution of amino
+        acids in the corresponding residues in aligned sequences
+
+        (discard those too similar to the query)
+
+      \item
+        Distribution describes the likelihood of each mutation for each residue
+        of the query sequence
+
+      \item
+        Also describes which residues are more conserved and which are more
+        susceptible to insertions or deletions
+    \end{itemize}
+
+  \item
+    Uses this pattern information to search the database
+
+  \item
+    Process is repeated to allow the pattern to be tuned in successive cycles
+\end{itemize}
+
+\Para{Hidden Markov Models}
+
+\begin{itemize}
+  \item
+    TODO
+\end{itemize}
 
 \section{Protein Structure Prediction}
 
@@ -1667,7 +1788,7 @@ TODO
 
 TODO
 
-\section{Omics Data ans Analysis}
+\section{Omics Data and Analysis}
 
 TODO
 
