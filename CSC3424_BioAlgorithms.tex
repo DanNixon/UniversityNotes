@@ -1807,6 +1807,104 @@ TODO
 
 \section{Network Analysis}
 
+\subsection{Network}
+
+A graph, either directed or undirected, with a set of nodes joined by arcs
+(directed) or edges (undirected).
+
+\subsection{Concepts and Metrics}
+
+\Para{Degree}
+
+\begin{itemize}
+  \item
+    In-degree: number of connections incoming to a node
+
+  \item
+    Out-degree: number of connections outgoing from a node
+
+  \item
+    For an undirected graph both are equal
+\end{itemize}
+
+Degree distribution:
+
+\begin{description}
+  \item[Constant]
+    All nodes have exactly $k$ links
+
+  \item[Random]
+    Probability of finding a node with connectivity $k$ is equal to the average
+    connectivity
+
+  \item[Scale free]
+    No characteristic scale for connectivity of the network
+\end{description}
+
+\Para{Distance}
+
+\begin{itemize}
+  \item
+    Minimum number of links between a pair of nodes
+\end{itemize}
+
+\Para{Diameter}
+
+\begin{itemize}
+  \item
+    Pajek: longest of shortest paths between all pairs of nodes
+
+  \item
+    Watts: Average of shortest paths between all pairs of nodes
+\end{itemize}
+
+\Para{Density}
+
+\begin{itemize}
+  \item
+    Number of edges as a fraction of all possible edges
+\end{itemize}
+
+\Para{Cluster coefficient}
+
+\begin{itemize}
+  \item
+    Measure of attachment amongst neighbours
+
+  \item
+    Average density of neighbourhood
+\end{itemize}
+
+\Para{Centrality}
+
+\begin{itemize}
+  \item
+    Searching for significant nodes based on their connections
+
+  \item
+    \begin{description}
+      \item[Degree centrality] \hfill \\
+        Number of edges of a node
+
+      \item[Closeness centrality] \hfill \\
+        High for nodes which have a low shortest path to all other nodes
+
+        \[
+          C_{H}(x) = \sum_{y \neq x} \frac{1}{d(x, y)}
+        \]
+
+      \item[Betweenness centrality] \hfill \\
+        Fraction of shortest paths of the network of which a node is a member of
+
+        \[
+          H_{B}(v) = \sum_{(s \neq v \neq t) \in V} \frac{\sigma_{st}(v)}{\sigma_{st}}
+        \]
+
+    \end{description}
+\end{itemize}
+
+\subsection{TODO}
+
 TODO
 
 \section{Omics Data and Analysis}
