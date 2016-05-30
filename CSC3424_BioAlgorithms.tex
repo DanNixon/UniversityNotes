@@ -1444,7 +1444,140 @@ Workflow:
 
   \item
     Exact approach is too computationally expensive to use
+
+  \item
+    Can be performed or interpreted by hand/visually by colour coding each
+    residue
+
+  \item
+    Requires a lot of computational power.
+
+  \item
+    Often too computationally intensive to use exact methods
+
+    Most commonly used algorithms are heuristic based
+
+  \item
+    Methods:
+
+    \begin{itemize}
+      \item
+        Progressive alignment strategies (e.g. Clustal, T-Coffee)
+
+      \item
+        Iterative methods (e.g. DIALIGN, PRRP)
+
+        Make an initial estimate then iteratively refine it
+
+      \item
+        Statistical methods (e.g. HMMER, SAM)
+
+        Generate probabilistic models of sequences, e.g. using a hidden Markov
+        model
+
+      \item
+        Based on locally conserved patterns found in same order in sequence
+    \end{itemize}
 \end{itemize}
+
+\subsubsection{Phylogenetics}
+
+\begin{itemize}
+  \item
+    Starting point for phylogenetic analysis
+
+  \item
+    Can be used to group sequences or subsequences into families
+
+    Given a multiple sequence alignment each alignment column reflects mutations
+    at that site during evolution
+
+  \item
+    A multiple sequence alignment allows the deduction of the order of
+    appearance of sequences during evolution
+
+  \item
+    Both global and local alignment used:
+
+    \begin{itemize}
+      \item
+        Protein sequences can be conserved throughout evolutionary change
+        (global)
+
+      \item
+        Functional domains of protein sequences may be conserved whilst the
+        sequence diverges (local)
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Algorithm: Clustal}
+
+\begin{itemize}
+  \item
+    Very fast
+
+    Can align $~10^{5}$ sequences in a couple of hours
+
+  \item
+    Can be parallelised
+\end{itemize}
+
+Workflow:
+
+\begin{enumerate}
+  \item[1]
+    Compare sequences to obtain a similarity matrix
+
+    \begin{itemize}
+      \item
+        Genetic distances between each pair of sequences is computed:
+        $\frac{\# \: mismatched \: positions}{\# \: matched \: positions}$
+    \end{itemize}
+
+  \item[2]
+    Using similarity matrix, create a tree that relates all sequences
+
+    \begin{itemize}
+      \item
+        Computed genetic distances are used to build a phylogenetic tree of all
+        sequences, known as the "guide tree"
+
+      \item
+        This tree is used to control the order in which sequences are added to
+        the multiple sequence alignment
+
+      \item
+        Contributions of each sequence to the alignment are weighted by the
+        position of the sequence in the guide tree
+    \end{itemize}
+
+  \item[3]
+    Perform progressive alignments in which the sequences are aligned in an
+    order determined by the tree
+
+    \begin{itemize}
+      \item
+        Most closely related pair(s) are aligned first
+
+      \item
+        Next closes sequence is then added to alignment until all sequences have
+        been aligned
+
+      \item
+        Sequences are added to alignment by performing an alignment between the
+        new sequence and the existing alignment
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Algorithm: T-Coffee}
+
+TODO
+
+\subsubsection{Algorithm: Muscle}
+
+TODO
+
+\subsubsection{Analysis}
 
 TODO
 
