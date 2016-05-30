@@ -1514,6 +1514,9 @@ Workflow:
 
 \begin{itemize}
   \item
+    Progressive alignment based
+
+  \item
     Very fast
 
     Can align $~10^{5}$ sequences in a couple of hours
@@ -1571,11 +1574,86 @@ Workflow:
 
 \subsubsection{Algorithm: T-Coffee}
 
-TODO
+\begin{itemize}
+  \item
+    Progressive alignment based
+
+  \item
+    Used within a family of other algorithms for tasks such as accuracy
+    reporting, combining multiple sequence alignments, etc.
+
+  \item
+    Every possible pair-wise alignment computed using a hidden Markov model
+    which are used to build a library
+
+  \item
+    A progressive alignment builds up a multiple sequence alignment using
+    pair-wise alignments from the library
+
+    Alignment with highest possible agreement is selected
+
+  \item
+    Can use any pair-wise alignment method to build library
+
+    Adds flexibility
+\end{itemize}
 
 \subsubsection{Algorithm: Muscle}
 
-TODO
+\begin{itemize}
+  \item
+    (MUltiple Sequence Comparison by Log-Expectation)
+
+  \item
+    Faster for a large multiple sequence alignment
+
+  \item
+    Relatively complex algorithm
+
+  \item
+    Two progressive alignment steps followed by an iterative refinement step
+\end{itemize}
+
+Workflow:
+
+\begin{itemize}
+  \item[1]
+    Progressive alignment 1
+
+    \begin{itemize}
+      \item
+        Based on local similarity using $k$-tuple matching
+
+      \item
+        (draft progression)
+    \end{itemize}
+
+  \item[2]
+    Progressive alignment 2
+
+    \begin{itemize}
+      \item
+        Based on global alignment
+
+      \item
+        (improved progression)
+    \end{itemize}
+
+  \item[3]
+    Iterative refinement
+
+    \begin{itemize}
+      \item
+        Alignments are split apart
+
+      \item
+        Parts are realigned using local conserved regions
+
+      \item
+        If the alignment is better the changes are saved and the process is
+        repeated
+    \end{itemize}
+\end{itemize}
 
 \subsubsection{Analysis}
 
