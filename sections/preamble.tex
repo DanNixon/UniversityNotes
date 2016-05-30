@@ -1,8 +1,3 @@
-% Set document attributes
-\def\DOCDATE{\today}
-\title{\DOCTITLE}
-\date{\DOCDATE}
-
 \usepackage{fullpage}
 \usepackage{scrextend}
 \usepackage{titlesec}
@@ -16,6 +11,12 @@
 \usepackage{graphicx}
 \usepackage{minted}
 \usepackage{subcaption}
+\usepackage{datetime}
+
+% Set document attributes
+\def\DOCDATE{\currenttime \hspace{1ex} \today}
+\title{\DOCTITLE}
+\date{\DOCDATE}
 
 % Setup headers and footers
 \pagestyle{fancy}
