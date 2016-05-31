@@ -1807,6 +1807,201 @@ Workflow:
 
 \section{Protein Structure Prediction}
 
+\begin{itemize}
+  \item
+    Molecules of primary importance to life
+
+  \item
+    Polypeptide chains created by joining amino acids
+
+  \item
+    Linear chain folds to produce a 3D structure
+
+  \item
+    Final 3D structure depends on amino acid composition of the protein
+\end{itemize}
+
+\subsection{Amino acids}
+
+\begin{itemize}
+  \item
+    All amino acids have a common backbone which is used to form the linear
+    string of amino acids that composes a protein
+
+  \item
+    The side chain is the unique part of the amino acid and attaches to the
+    backbone by the $\mathrm{C}_{\alpha}$ atom
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  % \includegraphics[width=0.4\textwidth]{graphics/protein_structure.eps}
+  TODO
+  \caption{Protein structure}
+  \label{fig:protein_structure}
+\end{figure}
+\FloatBarrier
+
+\begin{itemize}
+  \item
+    Different amino acids have different properties
+
+  \item
+    e.g. Hydrophobic, small, polar, etc.
+
+  \item
+    Hydrophobicity has the largest effect on the final 3D structure
+\end{itemize}
+
+\subsection{Structure}
+
+Hierarchical structure:
+
+\begin{description}
+  \item[Primary structure] \hfill \\
+    The amino acid sequence of the protein
+
+  \item[Secondary structure] \hfill \\
+    Local interactions between closest residues in the sequence that form one of
+    two structures; $\alpha$-helices or $\beta$-sheets
+
+  \item[Tertiary structure] \hfill \\
+    Global interactions of $\alpha$-helices and $\beta$-sheets cause
+    organisation into a stable state to form a complex 3D structure
+
+  \item[Super-secondary structure (lesser used)] \hfill \\
+    Recurrent patters of interaction between secondary structures in close
+    proximity
+
+    e.g.:
+    \begin{description}
+      \item[$\beta$ hairpin] \hfill \\
+        An anti-parallel $\beta$-sheet arranged in a hairpin shape
+
+      \item[$\beta-\alpha-\beta$ unit] \hfill \\
+        An $\alpha$-helix in a strand between two $\beta$-sheets, all of which
+        are arranged parallel to each other
+    \end{description}
+
+  \item[Domain (lesser used)] \hfill \\
+    Sub-units within a protein with similar folding stability
+\end{description}
+
+\begin{itemize}
+  \item
+    Polypeptide chain is joined such that two angles exist at each side of the
+    peptide unit
+
+    \begin{itemize}
+      \item
+        $\Psi$, between $\mathrm{C}_{\alpha}$ and $\mathrm{N}$
+
+      \item
+        $\Phi$, between $\mathrm{C}_{\beta}$ and $\mathrm{C}$
+
+      \item
+        These angles determine the 3D structure of the protein chain
+    \end{itemize}
+
+  \item
+    An $\alpha$-helix is the formation of a coil 3.6 residues per turn 5.4
+    $\mathrm{\Angstrom}$ wide
+
+  \item
+    A $\beta$-sheet is the formation of one or more straight (parallel) chains
+
+    \begin{itemize}
+      \item
+        If all strands have the same N-C orientation the sheet is known as a
+        parallel sheet
+
+      \item
+        If adjacent strands are opposite to each other the sheet is known as an
+        anti-parallel sheet
+    \end{itemize}
+
+  \item
+    Any residues that are not part of an $\alpha$-helix or $\beta$-sheet are
+    said to be in coil state
+
+  \item
+    Structure of experimentally observed proteins stored in the Protein Data
+    Bank (PDB)
+\end{itemize}
+
+\subsubsection{Ramachandran plots}
+
+\begin{itemize}
+  \item
+    Plots relationship of $\Psi$ and $\Phi$ angles to secondary structure
+
+  \item
+    Range of observed angles is very constrained and secondary structure types
+    are often clustered
+
+  \item
+    Raw measured data is often not so clustered
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  % \includegraphics[width=0.4\textwidth]{graphics/ramachandran_plot.eps}
+  TODO
+  \caption{Ramachandran plot}
+  \label{fig:ramachandran_plot}
+\end{figure}
+\FloatBarrier
+
+\subsubsection{Classification}
+
+\begin{itemize}
+  \item
+    Several tertiary structure classifiers exist
+
+  \item
+    CATH is most up to date
+
+  \item
+    Uses hierarchical system to catalog proteins:
+
+    \begin{enumerate}
+      \item[1] Class
+        \begin{itemize}
+          \item Mainly Alpha
+          \item Mainly Beta
+          \item Alpha Beta
+          \item Few Secondary Structures
+        \end{itemize}
+
+      \item[2] Architecture
+      \item[3] Fold
+      \item[4] Super-family
+      \item[5] Domain
+    \end{enumerate}
+\end{itemize}
+
+\subsection{Structure Prediction}
+
+\begin{itemize}
+  \item
+    Protein function is dependant on its structure
+
+  \item
+    Function is determined by which amino acids are exposed to the outside of
+    the protein, which depends on the 3D structure
+
+  \item
+    Structure determines what substrate the protein can react with
+
+  \item
+    Protein structure is very difficult (or sometimes near impossible) to
+    measure experimentally
+
+  \item
+    Protein structure prediction aims to predict the 3D structure of a protein
+    based on its amino acid sequence
+\end{itemize}
+
 TODO
 
 \section{Network Analysis}
