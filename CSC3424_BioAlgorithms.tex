@@ -774,6 +774,9 @@ the original.
 
   \item
     Can use molecular data to infer phylogenetic relationships.
+
+  \item
+    Publish phylogenetics tend to be low quality.
 \end{itemize}
 
 \subsection{Workflow}
@@ -792,7 +795,8 @@ the original.
 
 \begin{itemize}
   \item
-    TODO
+    Used to provide data from which to create a hypothesis about the
+    relationship between sequences.
 \end{itemize}
 
 \subsubsection{Masking}
@@ -1903,9 +1907,55 @@ Degree distribution:
     \end{description}
 \end{itemize}
 
-\subsection{TODO}
+\subsection{Kauffman's hypothesis}
 
-TODO
+\begin{itemize}
+  \item
+    Cell types represent attractors in gene expression state
+
+  \item
+    Number of cell types proportional to root of number of genes
+
+  \item
+    Genetic regulation can be modelled using a random boolean network
+
+    \begin{itemize}
+      \item
+        Each node has a boolean state
+
+      \item
+        Rules define the next state of a node as a function of its current state
+        and the state of its inputs
+    \end{itemize}
+\end{itemize}
+
+\subsection{Building networks from data}
+
+\begin{itemize}
+  \item
+    Many sources of data
+
+  \item
+    Most data sets are either incomplete, noisy or both
+
+  \item
+    Data integration is performed to increase quality of network
+
+    \begin{itemize}
+      \item
+        Weight edges by reliability, relevance, etc.
+
+      \item
+        Generate high-level probabilistic networks
+
+        (e.g. String DB)
+
+      \item
+        Generate networks from experimentally verified data only
+
+        (e.g. BioGRID)
+    \end{itemize}
+\end{itemize}
 
 \section{Omics Data and Analysis}
 
@@ -1913,6 +1963,26 @@ TODO
 
 \section{Data Standards}
 
-TODO
+\begin{itemize}
+  \item
+    Growing amount of data
+
+  \item
+    Several data standards for each area of bioinformatics
+
+  \item
+    Publishing data often requires use of an existing standard
+
+  \item
+    Standards define minimum data that must be present for publication
+
+  \item
+    Various fields of bioinformatics use a controlled vocabulary to assist
+    searching and categorisation
+
+  \item
+    Ontologies used to represent relationships between data sets often using a
+    controlled vocabulary
+\end{itemize}
 
 \end{document}
