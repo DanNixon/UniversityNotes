@@ -1928,7 +1928,7 @@ Hierarchical structure:
     Bank (PDB)
 \end{itemize}
 
-\subsubsection{Ramachandran plots}
+\subsubsection{Ramachandran plot}
 
 \begin{itemize}
   \item
@@ -2140,21 +2140,297 @@ Contact map prediction at Newcastle:
 
 \begin{itemize}
   \item
-    TODO
+    Try to identify a template protein
+
+  \item
+    Adapt the structure of the template to the target protein
+
+  \item
+    Energy optimisation step aims to find a "at rest" state for amino acid chain
+    in terms of forces acting on atoms
 \end{itemize}
+
+Workflow:
+
+\begin{enumerate}
+  \item[1]
+    Template Identification
+
+    \begin{itemize}
+      \item
+        Attempt finding a close homologous sequence, this will have the best
+        change of having a similar structure
+
+      \item
+        If a template exists but has low sequence similarity it must be found by
+        other means
+
+        \begin{description}
+          \item[Profile based methods] \hfill
+            \begin{itemize}
+              \item
+                Construct 1D representations (profiles) of structures in
+                database
+
+              \item
+                Construct profile of target sequence and search for closest
+                matching profile in database
+
+              \item
+                Profiles are constructed from structural properties of residues
+
+                \begin{itemize}
+                  \item
+                    Secondary structure state
+
+                  \item
+                    Solvent accessibility
+
+                  \item
+                    Amino acid properties
+                \end{itemize}
+            \end{itemize}
+
+          \item[Threading methods] \hfill
+            \begin{itemize}
+              \item
+                Create a catalogue of unique (structural) folds
+
+              \item
+                Evaluate how likely it is that the target sequence adopts to
+                each fold and how it adapts (alignment)
+
+              \item
+                Choose template (and alignment) that has the lowest estimated
+                energy
+            \end{itemize}
+        \end{description}
+
+    \end{itemize}
+
+  \item[2]
+    Alignment
+
+    \begin{itemize}
+      \item
+        It is possible that the alignment between the template and target
+        sequences means that atoms are placed in incorrect positions in the 3D
+        structure model
+
+      \item
+        The offset (alignment) between template and target sequences must
+        therefore be adjusted to correct this
+
+      \item
+        To correct this information can be used form:
+
+        \begin{itemize}
+          \item
+            Information derived from template structure
+
+          \item
+            Predictions about the target
+        \end{itemize}
+    \end{itemize}
+
+  \item[3]
+    Alignment gap correction
+
+    \begin{itemize}
+      \item
+        Determine main chain segments of the target that represent the regions
+        containing gaps in alignment
+
+      \item
+        Stitch them into the main chain of the template to crate an initial
+        model for the target
+    \end{itemize}
+
+  \item[4]
+    Populate mutations
+
+    \begin{itemize}
+      \item
+        Replace the side chains of residues that have been mutated (mismatches
+        in alignment)
+    \end{itemize}
+
+  \item[5]
+    Atomic position validation
+
+    \begin{itemize}
+      \item
+        Inspect the positions of atoms to detect any collisions
+
+      \item
+        Resolve any serious collisions
+    \end{itemize}
+
+  \item[6]
+    Refinement by energy optimisation
+
+    \begin{itemize}
+      \item
+        Adapt stitched segments to conserved structure
+
+      \item
+        Adjust side chains to most stable configuration
+    \end{itemize}
+\end{enumerate}
 
 \subsubsection{Ab initio methods}
 
 \begin{itemize}
   \item
-    TODO
+    Without a template sequence ab initio modelling is the only option
+
+  \item
+    Pure ab initio is costly and ineffective
+
+  \item
+    Hybrid ab initio/homology methods exist and have better performance
+
+    e.g. fragment assembly
+\end{itemize}
+
+\Para{Fragment Assembly}
+
+\begin{itemize}
+  \item
+    Most advanced ab initio method
+
+  \item
+    Break up sequences into subsegments of length 3-9 residues
+
+  \item
+    Generate structure of subsequences based on library of known fragment
+    structures
+
+  \item
+    Decoys (candidate structures) are generated from all possible combinations
+    of fragments
+
+  \item
+    Energy minimisation is applied to all decoys
+
+  \item
+    Decoys are clustered and the final models are selected form the centres of
+    the largest clusters
 \end{itemize}
 
 \subsubsection{I-Tasser method}
 
 \begin{itemize}
   \item
-    TODO
+    Fully automated prediction method
+\end{itemize}
+
+Workflow:
+
+\begin{enumerate}
+  \item[1]
+    Template identification
+
+    \begin{itemize}
+      \item
+        TODO
+    \end{itemize}
+
+  \item[2]
+    Structure assembly
+
+    \begin{itemize}
+      \item
+        TODO
+    \end{itemize}
+
+  \item[3]
+    Atomic model construction
+
+    \begin{itemize}
+      \item
+        TODO
+    \end{itemize}
+
+  \item[4]
+    Model selection
+
+    \begin{itemize}
+      \item
+        TODO
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Assessment of protein structure prediction}
+
+\begin{itemize}
+  \item
+    Requirement to compare a predicted protein structure to experimental data
+
+    \begin{itemize}
+      \item Algorithm verification
+      \item CASP exercise results
+    \end{itemize}
+
+  \item
+    Various methods exist that measure different metrics
+
+  \item
+    Most popular metric: GDT-TS
+\end{itemize}
+
+\subsubsection{GDT-TS}
+
+\begin{itemize}
+  \item
+    (Global Distance Test - Total Score)
+
+  \item
+    Aims to balance rewarding good local similarity and good global similarity
+
+    \begin{itemize}
+      \item
+        A measure that only takes into account local similarity could discard
+        models that only fail on a few amino acids
+    \end{itemize}
+
+  \item
+    Superimposition process is repeated with thresholds of 1, 2, 4 and
+    8$\mathrm{\AA}$
+
+    \begin{itemize}
+      \item
+        Different thresholds used to allow metric to be used with both
+        approximate and high accuracy models
+    \end{itemize}
+\end{itemize}
+
+Workflow:
+
+\begin{enumerate}
+  \item[1]
+    All segments of 3, 5 and 7 consecutive amino acids form the model are
+    superimposed to the actual structure
+
+  \item[2]
+    Each segment is iteratively extended while the distance between all residue
+    pairs is below a given threshold
+
+  \item[3]
+    A final superposition includes the set of segments covering as many residues
+    as possible
+
+    Segments do not need to be continuous
+\end{enumerate}
+
+\subsubsection{GDT-HA}
+
+\begin{itemize}
+  \item
+    (Global Distance Test - High Accuracy)
+
+  \item
+    Uses thresholds of 0.5, 1, 2 and 4$\mathrm{\AA}$
 \end{itemize}
 
 \section{Network Analysis}
