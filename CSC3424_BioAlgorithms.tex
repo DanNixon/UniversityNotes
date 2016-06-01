@@ -1998,9 +1998,147 @@ Hierarchical structure:
   \item
     Protein structure prediction aims to predict the 3D structure of a protein
     based on its amino acid sequence
+
+  \item
+    Prediction of 3D structure is typically an optimisation problem
+
+  \item
+    Prediction of structural aspects of residues (such as secondary structure,
+    contact points, etc.)are typically machine learning problems
 \end{itemize}
 
-TODO
+\subsubsection{Prediction of structural aspects}
+
+\begin{itemize}
+  \item
+    Many features are present due to local interactions between amino acids and
+    its close neighbours in the protein chain
+
+  \item
+    Need to consider more than just the primary structure (sequence)
+
+  \item
+    Also consider evolutionary information (which residues are conserved)
+
+    Data from Position Specific Scoring Matrices (PSSM) which are created from a
+    multiple sequence alignment
+\end{itemize}
+
+\Para{Secondary Structure}
+
+\begin{itemize}
+  \item
+    Predicts if a reside belongs to an $\alpha$-helix, $\beta$-sheet or is in
+    coil state
+
+  \item
+    Uses a window of 15 amino acids (7 either side of the residue being
+    predicted)
+
+  \item
+    Prediction is typically performed by creating a probability profile of the
+    sequence using a PSSM then by considering each window of the probability
+    profile
+\end{itemize}
+
+\Para{Contact Number}
+
+\begin{itemize}
+  \item
+    Two residues are said to be in contact if they are less than a threshold
+    distance apart
+
+  \item
+    The contact number is the number of contacts that a given residue has
+
+  \item
+    The contact number of each residue gives a vague indication of the density
+    of the protein
+\end{itemize}
+
+\Para{Contact Map}
+
+\begin{itemize}
+  \item
+    Given two residues determine if they are in contact
+
+  \item
+    Typically represented as a binary matrix
+
+  \item
+    Can be used to determine a lot of information about the structure of a
+    protein
+
+    \begin{itemize}
+      \item
+        Basic 3D model
+
+      \item
+        Model selection
+
+      \item
+        Parameters to energy function of 3D protein structure prediction
+    \end{itemize}
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  % \includegraphics[width=0.7\textwidth]{graphics/protein_contact_map.eps}
+  TODO
+  \caption{Contact Map}
+  \label{fig:protein_contact_map}
+\end{figure}
+\FloatBarrier
+
+Contact map prediction at Newcastle:
+
+\begin{itemize}
+  \item
+    TODO
+\end{itemize}
+
+\Para{Other Predictions}
+
+\begin{itemize}
+  \item
+    Solvent Accessibility
+
+    Surface area of a residue that is exposed to the environment
+
+  \item
+    Recursive Convex Hull
+
+    Assign a "layer" to each residue representing their relative proximity to
+    the "centre" of the protein where each layer is a convex hull of points
+\end{itemize}
+
+\subsection{3D Structure Prediction}
+
+\begin{itemize}
+  \item
+    TODO
+\end{itemize}
+
+\subsubsection{Template based modelling}
+
+\begin{itemize}
+  \item
+    TODO
+\end{itemize}
+
+\subsubsection{Ab initio methods}
+
+\begin{itemize}
+  \item
+    TODO
+\end{itemize}
+
+\subsubsection{I-Tasser method}
+
+\begin{itemize}
+  \item
+    TODO
+\end{itemize}
 
 \section{Network Analysis}
 
