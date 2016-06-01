@@ -2094,7 +2094,29 @@ Contact map prediction at Newcastle:
 
 \begin{itemize}
   \item
-    TODO
+    Machine learning approach to contact map prediction
+
+  \item
+    Use three residue windows:
+
+    \begin{itemize}
+      \item Centred on first residue
+      \item Centred on second residue
+      \item Centred on median residue between first and second
+    \end{itemize}
+
+  \item
+    Training data of 2413 proteins with less than 2\% real contacts
+
+  \item
+    Split training set into 50 samples
+
+  \item
+    BioHEL algorithm used to train 25 rule sets for each of the 50 samples
+
+  \item
+    Contact is predicted using consensus voting over all 1250 ($50 \times 25$)
+    rule sets
 \end{itemize}
 
 \Para{Other Predictions}
@@ -2113,11 +2135,6 @@ Contact map prediction at Newcastle:
 \end{itemize}
 
 \subsection{3D Structure Prediction}
-
-\begin{itemize}
-  \item
-    TODO
-\end{itemize}
 
 \subsubsection{Template based modelling}
 
