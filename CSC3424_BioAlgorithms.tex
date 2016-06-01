@@ -2333,7 +2333,13 @@ Workflow:
 
     \begin{itemize}
       \item
-        TODO
+        MUSTER fold recognition method
+
+      \item
+        Profile based fold recognition
+
+      \item
+        For more difficult targets a combination of various methods
     \end{itemize}
 
   \item[2]
@@ -2341,7 +2347,21 @@ Workflow:
 
     \begin{itemize}
       \item
-        TODO
+        Generate preliminary model with only $\mathrm{C}_{\alpha}$ and side
+        chain positions using template where possible and falling back on ab
+        initio methods
+
+      \item
+        Two iterations of refinement:
+
+        \begin{enumerate}
+          \item[1]
+            Template based
+
+          \item[2]
+            Cluster models of previous iteration and use centroids as starting
+            point
+        \end{enumerate}
     \end{itemize}
 
   \item[3]
@@ -2349,7 +2369,14 @@ Workflow:
 
     \begin{itemize}
       \item
-        TODO
+        Full models constructed from approximate models produced by cluster
+        centroids
+
+      \item
+        Backbone is matched to a library of template fragments
+
+      \item
+        Atomic optimisation performed (focus on Hydrogen bonds)
     \end{itemize}
 
   \item[4]
@@ -2357,7 +2384,21 @@ Workflow:
 
     \begin{itemize}
       \item
-        TODO
+        Several full atom models generated from each cluster centroid
+
+      \item
+        Models are ranked based on:
+
+        \begin{itemize}
+          \item
+            $\frac{\# \: H-bonds}{target \: length}$
+
+          \item
+            Comparison score between full atom model and centroid cluster
+        \end{itemize}
+
+      \item
+        Best model is selected
     \end{itemize}
 \end{enumerate}
 
