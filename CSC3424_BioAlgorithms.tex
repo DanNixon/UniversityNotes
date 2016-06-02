@@ -2627,7 +2627,286 @@ Degree distribution:
 
 \section{Omics Data and Analysis}
 
-TODO
+\begin{itemize}
+  \item
+    General technological field associated with measurement of activity of a
+    cell
+\end{itemize}
+
+\subsection{Genome level}
+
+\subsubsection{Single Nucleotide Polymorphisms (SNP)}
+
+\begin{itemize}
+  \item
+    One base pair variation in DNA
+
+  \item
+    Typically in non-coding region
+
+  \item
+    When frequent enough in a population, SNP can be linked to a trait (e.g.
+    disease)
+
+  \item
+    Can be probed in parallel using SNP microarrays
+\end{itemize}
+
+\subsubsection{Methylation}
+
+\begin{itemize}
+  \item
+    Chemical reaction that blocks transcription of a certain region of a
+    chromosome
+
+  \item
+    Has a boolean state
+
+  \item
+    Can be probed using specialised microarrays
+\end{itemize}
+
+\subsection{RNA level}
+
+\subsubsection{RT-PCR}
+
+\begin{itemize}
+  \item
+    (Real Time reverse Polymerase Chain Reaction)
+
+  \item
+    Measures expression of a single predetermined gene
+
+  \item
+    High accuracy
+\end{itemize}
+
+\subsubsection{RNA microarrays}
+
+\begin{itemize}
+  \item
+    Measures expression of many genes in parallel
+
+  \item
+    High noise
+\end{itemize}
+
+\subsubsection{RNA sequencing}
+
+\begin{itemize}
+  \item
+    Use high throughput technologies to obtain RNA content of a sample
+
+  \item
+    mRNA converted to cDNA
+
+  \item
+    cDNA used to generate sequencing library
+
+  \item
+    Library allows analysis of RNA
+\end{itemize}
+
+\subsubsection{RNA-Seq}
+
+\begin{itemize}
+  \item
+    Can detect more scarce transcripts than traditional RNA sequencing
+
+  \item
+    More reliable results
+\end{itemize}
+
+\subsection{Protein level}
+
+Experimental methods:
+
+\begin{itemize}
+  \item
+    2D gel electrophoresis
+
+    \begin{itemize}
+      \item
+        Protein mixture separated on gel plate
+
+      \item
+        Regions of interest identified using Peptide Mass Fingerprinting
+    \end{itemize}
+
+  \item
+    Liquid chromatography MS/MS
+
+    \begin{itemize}
+      \item
+        Peptide mixture separated on micro column
+
+      \item
+        Proteins identified by mass spectroscopy
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Peptide Mass Fingerprinting}
+
+\begin{itemize}
+  \item
+    Mass spectroscopy of peptides provides list of peaks (mass:charge
+    ratios)
+
+  \item
+    Peaks compared to databases of peptides
+
+  \item
+    Identified proteins (with a confidence score)
+\end{itemize}
+
+\subsection{Analysis}
+
+\begin{itemize}
+  \item
+    Challenge is imbalance between number of samples and number of variables in
+    dataset
+
+  \item
+    Lack of samples mean only crude analysis can be performed
+\end{itemize}
+
+\subsubsection{Normalisation}
+
+\begin{itemize}
+  \item
+    Large variation of results due to different experimental
+    conditions/facilities
+
+  \item
+    Normalisation aims to remove such systematic errors
+
+  \item
+    Ensures all samples have same statistical distribution
+\end{itemize}
+
+\Para{Quantile Normalisation}
+
+\begin{enumerate}
+  \item[1]
+    Rank each data point in each sample
+
+  \item[2]
+    Take average value for each rank
+
+  \item[3]
+    Replace each value with the average for the rank
+\end{enumerate}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{@{}llll@{}}
+    \toprule
+    Gene & Array 1 & Array 2 & Array 3 \\
+    \midrule
+    A    & 15      & 24      & 13      \\
+    B    & 10      & 11      & 15      \\
+    C    & 20      & 9       & 24      \\
+    D    & 30      & 31      & 28      \\
+    \bottomrule
+  \end{tabular}
+  \caption{Raw Data}
+  \label{tab:qn_raw}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{@{}llll@{}}
+    \toprule
+    Gene & Array 1 & Array 2 & Array 3 \\
+    \midrule
+    A    & 15 (2)  & 24 (3)  & 13 (1)  \\
+    B    & 10 (1)  & 11 (2)  & 15 (2)  \\
+    C    & 20 (3)  & 9 (1)   & 24 (3)  \\
+    D    & 30 (4)  & 31 (4)  & 28 (4)  \\
+    \bottomrule
+  \end{tabular}
+  \caption{Ranks (rank in brackets)}
+  \label{tab:qn_raw}
+\end{table}
+
+\begin{table}[h!]
+  \centering
+  \begin{tabular}{@{}llll@{}}
+    \toprule
+    Gene & Array 1     & Array 2     & Array 3     \\
+    \midrule
+    A    & 15 (2) [15] & 24 (3) [24] & 13 (1) [10] \\
+    B    & 10 (1) [10] & 11 (2) [15] & 15 (2) [15] \\
+    C    & 20 (3) [24] & 9 (1) [10]  & 24 (3) [24] \\
+    D    & 30 (4) [30] & 31 (4) [30] & 28 (4) [30] \\
+    \bottomrule
+  \end{tabular}
+  \caption{Normalised (normalised value in square brackets)}
+  \label{tab:qn_raw}
+\end{table}
+
+\subsubsection{Quality Control}
+
+\begin{itemize}
+  \item
+    Step in which obvious anomalous data are removed from the sample data
+
+  \item
+    Expect all data within the same class to have similar values
+\end{itemize}
+
+\subsubsection{Analysis Methods}
+
+\begin{itemize}
+  \item
+    Methods can be either supervised or unsupervised
+
+  \item
+    Unsupervised methods:
+
+    \begin{itemize}
+      \item Principal Component Analysis
+      \item Hierarchical clustering
+    \end{itemize}
+
+    (can also be used for quality control)
+
+  \item
+    Supervised methods:
+
+    \begin{itemize}
+      \item Univariate (differentially expressed)
+      \item Multivariate (machine learning)
+    \end{itemize}
+\end{itemize}
+
+\begin{description}
+  \item[Principal Component Analysis (PCA)] \hfill
+    \begin{itemize}
+      \item
+        Dimension reduction method
+
+      \item
+        Find a set of vectors that combine to describe the data but are
+        unrelated to each other
+    \end{itemize}
+
+  \item[Hierarchical clustering] \hfill
+    \begin{itemize}
+      \item
+        Each object starts in its own cluster
+
+      \item
+        Closest two clusters are combined
+
+      \item
+        Repeat iteratively until all objects are in a single cluster
+
+      \item
+        Order of merging and distance between pairs of of clusters infer a tree
+        structure
+    \end{itemize}
+\end{description}
 
 \section{Data Standards}
 
