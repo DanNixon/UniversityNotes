@@ -1,7 +1,6 @@
 language: shell
 
 sudo: required
-dist: trusty
 
 env:
   global:
