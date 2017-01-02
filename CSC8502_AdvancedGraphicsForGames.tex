@@ -6,6 +6,10 @@
 
 \tableofcontents
 
+\vfill
+Course material:
+\url{https://research.ncl.ac.uk/game/mastersdegree/graphicsforgames/}
+
 \section{Overview}
 
 \subsection{3D Graphics}
@@ -58,30 +62,20 @@
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.6\textwidth]{out/graphic_pipeline.eps}
-  \caption{Pipeline}
+  TODO: use new diagran
+  % \includegraphics[width=0.6\textwidth]{out/graphic_pipeline.eps}
+  \caption{OpenGL Pipeline}
   \label{fig:graphics_pipeline}
 \end{figure}
 \FloatBarrier
 
-\subsubsection{Vertex Operations}
+\subsection{OpenGL}
 
-\begin{enumerate}
-  \item[1] Vertices are transformed through a number of matrix operations
-           (section \ref{sec:transformations})
-  \item[2] Primitives outside screen space are removed (culled)
-  \item[3] Vertices outside the screen space are clipped
-  \item[4] 3D scene is projected onto a 2D plane
-\end{enumerate}
+Useful (somewhat) OpenGL related stuff to know:
 
-\subsubsection{Fragment Operations}
-
-\begin{enumerate}
-  \item[1] Once screen area for a primitive is determined it is rasterised
-           (section \ref{sec:rasterisation})
-  \item[2] Each fragment is then shaded depending on colour, texture, lighting,
-           etc.
-\end{enumerate}
+\begin{itemize}
+  \item TODO
+\end{itemize}
 
 \section{Transformations}
 \label{sec:transformations}
@@ -311,6 +305,20 @@ Three stages of the standard transformation pipeline:
 
 \end{description}
 
+\section{Vertex/Geometry Operation}
+
+\subsection{Clipping/Culling}
+
+TODO
+
+\subsection{Generation (Geometry Shader)}
+
+TODO
+
+\subsection{Amplification (Tessellation Shader)}
+
+TODO
+
 \section{Fragment Operations}
 \label{sec:fragment_operations}
 
@@ -322,7 +330,7 @@ Colour at point $p$ computed through simple linear interpolation between
 vertices $v_{0}$ and $v_{1}$.
 \begin{align*}
   C_{p} &= (C_{b} * t) + (C_{a} * (1 - t)) \\
-      t &= |(v_{1} - p) / (v_{1} - v_{0})|
+  t &= |(v_{1} - p) / (v_{1} - v_{0})|
 \end{align*}
 
 \Para{Triangles}
@@ -347,13 +355,13 @@ Factors $F_{source}$ and $F_{dest}$ are usually programmable but a common
 approach is standard linear blending:
 \begin{align*}
   F_{source} &= \alpha \\
-    F_{dest} &= 1 - \alpha
+  F_{dest} &= 1 - \alpha
 \end{align*}
 
 One other alternative is additive blending:
 \begin{align*}
   F_{source} &= 1 \\
-    F_{dest} &= 1
+  F_{dest} &= 1
 \end{align*}
 
 \subsection{Depth Buffer / Depth Test}
@@ -363,16 +371,24 @@ that has been rendered on a each pixel.
 
 \begin{enumerate}
   \item[1]   When a pixel is to be shaded compare the $z$ coordinate of the new
-             fragment with that in the depth buffer $D_{i}$
+    fragment with that in the depth buffer $D_{i}$
   \item[2.1] If $x \leq D_{i}$ then depth test passes, the pixel is shaded based
-             on the new fragment and the depth buffer updated
+    on the new fragment and the depth buffer updated
   \item[2.1] Otherwise the test fails and the fragment is discarded
   \item[3]   The depth buffer is rest to maximum depth at the start of each
-             frame
+    frame
 \end{enumerate}
 
 Can have "z fighting" when two objects with close $z$ coordinates are rasterised
 inside each other. A higher precision depth buffer avoids this.
+
+\subsection{Scissor testing}
+
+TODO
+
+\subsection{Stencil testing}
+
+TODO
 
 \section{Texture Mapping}
 
@@ -451,107 +467,6 @@ in $z$ axis to interpolate between two MIP map levels.
 Solves issue when an object spans multiple MIP levels and a noticeable line where
 the texture quality changes can be seen.
 
-\section{OpenGL}
-
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=0.8\textwidth]{out/opengl_pipeline.eps}
-  \caption{OpenGL Pipeline}
-  \label{fig:opengl_pipeline}
-\end{figure}
-\FloatBarrier
-
-Vertex post processing operations:
-
-\begin{itemize}
-  \item Vertex clipping
-  \item Perspective divide
-  \item Viewport transform
-\end{itemize}
-
-Sample processing operations:
-
-\begin{itemize}
-  \item Depth test
-  \item Alpha blending
-\end{itemize}
-
-Note that tessellation shaders, the tessellator, and geometry shaders are
-optional.
-
-\subsection{Shaders}
-
-\begin{description}
-  \item[Attributes] \hfill \\
-    Values specific to the vertex or fragment being processed
-  \item[Uniforms] \hfill \\
-    Constant for all shader executions
-  \item[Interface block] \hfill \\
-    Used to interface shaders to each other, e.g. vertex shader $\rightarrow$
-    fragment shader
-\end{description}
-
-Automatic interpolation between shaders (e.g. values in output block of
-vertex/geometry shaders get interpolated before the fragment shader) (can be
-disabled using \texttt{flat} layout qualifier).
-
-Textures accessed from any shader through samplers. Textures are bound to a
-texture unit which maps to texturing hardware.
-
-\subsection{Geometry Shader}
-
-Used to create new primitives from those created by the CPU side code.
-
-\begin{itemize}
-  \item Invoked once per primitive
-  \item Input is array of vertices
-  \item Output is a number of new primitives
-\end{itemize}
-
-Usage examples:
-
-\begin{itemize}
-  \item Normal visualisation
-  \item Particle systems
-\end{itemize}
-
-Reduces processing to be done by the CPU and earlier stages of the pipeline by
-reducing the number of vertices they need to process.
-
-Limited number of output vertices (based on specific hardware).
-
-\subsection{Tessellation}
-
-\begin{itemize}
-  \item Used for larger scale geometry amplification
-  \item Tessellation used to "fill" an existing primitive with more primitives
-  \item More vertices generated which can be transformed
-\end{itemize}
-
-The hardware tessellator operates on patches (areas bound by a number of
-vertices) and turns them in to wither lines, triangles or quads.
-
-Instead of a position, output vertices have a weighting which specifies its
-position relative to a number of the input vertices.
-
-Patches have tessellation factors that define how many new new vertices are
-generated. One factor for the inside of the patch and several for the outside.
-
-Using these factors it is possible to correctly line up patches with differing
-tessellation levels without having "cracks" in the object.
-
-\subsubsection{Tessellation Control Shader}
-
-Invoked once per input patch vertex.
-
-Feeds vertex information to tessellator and controls tessellation levels.
-
-\subsubsection{Tessellation Evaluation Shader}
-
-Invoked for every new vertex.
-
-Converts barycentric weightings created by the tessellator into positions.
-
 \section{Scene Hierarchy and Skeletal animation}
 
 \subsection{Scene Graphs}
@@ -559,7 +474,7 @@ Converts barycentric weightings created by the tessellator into positions.
 \begin{itemize}
   \item Hierarchical tree structure of meshes
   \item Each mesh has a model matrix that gets applied to it and all its
-        children
+    children
   \item Typically use a tree as shallow as possible to reduce traversal time
   \item Can include many other (non graphical) objects on the tree:
     \begin{itemize}
@@ -575,7 +490,7 @@ to add a "transparency" tag to each node.
 When processing objects:
 \begin{enumerate}
   \item[1] Traverse the tree and build a list of opaque objects and a list of
-           transparent objects
+    transparent objects
   \item[2] Render all the opaque objects
   \item[3] Sort the list of transparent objects by their $z$ position
   \item[4] Render transparent object from furthest away to closest
@@ -670,10 +585,10 @@ Types of light:
 
 Lighting colour $c$ of a fragment (for a single light):
 \begin{align*}
-      c &= c_{a} + (c_{d} + c_{s}) \times a \\
+  c &= c_{a} + (c_{d} + c_{s}) \times a \\
   c_{d} &= (N \cdot |(L - P)|) \times C_{d} \\
   c_{s} &= (N \cdot \frac{1}{2}(V + L))^{n} \times C_{s}\\
-      a &= 1 - \frac{L}{L_{max}}
+  a &= 1 - \frac{L}{L_{max}}
 \end{align*}
 
 where:
@@ -681,7 +596,7 @@ where:
 \begin{itemize}
   \item $k_{a}$ is the constant ambient light for the scene
   \item $L_{max}$ is the maximum distance that a light source can be away from a
-        source
+    source
   \item $L$ is the distance from the light source to the surface
   \item $n$ is the specular power (higher for shinier materials)
   \item $C_{d}$ and $C_{s}$ are colours of the diffuse and specular light
@@ -697,7 +612,7 @@ Normal $N$ can be calculated using two side vectors: $N = (v_{0} - v_{1}) \times
 Attenuation factor $a$ ensures that the light gets weaker as the light source
 moves away from the surface.
 
-\subsection{Shadows}
+\subsection{Shadow mapping}
 
 TODO
 
