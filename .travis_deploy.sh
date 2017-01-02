@@ -13,6 +13,6 @@ git config --global user.name "Travis CI"
 cd out
 git init
 
-git add CSC*.pdf *.html
+git add CSC*.pdf *.html *.css
 git commit -m "Deploy PDFs"
 git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:gh-pages > /dev/null 2>&1
