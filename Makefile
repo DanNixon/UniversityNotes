@@ -39,6 +39,7 @@ clean:
 
 copy_html:
 	cp -r html/* $(OUTPUT_DIR)
+	sed -i 's/BUILD_TIMESTAMP/$(shell date)/g' "$(OUTPUT_DIR)/index.html"
 
 $(OUTPUT_DIR)/%.pdf: %.tex
 	$(LATEXMK) $(TEX_OPTIONS) -jobname=$(subst .pdf,,$@) $<

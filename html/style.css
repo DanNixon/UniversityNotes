@@ -1,0 +1,13 @@
+h2 {
+  font-size: 1.2em;
+}
+
+#sidebar > div {
+  padding: 5px 0px;
+}
+
+#sidebar > div > p {
+  font-size: 0.8em;
+  margin: 0px;
+  padding: 0px;
+}
