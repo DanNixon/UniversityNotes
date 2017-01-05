@@ -74,7 +74,35 @@ Course material:
 Useful (somewhat) OpenGL related stuff to know:
 
 \begin{itemize}
-  \item TODO
+  \item
+    Buffers
+    \begin{itemize}
+      \item
+        OpenGL buffers are generated from data in main memory
+
+      \item
+        Buffer generation copies data to graphics memory
+
+      \item
+        Data in main memory is no longer required
+
+      \item
+        OpenGL buffers can be bound to CPU memory addresses to modify buffer
+        contents
+
+    \end{itemize}
+
+  \item
+    Shaders
+    \begin{itemize}
+      \item
+        Operate per item (per vertex for vertex and tessellation shaders, per
+        primitive for geometry shader, per fragment for fragment shader)
+
+      \item
+        Data common to all shaders passed as uniforms
+
+    \end{itemize}
 \end{itemize}
 
 \section{Transformations}
@@ -309,15 +337,41 @@ Three stages of the standard transformation pipeline:
 
 \subsection{Clipping/Culling}
 
-TODO
+\begin{itemize}
+  \item
+    TODO
 
-\subsection{Generation (Geometry Shader)}
-
-TODO
+\end{itemize}
 
 \subsection{Amplification (Tessellation Shader)}
 
-TODO
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
+
+\subsection{Generation (Geometry Shader)}
+
+\begin{itemize}
+  \item
+    Geometry shader runs after tessellation shader
+
+  \item
+    Takes single primitive as input and outputs zero or more new primitives
+    (limited types of primitives supported: points, lines \& triangles)
+
+  \item
+    Used to generate new (additional) geometry based on (limited) existing
+    geometry
+
+  \item
+    e.g. basic graphical particle system in which points are sent to the GPU
+    pipeline and are converted into quads by the geometry shader
+
+    This saves (~75\%) CPU time copying primitives to the GPU
+
+\end{itemize}
 
 \section{Fragment Operations}
 \label{sec:fragment_operations}
