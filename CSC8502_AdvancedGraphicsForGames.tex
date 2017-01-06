@@ -409,13 +409,23 @@ TODO: diagrams
 
 \end{itemize}
 
-\subsection{Vertex Clipping}
+\subsection{Clipping}
 
 \url{https://www.khronos.org/opengl/wiki/Vertex_Post-Processing#Clipping}
 
 \begin{itemize}
   \item
-    TODO
+    Remove geometry outside of viewing volume, reduced GPU load in rasterising
+    (parts of) primitives that will never be seen
+
+  \item
+    Whole primitives that are outside viewing volume are simply culled as a
+    whole
+
+  \item
+    Primitives that are partially outside are split at the boundary of the
+    viewing volume and new primitives are created as needed to fill any space
+    created inside the viewing volume (e.g. in the case of triangle clipping)
 
 \end{itemize}
 
@@ -425,7 +435,18 @@ TODO: diagrams
 
 \begin{itemize}
   \item
-    TODO
+    Removes (culls) faces that will not be seen due to facing away from the
+    camera
+
+  \item
+    Can cull front, back or all faces
+
+    Culling all faces effectively disables the rasteriser for triangle based
+    primitives
+
+  \item
+    Front and back faces are determined by the winding order of the vertices of
+    triangles
 
 \end{itemize}
 
