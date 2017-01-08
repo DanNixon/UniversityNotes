@@ -4,38 +4,42 @@ using namespace std;
 
 class ITouhou {
  public:
-  ITouhou() { cout << "ITouhou constructed" << endl; }
+  ITouhou() { cout << "ITouhou (" << name() << ") constructed" << endl; }
   virtual ~ITouhou() { cout << "ITouhou destructed" << endl; }
-  virtual string name() const = 0;
+  virtual string name() const { return "ITouhou"; };
 };
 
 class Youkai : public virtual ITouhou {
  public:
-  Youkai() : ITouhou() { cout << "Youkai constructed" << endl; }
+  Youkai() : ITouhou() { cout << "Youkai (" << name() << ") constructed" << endl; }
   virtual ~Youkai() { cout << "Youkai destructed" << endl; }
+  virtual string name() const { return "Youkai"; };
 };
 
 class IFlyable: public virtual ITouhou {
  public:
-  IFlyable() { cout << "IFlyable constructed" << endl; }
+  IFlyable() { cout << "IFlyable (" << name() <<") constructed" << endl; }
   virtual ~IFlyable() { cout << "IFlyable destructed" << endl; }
   virtual void fly() { cout << "IFlyable::fly()" << endl; }
+  virtual string name() const { return "IFlyable"; }
 };
 
 class Yuuka : public Youkai, public IFlyable {
  public:
-  Yuuka() : Youkai(), IFlyable() { cout << "Yuuka constructed" << endl; }
-  ~Yuuka() { cout << "Yuuka destructed" << endl; }
-  string name() const { return "Yuuka"; }
-  void fly() { cout << "Yuuka::fly()" << endl; }
+  Yuuka() : Youkai(), IFlyable()
+    { cout << "Yuuka " << name() << " constructed" << endl; }
+  virtual ~Yuuka() { cout << "Yuuka destructed" << endl; }
+  virtual string name() const { return "Yuuka"; }
+  virtual void fly() { cout << "Yuuka::fly()" << endl; }
 };
 
 class Reimu : public virtual ITouhou, public IFlyable
 {
  public:
-  Reimu() : ITouhou(), IFlyable() { cout << "Reimu constructed" << endl; }
-  ~Reimu() { cout << "Reimu destructed" << endl; }
-  string name() const { return "Reimu"; }
+  Reimu() : ITouhou(), IFlyable()
+    { cout << "Reimu (" << name() << ") constructed" << endl; }
+  virtual ~Reimu() { cout << "Reimu destructed" << endl; }
+  virtual string name() const { return "Reimu"; }
 };
 
 int main() {

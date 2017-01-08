@@ -10,8 +10,83 @@
 Course material:
 \url{https://research.ncl.ac.uk/game/mastersdegree/programmingforgames/}
 
-\section{TODO}
+\section{Common stupidly basic things I and most other people in the class
+         obviously already know but are for reasons beyond my comprehension
+         asked on the exam}
 
-TODO
+\begin{itemize}
+  \item
+    Variables should always be initialised before being used
+
+  \item
+    Destructors in polymorphic types should be \texttt{virtual}
+
+  \item
+    Classes with pointer types need a copy constructor
+
+\end{itemize}
+
+\section{Polymorphism}
+
+\begin{listing}[h!]
+  \inputminted[linenos,frame=lines,firstline=5,lastline=43]{cpp}{listings/polymorphism_1.cpp}
+  \caption{Polymorphism example classes}
+  \label{listing:polymorphism_1}
+\end{listing}
+\FloatBarrier
+
+\begin{listing}[h!]
+  \inputminted[linenos,frame=lines,firstline=45]{cpp}{listings/polymorphism_1.cpp}
+  \caption{Polymorphism example \texttt{main()}}
+  \label{listing:polymorphism_1_main}
+\end{listing}
+\FloatBarrier
+
+\begin{listing}[h!]
+  \inputminted[linenos,frame=lines]{text}{out/polymorphism_1.txt}
+  \caption{Polymorphism example output}
+  \label{listing:polymorphism_1_out}
+\end{listing}
+\FloatBarrier
+
+Notes:
+
+\begin{itemize}
+  \item The closest implementation of a \texttt{virtual} function to the type of
+        the instance will be called
+  \item The implementation of a function not declared \texttt{virtual} will be
+        that of the type (not the type if the instance)
+  \item For this reason destructors should always be \texttt{virtual}
+  \item Virtual inheritance is used to avoid the "diamond pattern" problem when
+        a class inherits from multiple children of a single base class
+  \item Without virtual inheritance this results in multiple copies of the base
+        class being created
+\end{itemize}
+
+\section{Threading}
+
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
+
+\section{Past Exam Questions}
+
+\subsection{2013/14 Question 2}
+
+\begin{listing}[h!]
+  \inputminted[linenos,frame=lines]{cpp}{listings/csc8501_pp1314_q2.cpp}
+  \caption{Sample code}
+  \label{listing:csc8501_pp1314_q2}
+\end{listing}
+\FloatBarrier
+
+\begin{listing}[h!]
+  \inputminted[linenos,frame=lines]{text}{out/csc8501_pp1314_q2.txt}
+  \caption{Output}
+  \label{listing:csc8501_pp1314_q2}
+\end{listing}
+\FloatBarrier
 
 \end{document}

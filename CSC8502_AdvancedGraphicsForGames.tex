@@ -707,14 +707,26 @@ handle).
 
 \section{Lighting}
 
+TODO
+
 \subsection{Normals}
 
 \begin{itemize}
-  \item Unit vector perpendicular to the surface
-  \item Can be calculated using cross product of two side vectors
-  \item Usually stored as part of the model
-  \item Vertex normals are interpolated across the primitive
-  \item Interpolation may cause problems if an object has sharp corners
+  \item
+    Unit vector perpendicular to the surface
+
+  \item
+    Can be calculated using cross product of two side vectors
+
+  \item
+    Usually stored as part of the model
+
+  \item
+    Vertex normals are interpolated across the primitive
+
+  \item
+    Interpolation may cause problems if an object has sharp corners
+
 \end{itemize}
 
 \subsection{Lighting Models}
@@ -769,16 +781,34 @@ Lighting colour $c$ of a fragment (for a single light):
 where:
 
 \begin{itemize}
-  \item $k_{a}$ is the constant ambient light for the scene
-  \item $L_{max}$ is the maximum distance that a light source can be away from a
+  \item
+    $k_{a}$ is the constant ambient light for the scene
+
+  \item
+    $L_{max}$ is the maximum distance that a light source can be away from a
     source
-  \item $L$ is the distance from the light source to the surface
-  \item $n$ is the specular power (higher for shinier materials)
-  \item $C_{d}$ and $C_{s}$ are colours of the diffuse and specular light
-  \item $P$ is the fragment position
-  \item $V$ is the view vector
-  \item $L$ is the light vector
-  \item $N$ is the normal
+
+  \item
+    $L$ is the distance from the light source to the surface
+
+  \item
+    $n$ is the specular power (higher for shinier materials)
+
+  \item
+    $C_{d}$ and $C_{s}$ are colours of the diffuse and specular light
+
+  \item
+    $P$ is the fragment position
+
+  \item
+    $V$ is the view vector
+
+  \item
+    $L$ is the light vector
+
+  \item
+    $N$ is the normal
+
 \end{itemize}
 
 Normal $N$ can be calculated using two side vectors: $N = (v_{0} - v_{1}) \times
