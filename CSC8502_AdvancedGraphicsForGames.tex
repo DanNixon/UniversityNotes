@@ -625,49 +625,75 @@ Caused by texture interpolation being linear but not fragment area.
 Solution is to use affine transform:
 
 \begin{enumerate}
-  \item[1] Divide texture coordinates by $P_{w}$
-  \item[2] Interpolate texture coordinates
-  \item[3] Multiply by $P_{w}$
+  \item[1]
+    Divide texture coordinates by $P_{w}$
+
+  \item[2]
+    Interpolate texture coordinates
+
+  \item[3]
+    Multiply by $P_{w}$
+
 \end{enumerate}
 
 \subsection{Bilinear Filtering}
 
-When a texture is viewed close enough to the camera such that the rasterised
-object takes up more pixel space than the texture image.
+\begin{itemize}
+  \item
+    When a texture is viewed close enough to the camera such that the rasterised
+    object takes up more pixel space than the texture image
 
-Sample multiple texels and blend them together.
+  \item
+    Sample multiple texels and blend them together
 
-e.g. for texel coordinate 7.6 blend colour of texel 7 and 8 by factor 0.6.
+    e.g. for texel coordinate 7.6 blend colour of texel 7 and 8 by factor 0.6
+
+\end{itemize}
 
 \subsection{MIP mapping /  minification}
 
-Generating smaller textures using the original fill size texture so that objects
-further away can sample a smaller texture.
+\begin{itemize}
+  \item
+    Generating smaller textures using the original fill size texture so that
+    objects further away can sample a smaller texture
 
-Forms a set of textures in decrecing size, known as a MIP chain.
+  \item
+    Forms a set of textures in decrecing size, known as a MIP chain
 
-MIP map is selected using the level of detail (LOD) $\lambda$.
+  \item
+    MIP map is selected using the level of detail (LOD) $\lambda$
 
-This is calculated using the derivatives of the interpolated $x$ and $y$
-texture coordinates, i.e. how fast the texture coordinates are changing.
+  \item
+    This is calculated using the derivatives of the interpolated $x$ and $y$
+    texture coordinates, i.e. how fast the texture coordinates are changing
 
-Faster change in texture coordinates (higher $\lambda$) means less unique texels
-hence less detail. The size of $\lambda$ denotes how far down the MIP change the
-texture is selected.
+  \item
+    Faster change in texture coordinates (higher $\lambda$) means less unique
+    texels hence less detail. The size of $\lambda$ denotes how far down the MIP
+    change the texture is selected
 
-MIP chain is pre processed when the texture is loaded.
+  \item
+    MIP chain is pre processed when the texture is loaded
 
-Requires more memory to store entire MIP chain opposed to a single texture, but
-gives faster processing as less work needs to be done during rasterisation and
-gives a better texture quality due to texel averaging.
+  \item
+    Requires more memory to store entire MIP chain opposed to a single texture,
+    but gives faster processing as less work needs to be done during
+    rasterisation and gives a better texture quality due to texel averaging
+
+\end{itemize}
 
 \subsubsection{Trilinear filtering}
 
-Similar to bilinear filtering (operating in $x$ and $y$ axes) but also operating
-in $z$ axis to interpolate between two MIP map levels.
+\begin{itemize}
+  \item
+    Similar to bilinear filtering (operating in $x$ and $y$ axes) but also
+    operating in $z$ axis to interpolate between two MIP map levels
 
-Solves issue when an object spans multiple MIP levels and a noticeable line where
-the texture quality changes can be seen.
+  \item
+    Solves issue when an object spans multiple MIP levels and a noticeable line
+    where the texture quality changes can be seen
+
+\end{itemize}
 
 \section{Scene Hierarchy and Skeletal animation}
 
