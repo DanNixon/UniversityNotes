@@ -15,9 +15,15 @@ Course material:
 \subsection{3D Graphics}
 
 \begin{itemize}
-  \item Scene made up of objects made up of primitives
-  \item Primitives are a collection of vertices
-  \item Vertices have attributes (position, colour, texture coordinate, etc.)
+  \item
+    Scene made up of objects made up of primitives
+
+  \item
+    Primitives are a collection of vertices
+
+  \item
+    Vertices have attributes (position, colour, texture coordinate, etc.)
+
 \end{itemize}
 
 \subsubsection{Primitives}
@@ -527,13 +533,20 @@ Have a depth buffer which records the depth ($z$ coordinate) of the fragment
 that has been rendered on a each pixel.
 
 \begin{enumerate}
-  \item[1]   When a pixel is to be shaded compare the $z$ coordinate of the new
-    fragment with that in the depth buffer $D_{i}$
-  \item[2.1] If $x \leq D_{i}$ then depth test passes, the pixel is shaded based
-    on the new fragment and the depth buffer updated
-  \item[2.1] Otherwise the test fails and the fragment is discarded
-  \item[3]   The depth buffer is rest to maximum depth at the start of each
-    frame
+  \item[1]
+    When a pixel is to be shaded compare the $z$ coordinate of the new fragment
+    with that in the depth buffer $D_{i}$
+
+  \item[2.1]
+    If $x \leq D_{i}$ then depth test passes, the pixel is shaded based on the
+    new fragment and the depth buffer updated
+
+  \item[2.1]
+    Otherwise the test fails and the fragment is discarded
+
+  \item[3]
+    The depth buffer is rest to maximum depth at the start of each frame
+
 \end{enumerate}
 
 Can have "z fighting" when two objects with close $z$ coordinates are rasterised
@@ -568,24 +581,38 @@ One other alternative is additive blending:
 \section{Texture Mapping}
 
 \begin{itemize}
-  \item Texture coordinates $(u, v)$ defined per vertex
-  \item Coordinated interpolated to obtain per fragment texture coordinates
-  \item $(u, v)$ are normalised texture coordinates within $[0, 1]$
-  \item Textures coordinates out of the $[0, 1]$ can be handled differently:
+  \item
+    Texture coordinates $(u, v)$ defined per vertex
+
+  \item
+    Coordinated interpolated to obtain per fragment texture coordinates
+
+  \item
+    $(u, v)$ are normalised texture coordinates within $[0, 1]$
+
+  \item
+    Textures coordinates out of the $[0, 1]$ can be handled differently:
+
     \begin{description}
       \item[Clamp] \hfill \\
         Anything above 1 is set to 1 \\
         Anything below 0 is set to 0
+
       \item[Repeat] \hfill \\
         $1.1 = 0.1$ \\
         $-0.1 = 0.9$ \\
         etc.
+
       \item[Mirror] \hfill \\
         $1.1 = 0.9$ \\
         $-0.1 = 0.1$ \\
         etc.
+
     \end{description}
-  \item All textures for a mesh typically stored in a single texture image
+
+  \item
+    All textures for a mesh typically stored in a single texture image
+
 \end{itemize}
 
 \subsection{Affine Transform}
@@ -647,28 +674,45 @@ the texture quality changes can be seen.
 \subsection{Scene Graphs}
 
 \begin{itemize}
-  \item Hierarchical tree structure of meshes
-  \item Each mesh has a model matrix that gets applied to it and all its
-    children
-  \item Typically use a tree as shallow as possible to reduce traversal time
-  \item Can include many other (non graphical) objects on the tree:
+  \item
+    Hierarchical tree structure of meshes
+
+  \item
+    Each mesh has a model matrix that gets applied to it and all its children
+
+  \item
+    Typically use a tree as shallow as possible to reduce traversal time
+
+  \item
+    Can include many other (non graphical) objects on the tree:
+
     \begin{itemize}
       \item Sound emitters
       \item Shaders
       \item etc.
     \end{itemize}
+
 \end{itemize}
 
 Need to ensure transparent objects are drawn in the correct order. Solution is
 to add a "transparency" tag to each node.
 
 When processing objects:
+
 \begin{enumerate}
-  \item[1] Traverse the tree and build a list of opaque objects and a list of
+  \item[1]
+    Traverse the tree and build a list of opaque objects and a list of
     transparent objects
-  \item[2] Render all the opaque objects
-  \item[3] Sort the list of transparent objects by their $z$ position
-  \item[4] Render transparent object from furthest away to closest
+
+  \item[2]
+    Render all the opaque objects
+
+  \item[3]
+    Sort the list of transparent objects by their $z$ position
+
+  \item[4]
+    Render transparent object from furthest away to closest
+
 \end{enumerate}
 
 \subsection{Animation}
@@ -704,6 +748,8 @@ attaching other meshes to them (e.g. attach a gun to a hand).
 Inverse kinematics can be used to position a child node in a given position and
 have the parent nodes move in a realistic manner (e.g. placing a hand on a door
 handle).
+
+TODO
 
 \section{Lighting}
 
@@ -764,10 +810,13 @@ Types of light:
 \begin{description}
   \item[Ambient] \hfill \\
     Lights all faces of all objects in a scene equally
+
   \item[Diffuse] \hfill \\
     Light from a source that has been scattered evenly
+
   \item[Specular] \hfill \\
     Light from a source that has been reflected towards the camera
+
 \end{description}
 
 Lighting colour $c$ of a fragment (for a single light):
@@ -934,10 +983,18 @@ moves away from the surface.
 
 \section{Post processing}
 
-TODO
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
 
 \section{Deferred Rendering}
 
-TODO
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
 
 \end{document}
