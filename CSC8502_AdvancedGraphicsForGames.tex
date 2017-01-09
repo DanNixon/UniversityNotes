@@ -1007,19 +1007,112 @@ moves away from the surface.
 
 \end{description}
 
+\subsection{Deferred Rendering}
+
+\begin{itemize}
+  \item
+    In the conventional approach to lighting every fragment is processed by the
+    lighting calculation even if they are not visible in the scene
+
+    When many lights are present in the scene this can add up to a considerable
+    amount of processing overhead processing fragments that have no influence on
+    the final rendered scene
+
+    This is the same with objects that are not in range of a given light
+
+  \item
+    Deferred rendering allows lighting calculations to be run in image space
+    (the final rendered image), this means that only fragments that are visible
+    in the final rendered scene will have lighting calculations applied to them
+
+  \item
+    Requires splitting data up into several screen sized buffers containing
+    information used in lighting calculations
+
+    This is known as the G-buffer
+
+    Possible contents:
+    \begin{itemize}
+      \item
+        Diffuse colours
+
+      \item
+        Normals
+
+      \item
+        Depth
+
+      \item
+        Specular intensity
+
+      \item
+        Post processing flags
+
+      \item
+        (any per fragment data)
+
+    \end{itemize}
+
+\end{itemize}
+
+\subsubsection{Light volumes}
+
+TODO
+
+\subsubsection{Workflow}
+
+\begin{enumerate}
+  \item[1] Fill G-Buffer \hfill \\
+    TODO
+
+  \item[2] Lighting Calculations \hfill \\
+    TODO
+
+  \item[3] Generate Final Image \hfill \\
+    TODO
+
+\end{enumerate}
+
 \section{Post processing}
 
 \begin{itemize}
   \item
-    TODO
+    Scene is rendered into a framebuffer to allow post processing stages to
+    manipulate the rendered scene as a texture
 
-\end{itemize}
-
-\section{Deferred Rendering}
-
-\begin{itemize}
   \item
-    TODO
+    Textures are bound to framebuffers as attachments that can contain colour,
+    depth and stencil data
+
+  \item
+    Once scene has been rendered into framebuffer the attachments can be
+    manipulated in further pipeline stages as regular textures
+
+  \item
+    Textures used as framebuffer attachments cannot be compressed
+    (compression/decompression overhead would be undesirable anyway) but can be
+    packed (e.g. using a single texture for depth and stencil attachments)
+
+  \item
+    A  processing stage renders a single quad that fills the screen which is
+    then textured using the colour attachment texture from the framebuffer the
+    scene was rendered into
+
+  \item
+    Processing stages may be cascaded using multiple processing render passes
+    into multiple framebuffers
+
+    An alternative to this is "ping-pong" texturing, in which a single
+    framebuffer and two textures are used and each processing stage samples from
+    one texture and buffers to the other alternately
+
+  \item
+    As the scene render pass is available as a texture effects that depend on
+    multiple fragments (e.g. blur) are now possible
+
+    Such effects are not possible without this post processing stage as in the
+    standard pipeline the fragment shader does not have access to adjacent (or
+    any) fragments other than the one it is operating on
 
 \end{itemize}
 
