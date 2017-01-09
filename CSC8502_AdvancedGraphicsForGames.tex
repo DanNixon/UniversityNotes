@@ -757,44 +757,28 @@ When processing objects:
 
 \subsubsection{Skinned meshes}
 
-TODO?
-
 \begin{itemize}
   \item
-    Instead a skinned mesh is used and each vertex is pulled in the direction of
-    several skeletal nodes (joints) by a set of weights
+    Model has internal skeleton made up of several joints which can be
+    positioned and rotated relative to each other
 
   \item
-    Skeletal nodes are arranged in a hierarchical tree and inherit
-    transformations
+    Use a mesh (skin) for a subsection of (or entire) skeleton and set position
+    of vertices on the mesh using weightings based on joint positions
 
   \item
-    Skinning (the process of transforming vertices of the mesh based on weights)
-    is typically done on the vertex shader
+    Two variants:
 
-    An array of transformations can be passed to the shader through a uniform.
+    \begin{itemize}
+      \item
+        Each skin vertex has a position and a set of joints it is influenced by
 
-  \item
-    The assignment of weights to each vertex and node (rigging) is done offline
-    in the 3D modelling suite
+      \item
+        Each vertex is relative to a number of anchors
 
-  \item
-    In order to get a good frame rate in a skeletal animation without having to
-    reskin the mesh every frame animation can be interpolated
+        Each anchor has a position and a joint it is relative to
 
-  \item
-    In order to combine multiple animations that affect different parts of the
-    skeleton, different animations can be blended together to form a new
-    animation
-
-  \item
-    Joints can usually be queried to obtain the transformation, useful when
-    attaching other meshes to them (e.g. attach a gun to a hand)
-
-  \item
-    Inverse kinematics can be used to position a child node in a given position
-    and have the parent nodes move in a realistic manner (e.g. placing a hand on
-    a door handle)
+    \end{itemize}
 
 \end{itemize}
 
