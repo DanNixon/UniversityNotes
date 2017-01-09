@@ -1053,23 +1053,102 @@ moves away from the surface.
 
     \end{itemize}
 
+  \item
+    Lighting calculations are only performed within the volume of a given light,
+    removes calculations for fragments that are outside of a given lights reach
+
+  \item
+    In the second pass it is already known what fragments are in the final image
+    (from the G-buffer) therefore no calculations take place for fragments that
+    do not contribute to the final image
+
+  \item
+    Video memory and bandwidth can be an issue due to the large amount of space
+    taken by the G-buffer
+
+  \item
+    Still does not help with issue of lighting transparent objects
+
+  \item
+    May need to perform anti-aliasing on final scene to remove jaggedness from
+    edges
+
 \end{itemize}
 
 \subsubsection{Light volumes}
 
-TODO
+\begin{itemize}
+  \item
+    In second pass volumes are rendered for each light
+
+  \item
+    Light volume encapsulates area which is lit by the light
+
+  \item
+    For example, for a simple point light the volume is simple a sphere, for a
+    spotlight it could be a cone
+
+  \item
+    In view space a light volume could encapsulate an object that is in reality
+    far away from the light
+
+    For this reason depth testing in the third stage must be performed
+
+\end{itemize}
 
 \subsubsection{Workflow}
 
 \begin{enumerate}
-  \item[1] Fill G-Buffer \hfill \\
-    TODO
+  \item[1]
+    Fill G-Buffer
 
-  \item[2] Lighting Calculations \hfill \\
-    TODO
+    \begin{itemize}
+      \item
+        Very similar to conventional rendering process
 
-  \item[3] Generate Final Image \hfill \\
-    TODO
+      \item
+        Transform vertex positions by MVP matrix
+
+      \item
+        Sample diffuse colour from texture
+
+      \item
+        Fill relevant data in G-buffer
+
+    \end{itemize}
+
+  \item[2]
+    Lighting Calculations
+
+    \begin{itemize}
+      \item
+        Render light volumes into scene, marking fragments that may be affected
+        by lights
+
+      \item
+        In fragment shader the world position of the fragment is reconstructed
+        using the depth map from the G-buffer
+
+        Can then determine if lighting calculation should be performed or if the
+        fragment should be discarded (if outside light volume)
+
+      \item
+        Additive blending is used to combine contributions from multiple lights
+
+    \end{itemize}
+
+  \item[3]
+    Generate Final Image
+
+    \begin{itemize}
+      \item
+        Draw a screen sized quad
+
+      \item
+        Texture using blend of lighting attachment textures and diffuse texture
+        (from G-buffer)
+
+    \end{itemize}
 
 \end{enumerate}
 
