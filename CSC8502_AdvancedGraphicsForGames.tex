@@ -743,43 +743,62 @@ When processing objects:
 
 \subsection{Animation}
 
-Can do simple animation by manipulating a tree of objects and their model
-matrices. This works well for simple objects such as cars and robots.
+\begin{itemize}
+  \item
+    Can do simple animation by manipulating a tree of objects and their model
+    matrices
 
-It will not work for objects that have a flexible skin (such as humans).
+    This works well for simple objects such as cars and robots
+
+  \item
+    It will not work for objects that have a flexible skin (such as humans)
+
+\end{itemize}
 
 \subsubsection{Skinned meshes}
 
-Instead a skinned mesh is used and each vertex is pulled in the direction of
-several skeletal nodes (joints) by a set of weights.
+TODO?
 
-Skeletal nodes are arranged in a hierarchical tree and inherit transformations.
+\begin{itemize}
+  \item
+    Instead a skinned mesh is used and each vertex is pulled in the direction of
+    several skeletal nodes (joints) by a set of weights
 
-Skinning (the process of transforming vertices of the mesh based on weights) is
-typically done on the vertex shader. An array of transformations can be passed
-to the shader through a uniform.
+  \item
+    Skeletal nodes are arranged in a hierarchical tree and inherit
+    transformations
 
-The assignment of weights to each vertex and node (rigging) is done offline in
-the 3D modelling suite.
+  \item
+    Skinning (the process of transforming vertices of the mesh based on weights)
+    is typically done on the vertex shader
 
-In order to get a good frame rate in a skeletal animation without having to
-reskin the mesh every frame animation can be interpolated.
+    An array of transformations can be passed to the shader through a uniform.
 
-In order to combine multiple animations that affect different parts of the
-skeleton, different animations can be blended together to form a new animation.
+  \item
+    The assignment of weights to each vertex and node (rigging) is done offline
+    in the 3D modelling suite
 
-Joints can usually be queried to obtain the transformation, useful when
-attaching other meshes to them (e.g. attach a gun to a hand).
+  \item
+    In order to get a good frame rate in a skeletal animation without having to
+    reskin the mesh every frame animation can be interpolated
 
-Inverse kinematics can be used to position a child node in a given position and
-have the parent nodes move in a realistic manner (e.g. placing a hand on a door
-handle).
+  \item
+    In order to combine multiple animations that affect different parts of the
+    skeleton, different animations can be blended together to form a new
+    animation
 
-TODO
+  \item
+    Joints can usually be queried to obtain the transformation, useful when
+    attaching other meshes to them (e.g. attach a gun to a hand)
+
+  \item
+    Inverse kinematics can be used to position a child node in a given position
+    and have the parent nodes move in a realistic manner (e.g. placing a hand on
+    a door handle)
+
+\end{itemize}
 
 \section{Lighting}
-
-TODO
 
 \subsection{Normals}
 
@@ -798,6 +817,11 @@ TODO
 
   \item
     Interpolation may cause problems if an object has sharp corners
+
+  \item
+    Cannot simply transform normals
+
+    Can use model matrix to transform is scale is uniform
 
 \end{itemize}
 
@@ -822,10 +846,6 @@ TODO
   \item[Phong shading] \hfill \\
     Per fragment lighting. \\
     Most computationally intensive.
-
-  \item[Bump Mapping] \hfill \\
-    Normals stored in texture. \\
-    Each texel has its own normal.
 
 \end{description}
 
@@ -891,6 +911,41 @@ Normal $N$ can be calculated using two side vectors: $N = (v_{0} - v_{1}) \times
 
 Attenuation factor $a$ ensures that the light gets weaker as the light source
 moves away from the surface.
+
+\subsection{Bump mapping}
+
+\begin{itemize}
+  \item
+    Adds additional surface texture/bump detail to Phong lighting model
+
+  \item
+    Surface texture stored in bump map (texture) in tangent space
+
+    Must be transformed to world space before used in lighting calculations
+
+  \item
+    Perform translation using binormal (see figure TODO)
+
+    $B = cross(N, T)$
+
+  \item
+    Transformation is performed using tangent binormal normal matrix
+
+    \[
+      \left [
+        \begin{array}{ccc}
+          T_{x} & B_{x} & N_{x} \\
+          T_{y} & B_{y} & N_{y} \\
+          T_{z} & B_{z} & N_{z}
+        \end{array}
+      \right ]
+    \]
+
+    $N_{w} = TBN \cdot N$
+
+\end{itemize}
+
+TODO: figure
 
 \subsection{Shadow mapping}
 
