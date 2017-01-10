@@ -68,8 +68,7 @@ Course material:
 
 \begin{figure}[h!]
   \centering
-  TODO: use new diagran
-  % \includegraphics[width=0.6\textwidth]{out/graphic_pipeline.eps}
+  \includegraphics[width=0.25\textwidth]{graphics/rendering_pipeline.eps}
   \caption{OpenGL Pipeline}
   \label{fig:graphics_pipeline}
 \end{figure}
@@ -389,7 +388,26 @@ Three stages of the standard transformation pipeline:
 
 \end{itemize}
 
-TODO: diagrams
+\begin{figure}[h]
+  \centering
+
+  \begin{subfigure}[b]{0.3\textwidth}
+    \includegraphics[width=0.8\textwidth]{graphics/tess_triangle.eps}
+    \caption{Triangle}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\textwidth}
+    \includegraphics[width=0.8\textwidth]{graphics/tess_quad.eps}
+    \caption{Quad}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\textwidth}
+    \includegraphics[width=0.8\textwidth]{graphics/tess_isoline.eps}
+    \caption{Isoline}
+  \end{subfigure}
+
+  \caption{Tessellation levels}
+  \label{fig:tess_levels}
+\end{figure}
+\FloatBarrier
 
 \subsection{Generation (Geometry Shader)}
 
@@ -908,7 +926,7 @@ moves away from the surface.
     Must be transformed to world space before used in lighting calculations
 
   \item
-    Perform translation using binormal (see figure TODO)
+    Perform translation using binormal (see figure \ref{fig:binormal_calc})
 
     $B = cross(N, T)$
 
@@ -929,7 +947,14 @@ moves away from the surface.
 
 \end{itemize}
 
-TODO: figure
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{graphics/binormal_calc.eps}
+  \caption{Binormal calculation \\
+           Green = Normal, Blue = Tangent, Red = Binormal}
+  \label{fig:binormal_calc}
+\end{figure}
+\FloatBarrier
 
 \subsection{Shadow mapping}
 
