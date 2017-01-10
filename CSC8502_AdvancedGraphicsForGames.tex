@@ -713,7 +713,80 @@ Solution is to use affine transform:
 
 \end{itemize}
 
-\section{Scene Hierarchy and Skeletal animation}
+\section{Scene Management and Hierarchy}
+
+\subsection{Handling Transparent Objects}
+\label{sec:handling_transparent_objects}
+
+Need to ensure transparent objects are drawn in the correct order. Solution is
+to add a "transparency" tag to each node.
+
+When processing objects:
+
+\begin{enumerate}
+  \item[1]
+    Traverse the tree and build a list of opaque objects and a list of
+    transparent objects
+
+  \item[2]
+    Render all the opaque objects
+
+  \item[3]
+    Sort the list of transparent objects by their $z$ position
+
+  \item[4]
+    Render transparent object from furthest away to closest
+
+\end{enumerate}
+
+\subsection{Early Z test}
+
+\begin{itemize}
+  \item
+    Sorting nodes by depth can also be used to make optimal use of the early Z
+    test
+
+  \item
+    Early Z test happens before the fragment shader is executed
+
+  \item
+    If opaque objects are drawn from front to back then occluded objects will
+    fail the early Z test and the fragment shader will not run for occluded
+    fragments
+
+  \item
+    (Hardware specific feature so is difficult to explicit enable or disable it
+    or detect if it is taking place)
+
+\end{itemize}
+
+\subsection{Frustum Culling}
+
+\begin{itemize}
+  \item
+    Discard entire objects if they are not in the viewing frustum of the camera
+
+  \item
+    Frustum represented as 6 infinite planes
+
+  \item
+    Each object must have a bounding volume, this should be a rough estimation
+    that can be quickly tested for interface with a plane
+
+    Common shapes include spheres and axis aligned bounding boxes
+
+  \item
+    (there was plane equation stuff in the notes here, it is covered in CSC3503
+    notes in more detail so look there)
+
+  \item
+    Frustum is derived from the projection view matrix
+
+  \item
+    Extract each axis from VP matrix and add/subtract from the $w$ axis to
+    obtain plane normals (which then need to be normalised)
+
+\end{itemize}
 
 \subsection{Scene Graphs}
 
@@ -738,42 +811,24 @@ Solution is to use affine transform:
 
 \end{itemize}
 
-Need to ensure transparent objects are drawn in the correct order. Solution is
-to add a "transparency" tag to each node.
-
-When processing objects:
-
-\begin{enumerate}
-  \item[1]
-    Traverse the tree and build a list of opaque objects and a list of
-    transparent objects
-
-  \item[2]
-    Render all the opaque objects
-
-  \item[3]
-    Sort the list of transparent objects by their $z$ position
-
-  \item[4]
-    Render transparent object from furthest away to closest
-
-\end{enumerate}
-
-\subsection{Animation}
+\section{Animation}
 
 \begin{itemize}
   \item
     Can do simple animation by manipulating a tree of objects and their model
     matrices
 
-    This works well for simple objects such as cars and robots
+  \item
+    Animation defined in several keyframes and transformations interpolated
+    between to obtain smooth animation
 
   \item
-    It will not work for objects that have a flexible skin (such as humans)
+    Can combine/blend several animations that affect different parts of a model
+    tree
 
 \end{itemize}
 
-\subsubsection{Skinned meshes}
+\subsection{Skinned meshes}
 
 \begin{itemize}
   \item
@@ -795,6 +850,49 @@ When processing objects:
         Each vertex is relative to a number of anchors
 
         Each anchor has a position and a joint it is relative to
+
+    \end{itemize}
+
+  \item
+    Final position of a vertex of the skin is determined by position of all its
+    reference points
+
+    Influence of each reference point is determined by a weightings which are
+    stored with the skin vertex (sum of all weights for a single vertex equals
+    1)
+
+  \item
+    $position = \sum{(t \cdot v) \cdot w}$
+
+    $t$ Joint transform
+
+    $v$ Vertex or weight relative position
+
+    $w$ Weight
+
+  \item
+    Process of assigning weights to the skin ("rigging") is performed offline by
+    the artist
+
+  \item
+    Skinning can be performed on the GPU
+
+    \begin{itemize}
+      \item
+        Skeletal transformation data can be sent as a large uniform array or
+        sampled from a texture
+
+      \item
+        Vertices require additional attributes, e.g. anchor positions,
+        weightings, joint indices
+
+      \item
+        Must enforce a maximum number of joints that a single vertex can be
+        influenced by due to constant size constraint on shader interface blocks
+
+      \item
+        Limit on the amount of uniform data that can be sent to shader pipeline,
+        this limits the number of joints in a hardware skinned skeleton
 
     \end{itemize}
 
