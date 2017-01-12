@@ -12,7 +12,208 @@ Course material:
 
 \section{Physics}
 
-TODO
+\subsection{Newtonian Dynamics}
+
+\subsubsection{Newton's First law}
+
+\textit{In an intertial reference frame, an object either remains at rest or
+continues to move at a constant velocity, unless acted upon by a force.}
+
+\begin{itemize}
+  \item
+    In a games physics engine forces that would typically dampen the velocity of
+    an object in motion (e.g. friction, air resistance, etc.) are abstracted to
+    simple damping factors
+\end{itemize}
+
+\subsubsection{Newton's Second law}
+
+\textit{In an intertial reference frame, the vector sum of forces on an object
+  is equal to the mass of the object multiplied by the acceleration of the
+object.}
+
+\[
+  F = ma
+\]
+
+\subsubsection{Newton's Third law}
+
+\textit{When one body exerts a force on a second body, the second body
+  simultaneously exerts a force equal in magnitude and opposite in
+direction on the first body.}
+
+\subsubsection{Conservation of Momentum}
+
+\textit{In a closed system, the total momentum is constant.}
+
+\[
+  p = mv
+\]
+
+In a collision:
+\begin{align*}
+  p^{i} &= p^{f} \\
+  p^{i}_{1} + p^{i}_{2} &= p^{f}_{1} + p^{f}_{2} \\
+  m^{i}_{1} v^{i}_{1} + m^{i}_{2} v^{i}_{2} &= m^{f}_{1} v^{f}_{1} + m^{f}_{2} v^{f}_{2}
+\end{align*}
+
+\subsubsection{Torque}
+
+\begin{itemize}
+  \item
+    Result of a force applied to an object a given distance from a pivot point
+
+  \item
+    Torque produced by force $F$ at distance from pivot $d$: $\tau = dF$
+
+\end{itemize}
+
+\subsubsection{Inertia}
+
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
+
+\subsection{Physics Engine}
+
+\begin{itemize}
+  \item
+    Role of physics engine:
+
+    \begin{enumerate}
+      \item[1]
+        Move objects
+
+      \item[2]
+        Detect collisions
+
+      \item[3]
+        Resolve collisions
+
+    \end{enumerate}
+
+\end{itemize}
+
+\subsubsection{Orientation}
+
+\begin{itemize}
+  \item
+    Stored as quaternion
+
+  \item
+    $\Theta = \left(
+      xsin\left(\frac{\theta}{2}\right),
+      ysin\left(\frac{\theta}{2}\right),
+      zsin\left(\frac{\theta}{2}\right),
+      cos\left(\frac{\theta}{2}\right)
+    \right)$
+
+    where $(x, y, z)$ is the axis of rotation and $\theta$ is the angle of
+    rotation
+
+\end{itemize}
+
+\subsubsection{Object state}
+
+\begin{description}
+  \item[Position $s$] \hfill
+    \begin{itemize}
+      \item
+        $s = \int v \: dt$
+
+    \end{itemize}
+
+  \item[Linear Velocity $v$] \hfill
+    \begin{itemize}
+      \item
+        $v = \int a \: dt$
+
+    \end{itemize}
+
+  \item[Linear Acceleration $a$] \hfill
+    \begin{itemize}
+      \item
+        $a = \frac{F}{m}$
+
+    \end{itemize}
+
+  \item[Force $F$] \hfill
+
+  \item[Mass $m$] \hfill
+
+  \item[Orientation $\theta$] \hfill
+    \begin{itemize}
+      \item
+        $\theta = \int \omega \: dt$
+
+      \item
+        Represented as quaternion
+
+    \end{itemize}
+
+  \item[Angular Velocity $\omega$] \hfill
+    \begin{itemize}
+      \item
+        $\omega = \int \alpha \: dt$
+
+    \end{itemize}
+
+  \item[Angular Acceleration $\alpha$] \hfill
+    \begin{itemize}
+      \item
+        $\alpha = \frac{\tau}{I}$
+
+    \end{itemize}
+
+  \item[Torque $\tau$] \hfill
+
+  \item[Inertia $I$] \hfill
+
+\end{description}
+
+\subsubsection{Physics Representation}
+
+\begin{description}
+  \item[Particle] \hfill
+    \begin{itemize}
+      \item
+        TODO
+
+    \end{itemize}
+
+  \item[Rigid Body] \hfill
+    \begin{itemize}
+      \item
+        TODO
+
+    \end{itemize}
+
+  \item[Soft Body] \hfill
+    \begin{itemize}
+      \item
+        TODO
+
+    \end{itemize}
+
+\end{description}
+
+\begin{table}[]
+  \centering
+  \begin{tabular}{@{}llllll@{}}
+    \toprule
+               & Velocity   & Angular    & Volume     & Deformation & Collision    \\
+    \midrule
+    Particle   & \checkmark & \crossmark & \crossmark & \crossmark  & (\crossmark) \\
+    Rigid Body & \checkmark & \checkmark & \checkmark & \crossmark  & (\checkmark) \\
+    Soft Body  & \checkmark & \checkmark & \checkmark & \checkmark  & (\checkmark) \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:physical_representation_comparison}
+  \caption{Comparison of features of different physical representations}
+\end{table}
+\FloatBarrier
 
 \subsection{Numerical integration}
 
