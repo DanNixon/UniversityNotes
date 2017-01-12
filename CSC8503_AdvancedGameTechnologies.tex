@@ -2,6 +2,9 @@
 \def\DOCTITLE{CSC8503 Advanced Game Technologies}
 \input{sections/preamble.tex}
 
+% New page for each sub section
+\newcommand{\subsectionbreak}{\clearpage}
+
 \begin{document}
 
 \tableofcontents
@@ -72,7 +75,84 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Moment of inertia is the resistance of a rigid body to change in rotational
+    motion
+
+  \item
+    Moment of inertia defines how mass is distributed about each axis
+
+  \item
+    Inertial tensor contains influence of torque in a given axis on the
+    acceleration in a given axis.
+
+    \[
+      \left [
+        \begin{array}{c}
+          \tau_{x} \\
+          \tau_{y} \\
+          \tau_{z}
+        \end{array}
+      \right ]
+      =
+      \left [
+        \begin{array}{ccc}
+          I_{xx} & I_{xy} & I_{xz} \\
+          I_{yx} & I_{yy} & I_{yz} \\
+          I_{zx} & I_{zy} & I_{zz}
+        \end{array}
+      \right ]
+      \left [
+        \begin{array}{c}
+          \alpha_{x} \\
+          \alpha_{y} \\
+          \alpha_{z}
+        \end{array}
+      \right]
+    \]
+
+  \item
+    In the inertia tensor the diagonal elements must not be zero and the
+    non-diagonal elements must be symmetrical
+
+  \item
+    For symmetrical objects the inertia tensor only has non-zero elements in the
+    diagonal, therefore for any given axis only torque applied in that axis can
+    influence angular acceleration in that axis
+
+  \item
+    Solid sphere of radius $r$ and mass $m$:
+    \begin{align*}
+      i &= \frac{2mr^{2}}{5} \\
+      \\
+      I &= \left [
+        \begin{array}{ccc}
+          i & 0 & 0 \\
+          0 & i & 0 \\
+          0 & 0 & i
+        \end{array}
+      \right ]
+    \end{align*}
+
+  \item
+    Solid cuboid of dimensions $(h, w, l)$ and mass $m$:
+    \begin{align*}
+      I_{xx} &= \frac{1}{12} m \left( h^{2} + w^{2} \right) \\
+      I_{yy} &= \frac{1}{12} m \left( l^{2} + w^{2} \right) \\
+      I_{zz} &= \frac{1}{12} m \left( h^{2} + l^{2} \right) \\
+      \\
+      I &= \left [
+        \begin{array}{ccc}
+          I_{xx} & 0      & 0      \\
+          0      & I_{yy} & 0      \\
+          0      & 0      & I_{zz}
+        \end{array}
+      \right ]
+    \end{align*}
+
+  \item
+    Asymmetrical objects are more computationally expensive than symmetrical
+    (due to non-diagonal inertia tensor) and is not always worthwhile in its
+    benefit to the simulation
 
 \end{itemize}
 
@@ -117,61 +197,40 @@ In a collision:
 
 \subsubsection{Object state}
 
-\begin{description}
-  \item[Position $s$] \hfill
-    \begin{itemize}
-      \item
-        $s = \int v \: dt$
+\begin{itemize}
+  \item
+    Position, $s = \int v \: dt$
 
-    \end{itemize}
+  \item
+    Linear Velocity, $v = \int a \: dt$
 
-  \item[Linear Velocity $v$] \hfill
-    \begin{itemize}
-      \item
-        $v = \int a \: dt$
+  \item
+    Linear Acceleration, $a = \frac{F}{m}$
 
-    \end{itemize}
+  \item
+    Force, $F$
 
-  \item[Linear Acceleration $a$] \hfill
-    \begin{itemize}
-      \item
-        $a = \frac{F}{m}$
+  \item
+    Mass, $m$
 
-    \end{itemize}
+  \item
+    Orientation, $\theta = \int \omega \: dt$
 
-  \item[Force $F$] \hfill
+    (Represented as quaternion)
 
-  \item[Mass $m$] \hfill
+  \item
+    Angular Velocity, $\omega = \int \alpha \: dt$
 
-  \item[Orientation $\theta$] \hfill
-    \begin{itemize}
-      \item
-        $\theta = \int \omega \: dt$
+  \item
+    Angular Acceleration, $\alpha = \frac{\tau}{I}$
 
-      \item
-        Represented as quaternion
+  \item
+    Torque, $\tau$
 
-    \end{itemize}
+  \item
+    Inertia, $I$
 
-  \item[Angular Velocity $\omega$] \hfill
-    \begin{itemize}
-      \item
-        $\omega = \int \alpha \: dt$
-
-    \end{itemize}
-
-  \item[Angular Acceleration $\alpha$] \hfill
-    \begin{itemize}
-      \item
-        $\alpha = \frac{\tau}{I}$
-
-    \end{itemize}
-
-  \item[Torque $\tau$] \hfill
-
-  \item[Inertia $I$] \hfill
-
-\end{description}
+\end{itemize}
 
 \subsubsection{Physics Representation}
 
@@ -179,21 +238,52 @@ In a collision:
   \item[Particle] \hfill
     \begin{itemize}
       \item
-        TODO
+        Single point in space
+
+      \item
+        Has linear motion but no angular motion
+
+      \item
+        Has no volume
+
+      \item
+        Can be used for particle systems (e.g. smoke, fog, fire, etc.) or for
+        when speed of calculations is more important than physical accuracy
+        (e.g.  distant objects, off camera objects, etc.)
 
     \end{itemize}
 
   \item[Rigid Body] \hfill
     \begin{itemize}
       \item
-        TODO
+        Objects are defined as a set of shapes in space
+
+        Complex objects built up of several individual rigid bodies
+
+      \item
+        Has linear and angular motion
+
+      \item
+        Has volume and mass
+
+      \item
+        Shape is constant/non-deformable
+
+      \item
+        Used when accurate collision detection and response is required
 
     \end{itemize}
 
   \item[Soft Body] \hfill
     \begin{itemize}
       \item
-        TODO
+        Represents objects that can change shape/deform
+
+      \item
+        Otherwise similar to rigid body
+
+      \item
+        More expensive than rigid bodies (both computationally and memory wise)
 
     \end{itemize}
 
@@ -215,9 +305,165 @@ In a collision:
 \end{table}
 \FloatBarrier
 
+\begin{itemize}
+  \item
+    Physics shapes are often different from graphical shapes
+
+  \item
+    Physical shape of an object is often an approximation made from several
+    small shapes that provides collision detection and response that is
+    sufficiently believable for the player
+
+\end{itemize}
+
+\subsubsection{Environment Scaling}
+
+\begin{itemize}
+  \item
+    Environment scaling is important in ensuring physical accuracy in the system
+
+  \item
+    Time step must be small enough to ensure that interfaces between objects are
+    detected in a timely manner
+
+  \item
+    Too slow a time step, too high a speed or too small a object can all lead to
+    interfaces being detected incorrectly (either not at all or with incorrect
+    normal and penetration depth)
+
+  \item
+    Use of a common scaling system (i.e. not relative to the object (or mesh))
+
+\end{itemize}
+
 \subsection{Numerical integration}
 
-TODO
+\begin{itemize}
+  \item
+    Obtaining new value based on its rate of change
+
+  \item
+    Multiple uses other than physics simulation
+
+\end{itemize}
+
+\subsubsection{Explicit Euler}
+
+\begin{align*}
+  v_{n + 1} &= v_{n} + a_{n} \Delta t \\
+  s_{n + 1} &= s_{n} + v_{n} \Delta t
+\end{align*}
+
+\begin{itemize}
+  \item
+    Evaluates entirely within current time step
+
+  \item
+    Tends to be unstable unless a very short time step is used
+
+\end{itemize}
+
+\subsubsection{Implicit Euler}
+
+\begin{align*}
+  v_{n + 1} &= v_{n} + a_{n + 1} \Delta t \\
+  s_{n + 1} &= s_{n} + v_{n + 1} \Delta t
+\end{align*}
+
+\begin{itemize}
+  \item
+    Addresses approximation issues of Explicit Euler by using future state of
+    system
+
+  \item
+    Knowing future value of acceleration is expensive (to the extent of not
+    typically being useful)
+
+\end{itemize}
+
+\subsubsection{Semi-implicit Euler}
+
+\begin{align*}
+  v_{n + 1} &= v_{n} + a_{n} \Delta t \\
+  s_{n + 1} &= s_{n} + v_{n + 1} \Delta t
+\end{align*}
+
+\begin{itemize}
+  \item
+    Best of both explicit and implicit Euler
+
+  \item
+    Uses current acceleration but next velocity
+
+  \item
+    Still fast to execute but more stable than explicit Euler
+
+\end{itemize}
+
+\subsubsection{Verlet}
+
+\begin{align*}
+  v_{n} &= \frac{s_{n} - s_{n - 1}}{\Delta t} \\
+  s_{n + 1} &= s_{n} + v_{n} \Delta t + a_{n} \Delta t^{2}
+\end{align*}
+
+\begin{itemize}
+  \item
+    Does not calculate velocity
+
+  \item
+    Second derivative approach
+
+  \item
+    Similar computational cost to semi-implicit Euler
+
+  \item
+    Can reverse simulation
+
+  \item
+    More suited to the penalty method of collision response
+
+  \item
+    Requires the initial state to be provided (requires last two positions)
+
+\end{itemize}
+
+\subsubsection{Runge-Kutta (Midpoint) method}
+
+\begin{itemize}
+  \item
+    Euler methods overlook the change in velocity that occurs throughout a time
+    step and only consider the values at the start and end of a step
+
+  \item
+    Runge-Kutta methods take changes in velocity during the time step into
+    account via several iterations of Euler integrations
+
+  \item
+    In RK2 the velocity is predicted at the point half way through the time step
+    \[
+      s_{n + 1} = s_{n} + v_{n + 0.5} \Delta t
+    \]
+
+\end{itemize}
+
+\subsubsection{Other methods}
+
+\begin{itemize}
+  \item
+    Several more complex iterative integration methods exist
+
+    (e.g. higher orders of Runge-Kutta)
+
+  \item
+    Additional accuracy of more complex integration will likely not be noticed
+    in gaming physics simulations
+
+  \item
+    Better suited for mathematics, engineering and scientific simulations where
+    there is a weaker real time constraint or lower agent simulations
+
+\end{itemize}
 
 \subsection{Constraints}
 
