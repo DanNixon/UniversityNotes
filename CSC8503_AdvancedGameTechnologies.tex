@@ -642,15 +642,143 @@ In a collision:
     \end{description}
 
   \item
+    State diagrams often used in design of an FSM
+
+    \begin{description}
+      \item[States] \hfill
+        \begin{itemize}
+          \item
+            Represented as nodes
+
+          \item
+            Shows the state and possibly actions
+
+        \end{itemize}
+
+      \item[Transitions] \hfill
+        \begin{itemize}
+          \item
+            Represented as edges
+
+          \item
+            Shows the possible transfers between states
+
+        \end{itemize}
+
+      \item[Transfer conditions] \hfill
+        \begin{itemize}
+          \item
+            Represented as edge labels
+
+          \item
+            Shows the conditions required for a transition to take place
+
+        \end{itemize}
+
+    \end{description}
+
+  \item
     When designing an FSM need to take into account possibility of state
     oscillations and add hysteresis to transfer conditions where appropriate
 
+\end{itemize}
+
+\subsubsection{Hierarchical FSM}
+
+\begin{itemize}
+  \item
+    Hierarchical FSMs allow more complex state machines and AI behaviour to be
+    created
+
+  \item
+    Essentially adding another FSM as a node in a parent FSM
+
+\end{itemize}
+
+\subsubsection{Behaviours and Types}
+
+\begin{itemize}
+  \item
+    AI types can be used to define an AI for a specific type of agent
+
+  \item
+    Types are defined by a combination of behaviours (an individual state
+    machine)
+
+  \item
+    Allows for easy scaling and reuse of AI functionality
+
+\end{itemize}
+
+\subsubsection{Fuzzy State Machines}
+
+\begin{itemize}
+  \item
+    State machine that can combine the behaviours of multiple states
+
+  \item
+    States not restricted to being either active or inactive
+
+    Can be a certain degree of active
+
+  \item
+    Can reduce the complexity of a state machine by allowing multiple states to
+    be active, therefore fewer states need to exist
+
+  \item
+    State transfer tests may be more complex to implement
+
+\end{itemize}
+
+\subsection{Path Planning}
+
+\begin{itemize}
   \item
     TODO
 
 \end{itemize}
 
-\subsection{Path Finding}
+\subsubsection{A* algorithm}
+
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
+
+\subsection{Crowd management}
+
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
+
+\subsubsection{Fixed Group}
+
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
+
+\subsubsection{Embedded Map Data}
+
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
+
+\subsubsection{Flocking}
+
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
+
+\subsubsection{Ant Colony Optimisation}
 
 \begin{itemize}
   \item
