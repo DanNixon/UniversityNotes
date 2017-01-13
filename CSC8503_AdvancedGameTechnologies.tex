@@ -923,7 +923,25 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Simply using A* for every agent is a large scale simulation is not possible:
+    \begin{itemize}
+      \item
+        Computationally expensive
+
+      \item
+        Not guaranteed to be correct
+
+        Multiple agents may end up attempting to take the same path at the same
+        time
+
+    \end{itemize}
+
+  \item
+    Crowd navigation focuses on managing the flow of a large number of agents
+    such that they tend towards a direction rather then following an exact path
+
+  \item
+    Tend to reuse the same data used in path finding
 
 \end{itemize}
 
