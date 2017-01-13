@@ -19,7 +19,7 @@ Course material:
 
 \subsubsection{Newton's First law}
 
-\textit{In an intertial reference frame, an object either remains at rest or
+\textit{In an inertial reference frame, an object either remains at rest or
 continues to move at a constant velocity, unless acted upon by a force.}
 
 \begin{itemize}
@@ -31,9 +31,8 @@ continues to move at a constant velocity, unless acted upon by a force.}
 
 \subsubsection{Newton's Second law}
 
-\textit{In an intertial reference frame, the vector sum of forces on an object
-  is equal to the mass of the object multiplied by the acceleration of the
-object.}
+\textit{In an inertial reference frame, the vector sum of forces on an object is
+  equal to the mass of the object multiplied by the acceleration of the object.}
 
 \[
   F = ma
@@ -467,42 +466,300 @@ In a collision:
 
 \subsection{Constraints}
 
-TODO
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
 
 \subsection{Collision Detection}
 
-TODO
+\begin{itemize}
+  \item
+    TODO
+
+  \item
+    Collision response data to be extracted from collision detection:
+    \begin{description}
+      \item[Penetration Depth, $p$] \hfill \\
+        Distance the two objects interface/overlap
+
+      \item[Collision Normal, $N$] \hfill \\
+        Normal along which the two objects collided
+
+      \item[Contact Point, $P$] \hfill \\
+        The point at which the two objects are interfacing
+
+    \end{description}
+
+\end{itemize}
+
+\subsubsection{Sphere-Sphere test}
+
+\begin{itemize}
+  \item
+    Two spheres of radii $r_{1}$ and $r_{2}$ at positions $S_{1}$ and $S_{2}$
+    have collided if:
+    \begin{align*}
+      d &< r_{1} + r_{2} \\
+      d &= \sqrt{(x_{2} - x_{1})^{2} + (y_{2} - y_{1})^{2} + (z_{2} - z_{1})^{2}}
+    \end{align*}
+    where $d$ is the distance between the circle centres.
+
+  \item
+    For computational savings can be simplified to:
+    \begin{align*}
+      d^{2} &< (r_{1} + r_{2})^{2} \\
+      d^{2} &= (x_{2} - x_{1})^{2} + (y_{2} - y_{1})^{2} + (z_{2} - z_{1})^{2}
+    \end{align*}
+
+  \item
+    Collision response data:
+    \begin{align*}
+      p &= r_{1} + r_{2} - d \\
+      N &= |S_{1} - S_{2}| \\
+      P &= S_{1} - N(r_{1} - p)
+    \end{align*}
+
+\end{itemize}
+
+\subsubsection{AABB-AABB test}
+
+\begin{itemize}
+  \item
+    Two AABB of dimensions $(w_{1}, h_{1}, l_{1})$ and $(w_{2}, h_{2}, l_{2})$
+    at positions $(x_{1}, y_{1}, l_{2})$ and $(x_{2}, y_{2}, z_{2})$ are
+    interfacing the three conditions are all true:
+    \begin{align*}
+      |x_{2} - x_{1}| &< \frac{1}{2}(w_{1} + w_{2}) \\
+      |y_{2} - y_{1}| &< \frac{1}{2}(h_{1} + h_{2}) \\
+      |z_{2} - z_{1}| &< \frac{1}{2}(l_{1} + l_{2})
+    \end{align*}
+
+  \item
+    Computationally cheap, but limited as bounding boxes must be axis aligned
+
+\end{itemize}
+
+\subsubsection{Sphere-Plane test}
+
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
+
+\subsubsection{TODO}
+
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
 
 \subsection{Collision Manifolds}
 
-TODO
+\begin{itemize}
+  \item
+    Specify multiple points of contact for an interface rather than just one
+
+  \item
+    Manifold is summation of surface area between two colliding objects
+
+\end{itemize}
+
+\subsubsection{Clipping method}
+
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
 
 \subsection{Collision Response}
 
-TODO
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
 
 \subsection{Solvers}
 
-TODO
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
 
 \section{Artificial Intelligence}
 
-TODO
-
 \subsection{Finite State Machine}
 
-TODO
+\begin{itemize}
+  \item
+    Implementation types:
+
+    \begin{description}
+      \item[Hard coded switch statements] \hfill \\
+        \begin{itemize}
+          \item
+            Switch case controlling state behaviours and test for state transfer
+
+          \item
+            OK for fast prototyping but is unmanageable for a large/complex state
+            machine
+
+          \item
+            Relatively computationally fast
+
+        \end{itemize}
+
+      \item[Hard coded state pattern] \hfill \\
+        \begin{itemize}
+          \item
+            Each state is a data type that contains the transfer tests and
+            behaviours
+
+          \item
+            Allows addition, removal and modification of states without the risk
+            of invalidating the rest of the FSM
+
+        \end{itemize}
+
+      \item[Interpreted state pattern] \hfill \\
+        \begin{itemize}
+          \item
+            Similar to hard coded state patterns
+
+          \item
+            States, behaviours and transfer conditions populated dynamically
+
+            e.g. from definition files or scripts
+
+        \end{itemize}
+
+    \end{description}
+
+  \item
+    When designing an FSM need to take into account possibility of state
+    oscillations and add hysteresis to transfer conditions where appropriate
+
+  \item
+    TODO
+
+\end{itemize}
 
 \subsection{Path Finding}
 
-TODO
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
 
 \section{Networking}
 
-TODO
+\subsection{Socket protocols}
+
+\begin{description}
+  \item[Stream (TCP)] \hfill \\
+    \begin{itemize}
+      \item
+        Packets are received in order
+
+      \item
+        Reliable packet delivery
+
+      \item
+        Slower
+
+      \item
+        Better suited for transport of "important" data
+
+        e.g. leaderboard data, in game transactions, etc
+
+    \end{itemize}
+
+  \item[Datagram (UDP)] \hfill \\
+    \begin{itemize}
+      \item
+        No guaranteed order
+
+      \item
+        No guaranteed delivery
+
+      \item
+        Faster
+
+      \item
+        Better suited for frequent, time critical updates
+
+        e.g. updating player positions in a game, etc
+
+    \end{itemize}
+
+\end{description}
+
+\subsection{Topologies}
+
+\begin{description}
+  \item[Client-Server] \hfill \\
+    \begin{itemize}
+      \item
+        Clients connect to a managed server
+
+      \item
+        Can guarantee behaviour of server
+
+      \item
+        Can cause bandwidth issues if player is far from server geographically
+
+    \end{itemize}
+
+  \item[Client-Client/Server] \hfill \\
+    \begin{itemize}
+      \item
+        Clients connect to another client running as a server
+
+      \item
+        Still requires some kind of discovery service (e.g. through a managed
+        server that only has this role)
+
+      \item
+        Can help to reduce bandwidth issues caused by geolocation
+
+    \end{itemize}
+
+  \item[Peer-peer] \hfill \\
+    \begin{itemize}
+      \item
+        Clients connect direct to one another
+
+      \item
+        Still requires some kind of discovery service (e.g. through a managed
+        server that only has this role)
+
+      \item
+        Can help to reduce bandwidth issues caused by geolocation
+
+    \end{itemize}
+
+\end{description}
+
+\subsection{TODO}
+
+\begin{itemize}
+  \item
+    TODO
+\end{itemize}
 
 \section{Massively parallel and Heterogeneous computing}
 
-TODO
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
 
 \end{document}
