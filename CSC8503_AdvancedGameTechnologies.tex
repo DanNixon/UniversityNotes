@@ -734,7 +734,48 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Represent environment as a graph
+    \begin{itemize}
+      \item
+        Waypoint are nodes
+
+      \item
+        Path between waypoints are edges
+
+    \end{itemize}
+
+  \item
+    Nodes can be arranged in a regular pattern or in an environment specific
+    manner (e.g. junctions are nodes and roads are edges)
+
+  \item
+    More sophisticated approach is to use a navigation mesh, in which nodes
+    bound regions based on the shape of the environment
+
+  \item
+    Edges are weighted to represent the difficulty of traversing between two
+    waypoints
+
+  \item
+    For navigation alone the data required for each node is:
+    \begin{itemize}
+      \item
+        Unique ID
+
+      \item
+        List of connected nodes
+
+      \item
+        Position
+
+      \item
+        Passibility flag
+
+    \end{itemize}
+
+  \item
+    Environment can be represented in any way as long as the important
+    information above is included in the representation
 
 \end{itemize}
 
@@ -742,7 +783,139 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Based on a heuristic for the cost of traversing from a given node to the
+    target node
+
+  \item
+    $f = g + h$
+
+    $f$ is the total cost for the node under consideration
+
+    $g$ is the cost of the shortest path from the start node to the current node
+
+    $h$ is the estimated cost of the path from this node to the end node
+
+  \item
+    This \textbf{must} be either an underestimate or the exact cost
+
+    Providing a heuristic that is an overestimate will result in a path other
+    than the optimal path being found
+
+  \item
+    The A* algorithm maintains two lists of nodes:
+    \begin{description}
+      \item[Open list] \hfill \\
+        \begin{itemize}
+          \item
+            Nodes that algorithm is aware of but not yet explored
+
+          \item
+            Have a computed $f$ value
+
+        \end{itemize}
+
+      \item[Closed list] \hfill \\
+        \begin{itemize}
+          \item
+            Nodes that have been explored
+
+          \item
+            All nodes in closed list have been moved from open list
+
+          \item
+            Final path is constructed from nodes in the closed list
+
+        \end{itemize}
+
+    \end{description}
+
+  \item
+    A* also requires storing a reference to a parent node in each node
+
+    Parent node is used to denote the parent which gives the shortest path back
+    to the start node from any given node on the open and closed lists
+
+  \item
+    The workflow of the algorithm is as follows:
+    \begin{enumerate}
+      \item[1]
+        Add start node to the open list
+
+      \item[2]
+        For each node P on the open list
+
+        \begin{enumerate}
+          \item[1]
+            Move P to the closed list
+
+          \item[2]
+            If P is the end node the shortest path has been found, then break
+            from the loop
+
+          \item[3]
+            For each node Q connected to P
+
+          \begin{enumerate}
+            \item[1]
+              Skip Q if it is not traversable
+
+            \item[2]
+              Calculate $g$ and $f$ scores for Q
+
+            \item[3]
+              If Q is on either the open list or closed list and the calculated
+              $g$-value is less than its current $g$-value then update the $g$
+              and $f$ scores and set its parent to P
+
+            \item[4]
+              If Q is not on any list then add it to the open list and set its
+              parent to P
+
+          \end{enumerate}
+
+        \end{enumerate}
+
+      \item[4]
+        If a path has been found the build the path by traversing the parents of
+        the last node added to the closed list adding each node to a list, then
+        reversing this list to obtain the path from start to end
+
+    \end{enumerate}
+
+\end{itemize}
+
+\subsubsection{Computational cost}
+
+\begin{itemize}
+  \item
+    Environment representation can be very memory costly for complex terrains
+
+  \item
+    Dynamic terrains will require the navigation map to be updated whenever the
+    environment changes
+
+  \item
+    Dynamic loading can make memory management for the navigation graph more
+    complex
+
+  \item
+    Path finding is often very computationally expensive especially with a high
+    number of possible unique paths
+
+  \item
+    Path finding calculations are often not timing critical and can be split
+    over frames and cores as available
+
+  \item
+    The use of a heuristic path planner should be assessed and avoided if
+    possible
+
+  \item
+    Can use a hierarchical navigation graph to split up large environments
+
+  \item
+    Commonly used or high level (in a hierarchical approach) paths may be
+    precomputed
 
 \end{itemize}
 
