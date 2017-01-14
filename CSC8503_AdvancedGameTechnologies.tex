@@ -1281,11 +1281,222 @@ In a collision:
 
 \end{description}
 
-\subsection{TODO}
+\subsection{Constraints of Network Gaming}
+
+Two main issues:
+\begin{description}
+  \item[Real time] \hfill
+    \begin{itemize}
+      \item
+        If an event is triggered by player $U_{1}$ at time $t$, then all players
+        should see the event happen at time $t$
+
+      \item
+        Consider if an element of the simulation need to be updated across all
+        clients
+
+        (e.g. typically gravity is constant and does not need to be updated over
+        the network)
+
+      \item
+        Consider if an element needs to be updated in real time or if a slower
+        periodic (synchronising) update would suffice
+
+        (e.g. the position of a skybox determined by time of day can be updated
+        locally on all clients and occasionally synchronised with the server)
+
+    \end{itemize}
+
+  \item[Consistency] \hfill
+    \begin{itemize}
+      \item
+        If player $U_{1}$ affects player $U_{2}$, then all players should see
+        $U_{1}$ affecting $U_{2}$
+
+      \item
+        Simple solution is to use TCP over UDP
+
+      \item
+        Design of game can be such that when consistency is desired the real
+        time requirement is relaxed
+
+    \end{itemize}
+
+\end{description}
+
+\subsubsection{Zoning}
 
 \begin{itemize}
   \item
-    TODO
+    Reducing the number of updates that are sent based on the location of
+    objects in the game world
+
+  \item
+    Determining if clients might interact with each other
+
+  \item
+    Analogous to broadphase in collision detection
+
+  \item
+    Zones often distributed across several servers
+
+\end{itemize}
+
+\Para{High Level Zoning}
+
+\begin{itemize}
+  \item
+    Analogous to fixed world space partitioning in collision detection
+
+  \item
+    Split world into several distinct zones
+
+  \item
+    Clients in each zone should not be able to affect those in other zones
+
+  \item
+    Assumes an even distribution of players across all zones
+
+\end{itemize}
+
+\Para{Spatial Zoning}
+
+\begin{itemize}
+  \item
+    Aims to subdivide the world into zones without having to stop on a loading
+    screen while the player changes zones
+
+  \item
+    Server must pre-empt when the player will change between zones
+
+  \item
+    Player leaving one zone is disconnected from one server and joins another
+
+  \item
+    Density and shape of zones can be modified based on the rate at which
+    players are entering leaving them
+
+  \item
+    Level design can be used to prevent players from simply appearing in a world
+    or the environment of the new zone suddenly appearing when players switch
+    zones
+
+\end{itemize}
+
+\subsubsection{Interest Management}
+
+\begin{itemize}
+  \item
+    Determining if clients actually do interact with one another
+
+  \item
+    Analogous to narrowphase in collision detection
+
+\end{itemize}
+
+\Para{Behavioural Modelling}
+
+\begin{itemize}
+  \item
+    Adjusting the area of interest based on the behaviours of the client
+
+  \item
+    (e.g. a client flying a plane will have a larger area of interest than a
+    client driving a jeep)
+
+\end{itemize}
+
+\Para{Publish-Subscriber Model}
+
+\begin{itemize}
+  \item
+    Common method of interest management
+
+  \item
+    A client will subscribe to relevant updates from objects it is interested
+    in/affected by
+
+  \item
+    Reduces network traffic at the cost of increased server load
+
+  \item
+    Can play a part in making network games cheat proof
+
+\end{itemize}
+
+\Para{Aura-Nimbus Approach}
+
+\begin{itemize}
+  \item
+    Client has two radii:
+    \begin{description}
+      \item[Aura] \hfill \\
+        Range of influence
+
+      \item[Nimbus] \hfill \\
+        Range of interest
+
+    \end{description}
+
+  \item
+    If client $A$ is within the aura of client $B$ and $B$ is in the nimbus of
+    $A$ then $A$ receives updates from $B$
+
+  \item
+    If all aura and nimbi overlap then no performance advantage is seen, rather
+    a performance overhead will be incurred
+
+\end{itemize}
+
+\subsubsection{Dead Reckoning}
+
+\begin{itemize}
+  \item
+    In distributed games there is no single global state that can be said to be
+    true for all players
+
+  \item
+    Need to keep individual players world states in sync to a believable
+    standard
+
+  \item
+    Can base world synchronisation on 0th, 1st or 2nd order differential of
+    position
+
+  \item
+    0th order (i.e. position itself) is not used for dead reckoning, rather
+    frequent state regeneration
+
+  \item
+    The choice between velocity and acceleration depends on which of the two is
+    the least volatile, the least volatile value should be chosen to reduce the
+    chances of lost packets causing the world states to become too far out of
+    sync
+
+\end{itemize}
+
+\Para{Convergence of World Views}
+
+\begin{itemize}
+  \item
+    If two world states are too far diverged then resynchronising them is
+    impossible, game design should prevent this from such a state being possible
+
+    (e.g. player $A$ thinks they have killed player $B$ but $B$ thinks they have
+    dodged player $A$'s attack)
+
+  \item
+    Can use frequent state regeneration on variables that denote the state of
+    other clients
+
+    (e.g. a client that has killed another player may wait for that player to
+    confirm that they are dead)
+
+  \item
+    Server may frequently broadcast the positions of all entities and any that
+    are out of sync can interpolate their position with that broadcast by the
+    server to synchronise with the rest of the world states
+
 \end{itemize}
 
 \section{Massively parallel and Heterogeneous computing}
