@@ -2,8 +2,7 @@
 \def\DOCTITLE{CSC8503 Advanced Game Technologies}
 \input{sections/preamble.tex}
 
-% New page for each sub section
-\newcommand{\subsectionbreak}{\clearpage}
+\newcommand{\subsectionbreak}{\vspace{5em}}
 
 \begin{document}
 
@@ -594,6 +593,38 @@ In a collision:
 
 \section{Artificial Intelligence}
 
+\begin{itemize}
+  \item
+    Must balance randomness and predictability
+
+  \item
+    Must make the game sufficiently challenging that it is enjoyable to play
+    without being unbeatable
+
+  \item
+    For example, may introduce "rubber banding" to keep a certain number of cars
+    in a racing game near the player
+
+  \item
+    Optimisations
+    \begin{itemize}
+      \item
+        As objects get further away from the player the complexity of their
+        behaviour can be reduced, however the same outcome must still be reached
+
+        (e.g. a high level of detail task may be "walk to market, sell fish, buy
+        bread, go home" but if the player never sees the NPC performing those
+        actions then as long as there is more fish and less bread in the market
+        they will never know if they didn't)
+
+      \item
+        AI computations are often not time critical so can be performed over
+        multiple frames or multiple cores
+
+    \end{itemize}
+
+\end{itemize}
+
 \subsection{Finite State Machine}
 
 \begin{itemize}
@@ -903,10 +934,6 @@ In a collision:
     number of possible unique paths
 
   \item
-    Path finding calculations are often not timing critical and can be split
-    over frames and cores as available
-
-  \item
     The use of a heuristic path planner should be assessed and avoided if
     possible
 
@@ -916,6 +943,24 @@ In a collision:
   \item
     Commonly used or high level (in a hierarchical approach) paths may be
     precomputed
+
+\end{itemize}
+
+\subsubsection{Spline following}
+
+\begin{itemize}
+  \item
+    Entities follow a predetermined path in the environment defined by a series
+    of curves
+
+  \item
+    Commonly used in games that feature a predefined track
+
+    (e.g. racing games)
+
+  \item
+    Can use multiple different paths to provide a sense of randomness to the
+    player
 
 \end{itemize}
 
@@ -949,7 +994,47 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Workflow:
+    \begin{enumerate}
+      \item[1]
+        Define arrangement of entities around a centre point
+
+      \item[2]
+        Perform a navigation algorithm on the centre point
+
+      \item[3]
+        Move the centre point along the path
+
+        (also moving all entities relative to this point)
+
+      \item[4]
+        Apply a small force to all entities in the direction of the new location
+
+      \item[5]
+        Reduce applied force as centre point approaches destination
+
+    \end{enumerate}
+
+  \item
+    Well suited to small groups of agents
+
+  \item
+    Can cause issues if one entity becomes separated from the group (e.g. they
+    enter a building)
+    \begin{itemize}
+      \item
+        Entity can become trapped
+
+      \item
+        One solution is to navigate the separated entity back to the squad using
+        A* and switch back to fixed group navigation when they arrive back at
+        the group
+
+      \item
+        Could also apply forces to entities that prevent them for getting too
+        close to objects that can cause this issue
+
+    \end{itemize}
 
 \end{itemize}
 
@@ -957,7 +1042,22 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Good for navigation of large numbers of entities to a small selection of
+    predetermined points
+
+  \item
+    Path between event node to the destination is precomputed and embedded into
+    the map data
+
+  \item
+    Navigation then becomes a simple lookup based on the entity position which
+    is sufficiently computationally cheap to scale to large numbers well
+
+  \item
+    Limited number of destinations (which must be known at design stage)
+
+  \item
+    High memory footprint as map size and number of destinations increases
 
 \end{itemize}
 
@@ -965,7 +1065,55 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Efficient update of many entities (boids) in a flock
+
+  \item
+    On updating an entity, consider:
+    \begin{description}
+      \item[Separation] \hfill \\
+        \begin{itemize}
+          \item
+            How far the entity is from it's nearest neighbours
+
+          \item
+            Manages flock density
+
+          \item
+            Keeps entities from moving too close together such that they all
+            occupy the same space
+
+        \end{itemize}
+
+      \item[Alignment] \hfill \\
+        \begin{itemize}
+          \item
+            Average direction of flock
+
+          \item
+            (normalised vector sum)
+
+        \end{itemize}
+
+      \item[Cohesion] \hfill \\
+        \begin{itemize}
+          \item
+            Move towards average position of the flock
+
+          \item
+            Keeps flock together
+
+        \end{itemize}
+
+    \end{description}
+
+  \item
+    Weighting can be applied to the three factors above to change the way the
+    flock behaves
+
+  \item
+    Alignment can be used to set the path of the flock
+
+    (e.g. as the result of a navigation algorithm)
 
 \end{itemize}
 
@@ -973,7 +1121,74 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Start with no knowledge of the environment
+
+  \item
+    Ants explore terrain while depositing a pheromone trail
+
+  \item
+    Other ants are more likely to follow an existing pheromone trail
+
+  \item
+    An optimal route by definition has more frequent traversals so over time has
+    a stronger pheromone trail
+
+  \item
+    As a route becomes non-optimal ants stop taking it and the pheromone trail
+    becomes weak
+
+  \item
+    Important to balance exploration (searching paths with little or weak
+    pheromone trails randomly) and exploitation (preference for the route with
+    the strongest pheromone trail)
+
+\end{itemize}
+
+\subsection{Decision making}
+
+\subsubsection{Decision trees}
+
+\begin{itemize}
+  \item
+    Decision making often expressed as a tree of states
+
+  \item
+    Cheap method for simple AI entities
+
+\end{itemize}
+
+\subsubsection{Goal Oriented Action Planning}
+
+\begin{itemize}
+  \item
+    Using a graph search to determine a series of actions that lead to a given
+    event
+
+  \item
+    Graph nodes are states
+
+  \item
+    Edges are actions
+
+\end{itemize}
+
+\subsubsection{Machine Learning}
+
+\begin{itemize}
+  \item
+    Use machine learning to alter game play based on actions of the player
+
+  \item
+    Requires a training phase where player input should (ideally) result in a
+    given outcome
+
+  \item
+    Training obtains optimal values for the specific implementation (for a GA it
+    is the best solution, for ANN it is the neuron connection weightings)
+
+  \item
+    Requires significant testing and (depending on the way it is integrated)
+    state guards to prevent the game behaving in an undesirable way
 
 \end{itemize}
 
@@ -1077,7 +1292,43 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Splitting large scale numerical tasks over multiple computational devices
+
+  \item
+    In the case of GPU computing this is just on the graphics card
+
+  \item
+    Heterogeneous computing frameworks allow targeting a wide range of devices
+
+    (e.g. CPUs, GPUs, crypto-coprocessors, FPGAs, etc.)
+
+\end{itemize}
+
+\subsection{GPU computation}
+
+\begin{itemize}
+  \item
+    GPU arranged in several grids of blocks, each block executes a set of
+    threads
+
+  \item
+    Threads and block have their own (shared) memory
+
+  \item
+    Global/constants memory accessible to all blocks
+
+  \item
+    A copy to/from the GPU has an overhead which is not overly dependant on the
+    size of that data, for this reason small copies are often less efficient
+    than single large copies
+
+  \item
+    Data available per thread is limited
+
+  \item
+    The idea problem for GPU computation is one that is embarrassingly parallel
+    (e.g. updating the positions of many game entities or running a particle
+    system)
 
 \end{itemize}
 
