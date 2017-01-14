@@ -475,7 +475,40 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Performed in two stages:
+    \begin{description}
+      \item[Broadphase] \hfill
+        \begin{itemize}
+          \item
+            Determine if it is possible for two objects to have collided
+
+          \item
+            Reduce the list of collision pairs by excluding those where a
+            collision is certainly impossible
+
+          \item
+            Computationally fast tests as accuracy is not important at this
+            stage
+
+        \end{itemize}
+
+      \item[Narrowphase] \hfill
+        \begin{itemize}
+          \item
+            Determine if two objects have collided
+
+          \item
+            Accurate tests
+
+          \item
+            Often tests for simple shapes can be used, depending on the
+            specifics of the object
+
+            Game object often made up of several simple collision shapes
+
+        \end{itemize}
+
+    \end{description}
 
   \item
     Collision response data to be extracted from collision detection:
@@ -490,6 +523,99 @@ In a collision:
         The point at which the two objects are interfacing
 
     \end{description}
+
+\end{itemize}
+
+\subsubsection{Broadphase: Bounding volume test}
+
+\begin{itemize}
+  \item
+    Simplest (but effective) test
+
+  \item
+    Test for intersection of bounding volumes
+
+  \item
+    Typically either sphere or axis aligned bounding box due to efficiency of
+    test
+
+\end{itemize}
+
+\subsubsection{Broadphase: World Partitioning}
+
+\begin{itemize}
+  \item
+    Split world into partitions and only test for collision between objects in
+    the same partition
+
+  \item
+    Objects may reside in multiple partitions (if they are on the border of
+    several partitions)
+
+  \item
+    Common techniques are:
+    \begin{description}
+      \item[Fixed World Partitioning] \hfill
+        \begin{itemize}
+          \item
+            World is split into predetermined partitions
+
+          \item
+            Efficiency over brute force broadphase dependant on distribution of
+            objects
+
+        \end{itemize}
+
+      \item[Binary Search Partitioning] \hfill
+        \begin{itemize}
+          \item
+            Recursively partition the world
+
+          \item
+            Continue to split the world until either a maximum depth or number
+            of objects in a division is reached
+
+          \item
+            Distributes partitions according to object distribution so maintains
+            efficiency regardless of world state
+
+          \item
+            Octree and quadtree are common implementations, dividing each
+            partition into 8 or 4 sub-partitions respectively
+
+        \end{itemize}
+
+    \end{description}
+
+\end{itemize}
+
+\subsubsection{Broadphase: Sort and Sweep}
+
+\begin{itemize}
+  \item
+    Project bounding volumes onto a single axis and create possible collision
+    pairs from overlapping volumes
+
+  \item
+    Workflow:
+    \begin{enumerate}
+      \item[1]
+        Sort objects based on their position along the sort axis
+
+      \item[2]
+        Traverse the list, when the start of object $O_{i}$ is found and other
+        objects that are encountered before the end of $O_{i}$ are potential
+        collision pairs
+
+    \end{enumerate}
+
+\end{itemize}
+
+\subsubsection{Narrowphase: Separating Axis Theorem}
+
+\begin{itemize}
+  \item
+    TODO
 
 \end{itemize}
 
@@ -544,17 +670,29 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Sphere at position $S$ of radius $r$ intersects an infinite plane with
+    normal $N$ at distance $d$ from the origin if:
+    \[
+      N \cdot S -d < r
+    \]
 
-\end{itemize}
-
-\subsubsection{TODO}
-
-\begin{itemize}
   \item
-    TODO
+    Collision response data:
+    \begin{align*}
+      p &= r - (N \cdot S - d) \\
+      N &= N_{plane} \\
+      P &= S - N(r - p)
+    \end{align*}
 
 \end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.6\textwidth]{graphics/plane_collision_detection.eps}
+  \caption{Sphere-Plane collision test}
+  \label{fig:plane_collision_detection}
+\end{figure}
+\FloatBarrier
 
 \subsection{Collision Manifolds}
 
