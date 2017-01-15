@@ -1003,6 +1003,75 @@ Workflow:
 
 \begin{itemize}
   \item
+    Resolve collisions using:
+    \begin{itemize}
+      \item
+        The collision manifold
+
+      \item
+        The collision normal
+
+      \item
+        The penetration depth
+
+    \end{itemize}
+
+  \item
+    General methods of collision response:
+    \begin{description}
+      \item[Projection methods] \hfill \\
+        Control the position of colliding objects
+
+      \item[Impulse methods] \hfill \\
+        Control the velocity of colliding objects
+
+      \item[Penalty methods] \hfill \\
+        Control the acceleration of colliding objects
+
+    \end{description}
+
+\end{itemize}
+
+\subsubsection{Impulse method}
+
+\begin{itemize}
+  \item
+    Apply an impulse $J$ to each object:
+    \begin{align*}
+      J &= F \Delta t \\
+        &= ma \Delta t \\
+        &= m \frac{\Delta v}{\Delta t} \Delta t \\
+        &= m \Delta v
+    \end{align*}
+
+  \item
+    Affect velocity of each object using impulse:
+    \[
+      \Delta v = \frac{J}{m}
+    \]
+
+\end{itemize}
+
+\Para{Linear impulse}
+
+TODO
+
+\Para{Angular impulse}
+
+TODO
+
+\subsubsection{Penalty method}
+
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
+
+\subsubsection{Constraint based collision response}
+
+\begin{itemize}
+  \item
     TODO
 
 \end{itemize}
