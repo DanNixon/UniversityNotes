@@ -611,13 +611,157 @@ In a collision:
 
 \end{itemize}
 
-\subsubsection{Narrowphase: Separating Axis Theorem}
+\subsubsection{Narrowphase: Separating Axis Theorem (SAT)}
 
 \begin{itemize}
   \item
-    TODO
+    If two objects are not interfacing then it should be possible to draw a
+    plane between them
+
+  \item
+    Only works for convex shapes
+
+  \item
+    If a single can where a plane can be drawn between two objects then the two
+    objects are certainly not interfacing
+
+  \item
+    Test by projecting the shapes onto a test axis and checking for overlap
+    between them
 
 \end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.25\textwidth]{graphics/coll_det_sat.eps}
+  \caption{SAT collision detection}
+  \label{fig:coll_det_sat}
+\end{figure}
+\FloatBarrier
+
+\Para{Generating potential separating axes}
+
+\begin{itemize}
+  \item
+    Assuming only polygonal shapes the potential collision axes are defined by
+    the normals of each face of the collision shapes
+
+  \item
+    Number of potential separating axis is the number of faces of each shape
+    combined
+
+  \item
+    As soon as a single separating axis is found in which the projections of the
+    objects do not overlap the algorithm can exit (without having to test all
+    axes)
+
+  \item
+    Parallel axis do not need to be checked multiple times
+
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.5\textwidth]{graphics/coll_det_sat_axes.eps}
+  \caption{SAT potential collision axes}
+  \label{fig:coll_det_sat_axes}
+\end{figure}
+\FloatBarrier
+
+\Para{Edge-Edge collisions in 3D}
+
+\begin{itemize}
+  \item
+    Figure \ref{fig:colldet_sat_3d} shows a case where SAT generates a false
+    positive when two 3D objects are not actually colliding but all potential
+    axis tests show them to be overlapping
+
+  \item
+    Generate additional potential separating axis using the cross product of
+    every permutation of faces on both object
+
+  \item
+    Creates a set of new potential separating axes which are orthogonal to pairs
+    of faces
+
+  \item
+    Vast increase in number of potential separating axes
+
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{graphics/colldet_sat_3d_1.eps}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{graphics/colldet_sat_3d_2.eps}
+  \end{subfigure}
+
+  \vspace{1em}
+
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=0.6\textwidth]{graphics/colldet_sat_3d_top.eps}
+    \caption{Top ($-y$)}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{graphics/colldet_sat_3d_front.eps}
+    \caption{Front ($-z$)}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.32\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{graphics/colldet_sat_3d_left.eps}
+    \caption{Left ($+x$)}
+  \end{subfigure}
+
+  \caption{SAT in 3D}
+  \label{fig:colldet_sat_3d}
+\end{figure}
+\FloatBarrier
+
+\Para{Spheres and Curves}
+
+\begin{itemize}
+  \item
+    Curves have an infinite number of edges
+
+  \item
+    As shapes are convex only one axis must be tested to check if shapes are
+    colliding
+
+  \item
+    For sphere-sphere simply test the distance between the closest point of
+    object 1 with the closest point of object 2
+
+  \item
+    For sphere-polygon iterate through all faces of the polygon to find the face
+    on which the closest point to the sphere resides, the normal of this face is
+    the potential separating axis
+
+\end{itemize}
+
+\begin{figure}[h]
+  \centering
+
+  \begin{subfigure}[b]{0.4\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{graphics/colldet_sat_sphere_sphere.eps}
+    \caption{Sphere-Sphere}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \includegraphics[width=0.8\textwidth]{graphics/colldet_sat_sphere_polygon.eps}
+    \caption{Sphere-Polygon}
+  \end{subfigure}
+
+  \label{fig:colldet_sat_curves}
+\end{figure}
+\FloatBarrier
 
 \subsubsection{Sphere-Sphere test}
 
@@ -688,7 +832,7 @@ In a collision:
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.6\textwidth]{graphics/plane_collision_detection.eps}
+  \includegraphics[width=0.3\textwidth]{graphics/plane_collision_detection.eps}
   \caption{Sphere-Plane collision test}
   \label{fig:plane_collision_detection}
 \end{figure}
