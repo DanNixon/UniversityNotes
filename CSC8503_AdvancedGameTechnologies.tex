@@ -845,7 +845,11 @@ In a collision:
     Specify multiple points of contact for an interface rather than just one
 
   \item
-    Manifold is summation of surface area between two colliding objects
+    Summation of surface area between two colliding objects
+
+  \item
+    Manifold is created as a 2D surface, even though by the time a collision has
+    been detected there will be an intersecting volume between the two object
 
 \end{itemize}
 
@@ -853,9 +857,147 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Obtain a manifold that describes the initial collision points accurately
+
+  \item
+    Omit any contact points that are a result of collisions after the objects
+    intersect each other
+
+  \item
+    With convex object typically there will be only one or two contact points
 
 \end{itemize}
+
+\Para{Worked example}
+
+\begin{itemize}
+  \item
+    Using hypothetical collision shown in figure \ref{fig:manifolds_clipping_0}
+
+  \item
+    Have collision normal and penetration depth from SAT
+
+\end{itemize}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.35\textwidth]{graphics/manifolds_clipping_0.eps}
+  \caption{Example collision}
+  \label{fig:manifolds_clipping_0}
+\end{figure}
+\FloatBarrier
+
+Workflow:
+\begin{enumerate}
+  \item[1]
+    Identify Significant Faces
+    \begin{itemize}
+      \item
+        Identify the two significant faces that are intersecting
+
+      \item
+        For each shape:
+        \begin{itemize}
+          \item
+            Select the vertex furthest along the collision normal (shown in red
+            in figure \ref{fig:manifolds_clipping_1})
+
+          \item
+            Select the face that includes this vertex that has a normal closest
+            to the collision normal
+
+        \end{itemize}
+
+      \item
+        The faces selected for both shapes are the significant faces
+
+    \end{itemize}
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=0.35\textwidth]{graphics/manifolds_clipping_1.eps}
+      \caption{Significant faces}
+      \label{fig:manifolds_clipping_1}
+    \end{figure}
+    \FloatBarrier
+
+  \item[2]
+    Determining Incident and Reference Faces
+    \begin{itemize}
+      \item
+        The reference face will be the point of reference when clipping
+
+      \item
+        The incident face will be the set of vertices being clipped
+
+      \item
+        The face with a normal closest to the collision normal becomes the
+        reference face
+
+        The other face is the incident face
+
+    \end{itemize}
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=0.35\textwidth]{graphics/manifolds_clipping_2.eps}
+      \caption{Incident and Reference faces}
+      \label{fig:manifolds_clipping_2}
+    \end{figure}
+    \FloatBarrier
+
+  \item[3]
+    Adjacent face clipping
+    \begin{itemize}
+      \item
+        Clip the incident face with all adjacent face of the reference face
+
+      \item
+        Using the normal of adjacent faces and any vertex on the face to produce
+        a plane equation
+
+      \item
+        Use Sutherland-Hodgman Clipping algorithm
+
+      \item
+        Clipped edges will have new vertices added as shown on the left hand
+        side in figure \ref{fig:manifolds_clipping_3}
+
+    \end{itemize}
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=0.7\textwidth]{graphics/manifolds_clipping_3.eps}
+      \caption{Adjacent face clipping (clipping region shaded green)}
+      \label{fig:manifolds_clipping_3}
+    \end{figure}
+    \FloatBarrier
+
+  \item[4]
+    Final clipping
+    \begin{itemize}
+      \item
+        Final clipping is in the plane of the reference face
+
+      \item
+        Remove all points in clipping plane (as opposed to non-destructive
+        clipping in previous stage)
+
+      \item
+        This leaves the original collision points and removes any that occur
+        after the two objects intersect each other
+
+    \end{itemize}
+
+    \begin{figure}[h!]
+      \centering
+      \includegraphics[width=0.4\textwidth]{graphics/manifolds_clipping_4.eps}
+      \caption{Final clipping (clipping region shaded blue)}
+      \label{fig:manifolds_clipping_4}
+    \end{figure}
+    \FloatBarrier
+
+\end{enumerate}
 
 \subsection{Collision Response}
 
