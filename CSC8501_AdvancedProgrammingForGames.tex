@@ -52,15 +52,30 @@ Course material:
 Notes:
 
 \begin{itemize}
-  \item The closest implementation of a \texttt{virtual} function to the type of
-        the instance will be called
-  \item The implementation of a function not declared \texttt{virtual} will be
-        that of the type (not the type if the instance)
-  \item For this reason destructors should always be \texttt{virtual}
-  \item Virtual inheritance is used to avoid the "diamond pattern" problem when
-        a class inherits from multiple children of a single base class
-  \item Without virtual inheritance this results in multiple copies of the base
-        class being created
+  \item
+    The \texttt{virtual} keyword is required for polymorphic functions, it
+    allows the vtable to be created which is used to select the implementation
+    of a \texttt{virtual} function to be executed
+
+  \item
+    The closest implementation of a \texttt{virtual} function to the type of the
+    instance will be called
+
+  \item
+    The implementation of a function not declared \texttt{virtual} will be that
+    of the type (not the type if the instance)
+
+  \item
+    For this reason destructors should always be \texttt{virtual}
+
+  \item
+    Virtual inheritance is used to avoid the "diamond pattern" problem when a
+    class inherits from multiple children of a single base class
+
+  \item
+    Without virtual inheritance this results in multiple copies of the base
+    class being created
+
 \end{itemize}
 
 \section{Past Exam Questions}
