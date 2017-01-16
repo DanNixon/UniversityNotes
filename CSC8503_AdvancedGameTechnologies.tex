@@ -1054,17 +1054,103 @@ Workflow:
 
 \Para{Linear impulse}
 
-TODO
+\begin{itemize}
+  \item
+    Calculate relative velocity of colliding entities along collision normal:
+    \begin{align*}
+      v_{ab} &= v_{a} - v_{b} \\
+      v_{n} &= v_{ab} \cdot N
+    \end{align*}
+
+  \item
+    Final relative velocity dependant on coefficient of elasticity $\epsilon$
+    \begin{itemize}
+      \item
+        $\epsilon = 1$ is a purely elastic collision (no loss of velocity in
+        collision)
+
+      \item
+        $\epsilon = 0$ is a purely inelastic collision (no velocity transfer,
+        objects stick together)
+
+    \end{itemize}
+
+  \item
+    Impulse calculated as:
+    \[
+      J = \frac{-(1 + \epsilon) v_{ab} \cdot N}
+               {N \cdot N\left(\frac{1}{m_{a}} + \frac{1}{m_{b}}\right)}
+    \]
+
+  \item
+    Velocity updates:
+    \begin{align*}
+      v_{a} &= v_{a} + \frac{J}{m_{a}} N \\
+      v_{b} &= v_{b} + \frac{J}{m_{b}} N
+    \end{align*}
+
+\end{itemize}
 
 \Para{Angular impulse}
 
-TODO
+\begin{itemize}
+  \item
+    TODO
+
+\end{itemize}
 
 \subsubsection{Penalty method}
 
 \begin{itemize}
   \item
-    TODO
+    Model collision as a spring
+
+  \item
+    Spring equation with damping:
+    \[
+      F = -kx - cv
+    \]
+
+    $F$ is the force extorted by the spring
+
+    $k$ is the spring constant
+
+    $x$ is the displacement of the spring from it s rest position
+
+    $c$ is the damping coefficient
+
+    $v$ is the velocity of the moving object attached to the spring
+
+  \item
+    Calculate force for collision:
+    \begin{align*}
+      F &= -kx - c(N \cdot V_{ab}) \\
+      F &= ma \\
+    \end{align*}
+
+  \item
+    Calculate acceleration of each object:
+    \begin{align*}
+      a_{1} &= \frac{F}{m_{1}} \\
+      a_{2} &= \frac{F}{m_{2}}
+    \end{align*}
+
+\end{itemize}
+
+\subsubsection{Soft Bodies}
+
+\begin{itemize}
+  \item
+    Represent soft bodies as a mesh of nodes connected by springs
+
+  \item
+    Commonly use the graphical mesh as the node mesh
+
+  \item
+    Expensive to simulate
+
+  \item
+    Cannot usually use springs to model deformable objects
 
 \end{itemize}
 
