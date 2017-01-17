@@ -492,7 +492,7 @@ vertices $v_{0}$ and $v_{1}$.
 
 \Para{Triangles}
 
-Use Barycentric coordinates (section \ref{sec:barycentric}).
+Use Barycentric coordinates.
 \[
   C_{p} = (\alpha * C_{a}) + (\beta * C_{b}) + (\gamma * C_{c})
 \]
@@ -921,7 +921,21 @@ When processing objects:
   \item
     Cannot simply transform normals
 
-    Can use model matrix to transform is scale is uniform
+\end{itemize}
+
+\subsubsection{Normal Matrix}
+
+\begin{itemize}
+  \item
+    Use the normal matrix to transform normals
+
+  \item
+    Normal matrix is the transposition of the inverse model matrix
+
+    (\texttt{mat3 normalMatrix = transpose(inverse(mat3(modelMatrix)))})
+
+  \item
+    Preserves rotation while discarding scaling
 
 \end{itemize}
 
