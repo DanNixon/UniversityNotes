@@ -2,7 +2,12 @@
 \def\DOCTITLE{CSC8503 Advanced Game Technologies}
 \input{sections/preamble.tex}
 
+% Space between sub-sections
 \newcommand{\subsectionbreak}{\vspace{5em}}
+
+% For highlighting in math mode
+\usepackage{xcolor}
+\newcommand{\hl}[1]{\colorbox{yellow!50}{$\displaystyle#1$}}
 
 \begin{document}
 
@@ -1083,10 +1088,17 @@ Workflow:
     \]
 
   \item
+    Ensure conservation of momentum plus impulse to resolve collision:
+    \begin{align*}
+      m_{a}v_{a}^{f} &= m_{a}v_{a}^{i} + J N \\
+      m_{b}v_{b}^{f} &= m_{b}v_{b}^{i} + J N
+    \end{align*}
+
+  \item
     Velocity updates:
     \begin{align*}
-      v_{a} &= v_{a} + \frac{J}{m_{a}} N \\
-      v_{b} &= v_{b} + \frac{J}{m_{b}} N
+      v_{a}^{f} &= v_{a}^{i} + \frac{J}{m_{a}} N \\
+      v_{b}^{f} &= v_{b}^{i} + \frac{J}{m_{b}} N
     \end{align*}
 
 \end{itemize}
@@ -1095,7 +1107,39 @@ Workflow:
 
 \begin{itemize}
   \item
-    TODO
+    Need to take into account velocity of contact points due to angular
+    velocity:
+    \begin{align*}
+      v_{ca} &= v_{a} \hl{+ \omega_{a} r_{a}} \\
+      v_{cb} &= v_{b} \hl{+ \omega_{b} r_{b}}
+    \end{align*}
+
+  \item
+    Addition to impulse calculation:
+    \[
+      J = \frac{-(1 + \epsilon) v_{ab} \cdot N}
+               {N \cdot N\left(\frac{1}{m_{a}} + \frac{1}{m_{b}}\right)
+                \hl{+ \left[
+                      \left(I_{a}^{-1} \left(r_{b} \times N\right)\right) \times r_{a} +
+                      \left(I_{b}^{-1} \left(r_{b} \times N\right)\right) \times r_{b}
+                      \right] \cdot N
+                   }
+               }
+    \]
+
+  \item
+    Ensure conservation of momentum:
+    \begin{align*}
+      I_{a} \omega_{a}^{f} &= I_{a} \omega_{a}^{i} + r_{a} \times J N \\
+      I_{b} \omega_{b}^{f} &= I_{b} \omega_{b}^{i} + r_{b} \times J N
+    \end{align*}
+
+  \item
+    Angular velocity updates:
+    \begin{align*}
+      \omega_{a}^{f} &= \omega_{a}^{i} + \frac{r_{a} \times J N}{I_{a}} \\
+      \omega_{b}^{f} &= \omega_{b}^{i} - \frac{r_{b} \times J N}{I_{b}} \\
+    \end{align*}
 
 \end{itemize}
 
@@ -1150,7 +1194,11 @@ Workflow:
     Expensive to simulate
 
   \item
-    Cannot usually use springs to model deformable objects
+    Cannot usually use springs to model deformable objects where the object is
+    permanently deformed
+
+    (possible depending on situation, e.g. cloth can be torn by simply removing
+    constraints then splitting and filling in the graphical mesh)
 
 \end{itemize}
 
