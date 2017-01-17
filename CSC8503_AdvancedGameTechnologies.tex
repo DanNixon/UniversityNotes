@@ -1214,7 +1214,185 @@ Workflow:
 
 \begin{itemize}
   \item
-    TODO
+    As more constraints are added to a physics system the need to solve all
+    constraints simultaneously arises
+
+  \item
+    Objects may be affected by multiple constraints which may work against each
+    other if solving constraints sequentially
+
+  \item
+    Global solver represents constraints as a series of linear equations to be
+    solved
+
+    e.g.
+    \begin{align*}
+      4x + y &= 23 \\
+      x - z &= 6 \\
+      2z + y &= 3
+    \end{align*}
+
+  \item
+    Represent system of equations in \textbf{$Ax = b$} notation:
+    \[
+      \left [
+        \begin{array}{ccc}
+          4 & 1 & 0  \\
+          1 & 0 & -1 \\
+          0 & 1 & 2  \\
+        \end{array}
+      \right ]
+      \left [
+        \begin{array}{c}
+          x \\
+          y \\
+          z \\
+        \end{array}
+      \right ]
+      =
+      \left [
+        \begin{array}{c}
+          23 \\
+          6  \\
+          3  \\
+        \end{array}
+      \right ]
+    \]
+
+    $A$ is the coefficient matrix
+
+    $x$ is the solution (unknown) vector
+
+    $b$ is the constant vector
+
+  \item
+    In a system of $i$ equations with $j$ unknown the general form of $Ax = b$
+    is:
+    \[
+      \left [
+        \begin{array}{cccc}
+          a_{11} & a_{21} & \cdots & a_{i1} \\
+          a_{12} & a_{22} & \cdots & a_{i2} \\
+          \vdots & \vdots & \ddots & \vdots \\
+          a_{1j} & a_{2j} & \cdots & a_{ij} \\
+        \end{array}
+      \right ]
+      \left [
+        \begin{array}{c}
+          x_{1}  \\
+          x_{2}  \\
+          \vdots \\
+          x_{j}  \\
+        \end{array}
+      \right ]
+      =
+      \left [
+        \begin{array}{c}
+          b_{1}  \\
+          b_{2}  \\
+          \vdots \\
+          b_{i}  \\
+        \end{array}
+      \right ]
+    \]
+
+  \item
+    Can solve $Ax = b$ systems using multiple methods:
+    \begin{description}
+      \item[Jacobi] \hfill
+        \begin{itemize}
+          \item
+            Parallelisable
+
+          \item
+            Slow to converge
+
+        \end{itemize}
+
+      \item[Gauss-Seidel] \hfill
+        \begin{itemize}
+          \item
+            Simplest to implement
+
+        \end{itemize}
+
+      \item[Successive-Over-Relaxation] \hfill
+        \begin{itemize}
+          \item
+            Faster convergence over Gauss-Seidel
+
+        \end{itemize}
+
+      \item[Conjugate Gradient] \hfill
+        \begin{itemize}
+          \item
+            Fast convergence
+
+          \item
+            Relatively complex
+
+        \end{itemize}
+
+    \end{description}
+
+\end{itemize}
+
+\subsubsection{Gauss-Seidel}
+
+\begin{itemize}
+  \item
+    Iterate through each row of $A$ matrix (i.e. each constraint) and solve
+    constraints relevant to that object
+
+  \item
+    Generate a value indicating how much the velocity of the object should
+    change
+
+  \item
+    Constraint is therefore not solved in each iteration but made to converge
+    towards the solution over multiple iterations
+
+  \item
+    Convergence is not guaranteed in each frame due to the non-deterministic
+    amount of time taken to solve different numbers of constraints
+
+  \item
+    Limit number of solver iterations to prevent too much time spent on solver
+
+  \item
+    Non-convergence in a single frame is unimportant as the error can always be
+    corrected in subsequent frames and the system will eventually converge
+
+  \item
+    Order in which constraint are solved matters
+
+    In order to converge to the same value the constraints must be solved in the
+    same order every iteration
+
+\end{itemize}
+
+\subsubsection{Constraint Drift}
+
+\begin{itemize}
+  \item
+    Errors can accumulate and feed forward into subsequent frames
+
+  \item
+    Commonly seen in stacked objects (in which they can bee seen to sink into
+    each other)
+
+  \item
+    Baumgarte Stabilisation adds additional forces to the system to compensate
+    for accumulated error
+
+    Additional forces eventually bring solution back into convergence
+
+  \item
+    Additional energy to be added often requires trial and error tuning
+
+    Too little energy and the system will still drift
+
+    Too much and the system will become unstable
 
 \end{itemize}
 
