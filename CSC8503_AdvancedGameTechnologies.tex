@@ -472,7 +472,208 @@ In a collision:
 
 \begin{itemize}
   \item
-    TODO
+    Define what must not happen in the simulation
+
+  \item
+    General equation:
+    \[
+      \dot C = JV
+    \]
+
+\end{itemize}
+
+\subsubsection{Note on differentiation}
+
+\begin{itemize}
+  \item
+    A partial derivative (denoted by $\partial$) is one in which only a single
+    value of a multivariate function is changed
+
+    i.e. for function $f(x, y, z)$ the partial derivative $\frac{\partial
+    f}{\partial x}$ only changes variable $x$, variables $y$ and $z$ remain
+    constant
+
+  \item
+    The vector differential $\nabla$ is used to represent a series of partial
+    differentials for every variable in a system
+
+    e.g. $\nabla = \left(
+                      \frac{\partial}{\partial x},
+                      \frac{\partial}{\partial y},
+                      \frac{\partial}{\partial z}
+                   \right)$
+
+\end{itemize}
+
+\subsubsection{Constraint in a single dimension}
+
+\begin{itemize}
+  \item
+    Consider a constraint restricted in a single axis:
+    \[
+      C(x, y) = \frac{1}{2} \left((x - y)^{2} - L^{2}\right)
+    \]
+
+  \item
+    Constrains two points $x$ and $y$ along a single axis to be distance $L$
+    apart
+
+  \item
+    Differentiate $C$ with respect to time $t$ using multivariate chain rule:
+    \[
+      \frac{dC}{dt} = \frac{\partial C}{\partial x} \frac{dx}{dt} +
+                      \frac{\partial C}{\partial y} \frac{dy}{dt}
+    \]
+
+  \item
+    Rearrange and substitute dot notation differentials:
+    \[
+      \dot C = (x - y) \dot x + (y - x) \dot y
+    \]
+
+  \item
+    This gives:
+    \begin{align*}
+      J &= (x-y \quad y-x) \\
+      V &= (\dot x \quad \dot y)
+    \end{align*}
+
+  \item
+    Force $F$ required to satisfy constraint:
+    \[
+      F = J^{T} \lambda
+    \]
+
+    where $J^{T}$ is the transposed Jacobian
+
+\end{itemize}
+
+\subsubsection{Constraint in three dimensions}
+
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.35\textwidth]{graphics/constraint_3d_example.eps}
+  \caption{3D constraint example}
+  \label{fig:constraint_3d_example}
+\end{figure}
+\FloatBarrier
+
+\begin{itemize}
+  \item
+    Consider a constraint that keeps points $x_{1}$ and $x_{2}$ a fixed distance
+    $L$ apart:
+    \[
+      C(x_{1}, q_{1}, x_{2}, q_{2}) =
+        \frac{1}{2} \left((x_{2} - x_{1})^{2} - L^{2}\right)
+    \]
+
+    where $q_{1}$ and $q_{2}$ are orientations of the two cubes.
+
+  \item
+    Differentiate $x_{1}$ and $x_{2}$ as vector from position of cube with
+    respect to time:
+    \begin{align*}
+      \frac{dx_{1}}{dt} &= v_{1} + \omega_{1} \times r_{1} \\
+      \frac{dx_{2}}{dt} &= v_{2} + \omega_{2} \times r_{2}
+    \end{align*}
+
+  \item
+    Obtain:
+    \[
+      \dot C = -d \cdot v_{1} - (r_{1} \times d) \cdot \omega_{1} +
+                d \cdot v_{2} + (r_{2} \times d) \cdot \omega_{2}
+    \]
+
+  \item
+    Gives Jacobian $J$:
+    \[
+      J = (-d^{T} \quad -(r_{1} \times d)^{T} \quad d^{T} \quad (r_{2} \times d)^{T})
+    \]
+
+\end{itemize}
+
+\subsubsection{Adding Energy}
+
+\begin{itemize}
+  \item
+    Energy is constant when $\dot C = 0$
+
+  \item
+    Can set $\dot C$ to a vector function to add or remove energy from the
+    system
+
+  \item
+    Known as bias vector $\zeta$
+
+    Can relate to position, orientation and time
+
+  \item
+    Can introduce a correction factor $\beta$ to deal with accumulated error due
+    to iterative updates:
+    \[
+      \dot C = J V - \beta C
+    \]
+
+    (TODO?)
+
+\end{itemize}
+
+\subsubsection{Calculating $\lambda$}
+
+\begin{itemize}
+  \item
+    Force $F$ required to satisfy constraint:
+    \[
+      F = J^{T} \lambda
+    \]
+
+    where $\lambda$ is a constant such that force $F$ balances/solves the
+    constraint
+
+  \item
+    Need to calculate $\lambda$ for specific objects
+
+  \item
+    Consider Newton's second law ($f = ma$):
+    \begin{align*}
+      F &= M \cdot V \\
+      M &= \left[
+              \begin{array}{cccc}
+                m_{1} & 0     & 0     & 0     \\
+                0     & I_{1} & 0     & 0     \\
+                0     & 0     & m_{2} & 0     \\
+                0     & 0     & 0     & I_{2} \\
+              \end{array}
+           \right]
+    \end{align*}
+
+    Matrix $M$ describes distribution of mass for both objects ($m$ are masses,
+    $I$ are inertia tensors) and $\dot V$ is the acceleration equivalent to $V$
+
+  \item
+    Approximate $\dot V$ numerically over a small time step $\Delta t$:
+    \[
+      \dot V \approx \frac{V_{2} - V_{1}}{\Delta t}
+    \]
+
+  \item
+    Multiply by mass matrix $M$:
+    \begin{align*}
+      J^{T} \lambda &= M \dot V \\
+      J^{T} \lambda &= \frac{M(v_{2} - V_{1})}{\Delta t}
+    \end{align*}
+
+  \item
+    Multiply by $J M^{-1}$ ($M$ is easily invertible):
+    \[
+      J M^{-1} J^{T} \lambda = \frac{\zeta - J V}{\Delta t}
+    \]
+
+  \item
+    Rearrange for $\lambda$:
+    \[
+      \lambda = \frac{\zeta - J V}{J M^{-1} J^{T} \Delta t}
+    \]
 
 \end{itemize}
 
