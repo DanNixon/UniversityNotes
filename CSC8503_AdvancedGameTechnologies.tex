@@ -607,6 +607,11 @@ In a collision:
 
     Can relate to position, orientation and time
 
+\end{itemize}
+
+\subsubsection{Constraint Drift and Baumgarte correction}
+
+\begin{itemize}
   \item
     Can introduce a correction factor $\beta$ to deal with accumulated error due
     to iterative updates:
@@ -614,7 +619,18 @@ In a collision:
       \dot C = J V - \beta C
     \]
 
-    (TODO?)
+  \item
+    Errors often tied to nature of constraints and time, as such express
+    correction as:
+    \[
+      \dot C(t) + \beta C(t) = 0
+    \]
+
+  \item
+    $\beta$ is clamped to the range:
+    \[
+      0 < \beta < \frac{1}{\Delta t}
+    \]
 
 \end{itemize}
 
@@ -1405,9 +1421,139 @@ Workflow:
 
 \subsubsection{Constraint based collision response}
 
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=0.4\textwidth]{graphics/collision_constraint_example.eps}
+  \caption{Collision constraint example}
+  \label{fig:collision_constraint_example}
+\end{figure}
+\FloatBarrier
+
 \begin{itemize}
   \item
-    TODO
+    Inequality restraints restrict the axis, direction, area, etc. in which a
+    constraint can act
+
+    Do this by clamping $\lambda$:
+    \[
+      \lambda_{-} \leq \lambda \leq \lambda_{+}
+    \]
+
+  \item
+    Contact constraint only allows constraint force to push out (does not affect
+    other constraints)
+
+    \begin{align*}
+      \lambda_{-} &= 0 \\
+      \lambda_{+} &= \infty
+    \end{align*}
+
+  \item
+    Collision constraint:
+    \[
+      C = (x_{x} + r_{2} - x_{1} - r_{1}) \cdot N
+    \]
+
+  \item
+    Contact point $p$ is defined as:
+    \[
+      p = x + r
+    \]
+
+  \item
+    Obtain Jacobian:
+    \[
+      J = \left[
+            \begin{array}{c}
+              -N^{T}                \\
+              -(r_{1} \times N)^{T} \\
+              N^{T}                 \\
+              (r_{2} \times N)^{T}  \\
+            \end{array}
+          \right]
+    \]
+
+  \item
+    Collision is resolved by solving this constraint with the contact constraint
+    on $\lambda$
+
+  \item
+    Two options for using the collision manifold:
+    \begin{enumerate}
+      \item[1]
+        \begin{itemize}
+          \item
+            Iterate through all contact points in manifold
+
+          \item
+            Majority of collision resolved by first point, majority of remainder
+            by second point, etc.
+
+          \item
+            Slight loss of accuracy
+
+        \end{itemize}
+
+      \item[2]
+        \begin{itemize}
+          \item
+            Divide the constraint resolution between contact points
+
+        \end{itemize}
+    \end{enumerate}
+
+\end{itemize}
+
+\subsubsection{Constraints as Friction}
+
+\begin{itemize}
+  \item
+    Define tangents to surfaces that are in contact $u_{1}$ and $u_{2}$ and
+    their normal $n$:
+    \[
+      u_{1} \times u_{2} = n
+    \]
+
+  \item
+    Define collision constraints:
+    \begin{align*}
+      C_{1} &= (x_{2} + r_{2} - x_{1} - r_{1}) \cdot u_{1} \\
+      C_{2} &= (x_{2} + r_{2} - x_{1} - r_{1}) \cdot u_{2}
+    \end{align*}
+
+  \item
+    Constraints restrict movement of the contact points alone the surface in any
+    direction
+
+  \item
+    Obtain Jacobians:
+    \begin{align*}
+      J_{1} = \left[
+                \begin{array}{c}
+                  -u_{1}^{T}                \\
+                  -(r_{1} \times u_{1})^{T} \\
+                  u_{1}^{T}                 \\
+                  (r_{2} \times u_{1})^{T}  \\
+                \end{array}
+              \right]
+      J_{2} = \left[
+                \begin{array}{c}
+                  -u_{2}^{T}                \\
+                  -(r_{1} \times u_{2})^{T} \\
+                  u_{2}^{T}                 \\
+                  (r_{2} \times u_{2})^{T}  \\
+                \end{array}
+              \right]
+    \end{align*}
+
+  \item
+    Approximate limits on $\lambda$ based on frictional force due to gravity:
+    \[
+      -\mu m g \leq \lambda \leq \mu m g
+    \]
+
+    where $m$ is object mass, $g$ is acceleration due to gravity and $\mu$ is a
+    constant which is tuned to make the constraint believable
 
 \end{itemize}
 
